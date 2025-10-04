@@ -27,6 +27,62 @@ const loadSvg = (url) => {
 
 export default function ConcaveMatter() {
   const containerRef = useRef(null);
+  const engineRef = useRef(null);
+  const renderRef = useRef(null);
+  const wallsRef = useRef([]);
+  const lettersRef = useRef([]);
+  const initialDimensionsRef = useRef({ width: 0, height: 0 });
+
+  // Function to update canvas dimensions and walls
+  const updateCanvasDimensions = useCallback(() => {
+    if (!containerRef.current || !renderRef.current || !engineRef.current) return;
+
+    const container = containerRef.current;
+    const render = renderRef.current;
+    const engine = engineRef.current;
+    const world = engine.world;
+
+    // Update render dimensions
+    render.canvas.width = container.clientWidth;
+    render.canvas.height = container.clientHeight;
+    render.options.width = container.clientWidth;
+    render.options.height = container.clientHeight;
+
+    // Update walls positions
+    if (wallsRef.current.length > 0) {
+      const Bodies = MatterJS.Bodies;
+      
+      // Update bottom wall
+      MatterJS.Body.setPosition(wallsRef.current[0], {
+        x: container.clientWidth / 2,
+        y: container.clientHeight + THICKNESS / 2
+      });
+      MatterJS.Body.scale(wallsRef.current[0], container.clientWidth / wallsRef.current[0].bounds.max.x, 1);
+
+      // Update right wall
+      MatterJS.Body.setPosition(wallsRef.current[1], {
+        x: container.clientWidth + THICKNESS / 2,
+        y: container.clientHeight / 2
+      });
+      MatterJS.Body.scale(wallsRef.current[1], 1, container.clientHeight / wallsRef.current[1].bounds.max.y);
+
+      // Update left wall
+      MatterJS.Body.setPosition(wallsRef.current[2], {
+        x: -THICKNESS / 2,
+        y: container.clientHeight / 2
+      });
+      MatterJS.Body.scale(wallsRef.current[2], 1, container.clientHeight / wallsRef.current[2].bounds.max.y);
+    }
+
+    // Update viewport bounds
+    MatterJS.Render.lookAt(render, {
+      min: { x: 0, y: 0 },
+      max: {
+        x: container.clientWidth,
+        y: container.clientHeight,
+      },
+    });
+  }, []);
 
   useEffect(() => {
     if (!containerRef.current) return;
@@ -46,9 +102,16 @@ export default function ConcaveMatter() {
     // provide concave decomposition support library
     Common.setDecomp(require("poly-decomp"));
 
+    // Store initial dimensions
+    initialDimensionsRef.current = {
+      width: containerRef.current.clientWidth,
+      height: containerRef.current.clientHeight
+    };
+
     // create engine
     const engine = Engine.create();
     const world = engine.world;
+    engineRef.current = engine;
 
     // create renderer
     const render = Render.create({
@@ -62,6 +125,7 @@ export default function ConcaveMatter() {
       },
     });
 
+    renderRef.current = render;
     Render.run(render);
 
     // create runner
@@ -71,7 +135,7 @@ export default function ConcaveMatter() {
     // • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • •
     // WALLS
     // • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • •
-    Composite.add(world, [
+    const walls = [
       // Bottom
       Bodies.rectangle(
         containerRef.current.clientWidth / 2,
@@ -96,7 +160,10 @@ export default function ConcaveMatter() {
         containerRef.current.clientHeight * 100,
         { isStatic: true }
       ),
-    ]);
+    ];
+    
+    wallsRef.current = walls;
+    Composite.add(world, walls);
 
     // • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • • •
     // SVGs
@@ -112,11 +179,11 @@ export default function ConcaveMatter() {
         ]);
 
         const vertex = select(root, "path").map((path) =>
-          Vertices.scale(Svg.pathToVertices(path, 10), 0.7, 0.7)
+          Vertices.scale(Svg.pathToVertices(path, 10), 0.5, 0.5)
         );
 
         const letter = Bodies.fromVertices(
-          Math.random(containerRef.current.clientWidth - 500 + 250) * 1000,
+          Math.random() * containerRef.current.clientWidth,
           -containerRef.current.clientHeight,
           vertex,
           {
@@ -159,7 +226,8 @@ export default function ConcaveMatter() {
       const validLetters = results.filter(letter => letter !== null);
       vertexSets.push(...validLetters);
       
-      console.log("vertexSets", vertexSets);
+      // Store letter references for resizing
+      lettersRef.current = validLetters;
 
       // Add all letters to the world
       Composite.add(world, vertexSets);
@@ -194,12 +262,20 @@ export default function ConcaveMatter() {
       },
     });
 
+    // Add resize listener
+    const handleResize = () => {
+      updateCanvasDimensions();
+    };
+
+    window.addEventListener('resize', handleResize);
+
     // Cleanup function
     return () => {
+      window.removeEventListener('resize', handleResize);
       Render.stop(render);
       Runner.stop(runner);
     };
-  }, []);
+  }, [updateCanvasDimensions]);
 
   return <div className="bg-white fixed inset-0" ref={containerRef} />;
 }
