@@ -1,4 +1,6 @@
 import { Geist, Geist_Mono } from "next/font/google";
+import Link from "next/link";
+
 import "./globals.css";
 
 const geistSans = Geist({
@@ -20,9 +22,29 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-fixed bg-[radial-gradient(#999_1px,transparent_2px)] bg-size-[20px_20px] `}
       >
-        {children}
+        <div className="bg-fixed bg-[#cccccc] bg-[radial-gradient(#999_1px,transparent_2px)] bg-size-[20px_20px] absolute -inset-8 -rotate-[1.5deg] z-1" />
+        <header className="pointer-events-none absolute inset-0 p-6 font-['Ringside Regular'] text-4xl z-3 mix-blend-difference text-white flex flex-col justify-between">
+          <hgroup className="pointer-events-auto">
+            <h1>Andrew Alford Creative</h1>
+            <h2>
+              <Link href="/">Entrance</Link>, <Link href="/">Articles</Link>,{" "}
+              <Link href="/">Contact</Link>.
+            </h2>
+          </hgroup>
+          <nav className="flex gap-4 justify-between">
+            <div>
+              <Link href="/">About</Link>, <Link href="/">News</Link>.
+            </div>
+            <div className="text-2xl">
+              &copy; 2025 All rights reserved.
+            </div>
+          </nav>
+        </header>
+        <main className="">
+          {children}
+        </main>
       </body>
     </html>
   );

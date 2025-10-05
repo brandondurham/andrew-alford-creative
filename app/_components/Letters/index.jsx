@@ -279,9 +279,6 @@ export default function ConcaveMatter() {
   }, [updateCanvasDimensions]);
 
   return (
-    <div
-      className="bg-fixed bg-[#dddddd] bg-[radial-gradient(#777777_1px,transparent_2px)] bg-size-[20px_20px] fixed inset-0"
-      ref={containerRef}
-    />
+    <div className="absolute inset-0 z-2" ref={containerRef} />
   );
 }
