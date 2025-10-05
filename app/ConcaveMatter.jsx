@@ -9,6 +9,7 @@ import { Letters } from "./components/Matter/content";
 
 // Consts
 const THICKNESS = 10;
+const INITIAL_SIZE = 0.5;
 
 // Utilities
 const select = (root, selector) => {
@@ -179,7 +180,7 @@ export default function ConcaveMatter() {
         ]);
 
         const vertex = select(root, "path").map((path) =>
-          Vertices.scale(Svg.pathToVertices(path, 10), 0.5, 0.5)
+          Vertices.scale(Svg.pathToVertices(path, 10), INITIAL_SIZE, INITIAL_SIZE)
         );
 
         const letter = Bodies.fromVertices(
@@ -187,6 +188,7 @@ export default function ConcaveMatter() {
           -containerRef.current.clientHeight,
           vertex,
           {
+            // angle: Math.random() * Math.PI * 2, // Random rotation between 0° and 360°
             friction: 0.3,
             frictionAir: 0.00001,
             restitution: 0.8,

@@ -1,10 +1,17 @@
 export const Letters = [
   {
-    id: "acd3571c-8164-4f51-b537-667f9070090b",
-    paths: ["/letter-a.1.1.svg", "/letter-a.1.2.svg"],
+    id: "08c9d184-ef4a-47cf-aacc-ed0eaeef60b6",
+    paths: ["/c-1.svg"],
+    // primaryAxis: "both",
   },
   {
-    id: "8cd6cdb7-123b-4819-94de-eb33cda31c32",
-    paths: ["/letter-c.svg"],
+    id: "5ce514e9-7e1e-4c94-a267-c931746e8ed9",
+    paths: ["/a-1.svg"],
+    // primaryAxis: "both",
+  },
+  {
+    id: "67788fcf-4773-4f65-b390-b2cdac65eb90",
+    paths: ["/a-2.svg"],
+    // primaryAxis: "both",
   },
 ];
