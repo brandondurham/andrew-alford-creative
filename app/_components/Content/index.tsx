@@ -1,9 +1,9 @@
-// Styles
-import styles from "../../index.module.css";
+// Utils
+import { classes } from "@/utils";
 
 export function Content({ children, className }) {
   return (
-    <main className={`${styles.content} basis-1/2 ${className}`}>
+    <main className={classes('basis-1/2', className)}>
       {children}
     </main>
   );

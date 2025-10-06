@@ -4,6 +4,9 @@ import { classes, shuffle } from "@/utils";
 // Consts
 import { COLORS } from "@/app/_components/Letters/consts";
 
+// Styles
+import styles from "@/app/index.module.css";
+
 // Types
 import { ArticleProps } from "./types";
 
@@ -17,17 +20,22 @@ export function Article({ articleNumber = 0, className, id }: ArticleProps) {
       )}
       style={{ backgroundColor }}
     >
-      <header className="flex min-h-[24vh]">
-        <h2 className="mix-blend-overlay brightness-200 min-w-drop-cap pr-4 text-400">
-          Article #001
-        </h2>
-        <h1 className="title font-normal">
-          Designer vs. Artist: Crushing Control vs Feelings of Freedom
-        </h1>
+      <header className="min-h-[24vh] sticky top-0 z-3">
+        <hgroup
+          className="flex"
+          style={{ backgroundColor }}
+        >
+          <h2 className="mix-blend-overlay brightness-200 min-w-drop-cap pr-4 text-400">
+            Article #{articleNumber.toString().padStart(3, '0')}
+          </h2>
+          <h1 className="title font-normal">
+            Designer vs. Artist: Crushing Control vs Feelings of Freedom
+          </h1>
+        </hgroup>
       </header>
-      <div className="content mix-blend-overlay">
+      <div className={classes(styles.articleContent, 'mix-blend-overlay')}>
         <p>
-          <span className="drop-cap">W</span>
+          <span className="drop-cap mix-blend-overlay">W</span>
           hen I was three years old, my mom wrote in my baby book “Andy is going
           to be an artist when he grows up.” Since the early days of Covid, her
           observation has been front and center in my brain. Her words sparked
@@ -104,10 +112,10 @@ export function Article({ articleNumber = 0, className, id }: ArticleProps) {
           imaginative being my mom saw from the start.
         </p>
         <p className="note">
-          (Side note, a couple of paragraphs ago I said that selling art wasn’t
+          Side note, a couple of paragraphs ago I said that selling art wasn’t
           the primary goal of creating these paintings, but hey, I’m human. DM
           me for pricing and availability if your home or project needs an
-          antidote for beige.)
+          antidote for beige.
         </p>
       </div>
     </article>
