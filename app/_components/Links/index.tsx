@@ -15,15 +15,10 @@ export function Links({ className, links }: { className?: string, links: { href:
         {links.map(({ href, name }, index) => (
           <li className="inline-flex items-baseline gap-1" key={name}>
             {pathname === href && (
-              <span className="font-[Decimal] font-[400] text-[0.8em]">▶</span>
+              <span className="font-[var(--font-decimal)] text-[0.8em]">▶</span>
             )}
             <span>
-              <Link
-                // className={classes(
-                //   pathname === href ? "text-[blue]" : "text-dark"
-                // )}
-                href={href}
-              >
+              <Link href={href}>
                 {name}
               </Link>
               {index < links.length - 1 && ", "}

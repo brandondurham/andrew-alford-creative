@@ -34,14 +34,14 @@
     color: rgb(9 9 9/0.4);
     display: block;
     float: left;
-    font-family: 'Crimson Curse';
-      /* font-family: 'MB Thin Worms'; */
-      /* font-family: 'XXII Ultimate-Black-Metal'; */
+    font-family: var(--font-crimson-curse);
+    /* font-family: 'MB Thin Worms'; */
+    /* font-family: 'XXII Ultimate-Black-Metal'; */
     /* font-family: Hellshunx; */
     /* font-family: Historical-EnglishTextura; */
     /* font-family: Historical-StAugustin; */
     /* font-family: Historical; */
-      /* font-family: 'Crucial Noise'; */
+    /* font-family: 'Crucial Noise'; */
     /* font-family: Bradthen; */
     font-size: 11em;
     font-weight: 400;
@@ -49,18 +49,16 @@
     margin-bottom: -0.1em;
     padding: 0 0.1em 0.1em 0;
     position: relative;
-    /* text-indent: -0.03em; */
-
     text-indent: 0.01em;
   }
 
-  :global(.fancy) {
-    font-family: "Ringside Compressed", "Chronicle Disp Comp";
+  /* :global(.fancy) {
+    font-family: "Ringside Compressed";
     font-size: 2em;
     font-weight: 200;
     line-height: 1.1;
     text-align: center;
     text-justify: newspaper;
     text-wrap: balance;
-  }
+  } */
 }
