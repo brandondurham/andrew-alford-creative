@@ -16,8 +16,6 @@
 @theme inline {
   --color-dark: var(--dark);
   --color-light: var(--light);
-  /* --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono); */
 
   /* Theme Colors */
   --color-theme-a: #d31815;
@@ -39,6 +37,12 @@
   --color-theme-q: #ec1049;
   --color-theme-r: #520f20;
   --color-theme-s: #e69cae;
+
+  /* Fonts */
+  --font-crimson-curse: var(--font-crimson-curse);
+  --font-gory: var(--font-gory);
+  --font-decimal: var(--font-decimal);
+  --font-ringside-regular: var(--font-ringside-regular);
 
   /* Space */
   --spacing-drop-cap: 160px;
