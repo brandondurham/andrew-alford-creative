@@ -70,7 +70,7 @@ export function Letters({ className }: { className?: string }) {
 
     const { world } = engine;
     engineRef.current = engine;
-    engine.timing.timeScale = 2;
+    // engine.timing.timeScale = 2;
 
     // create renderer
     const render = Render.create({

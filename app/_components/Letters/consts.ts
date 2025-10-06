@@ -28,5 +28,5 @@ export const COLORS = [
 export const LETTER_PHYSICS = {
   // friction: 0.3,
   // frictionAir: 0.00001,
-  restitution: 0.9,
+  restitution: 1,
 };
