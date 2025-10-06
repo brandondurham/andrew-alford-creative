@@ -13,7 +13,7 @@ const PAGES = [
     href: "/",
   },
   {
-    name: "Papers",
+    name: "Articles",
     href: "/articles",
   },
   {
