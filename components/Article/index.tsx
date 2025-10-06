@@ -15,22 +15,25 @@ import styles from "@/app/index.module.css";
 import { ArticleProps } from "./types";
 
 export function Article({ articleNumber = 0, className }: ArticleProps) {
-  const [backgroundColor, setBackgroundColor] = useState<string>(COLORS[0]);
+  const [backgroundColor, setBackgroundColor] = useState<string | null>(null);
 
   useEffect(() => {
     // Only set the color on the client side to avoid hydration mismatches
     setBackgroundColor(shuffle(COLORS)[0]);
   }, []);
+
+  if (!backgroundColor) return null;
+
   return (
     <article
       className={classes(
-        "flex flex-col gap-[1.11em] p-6 text-white mix-blend-difference",
+        "flex flex-col gap-[1.11em] text-white mix-blend-difference",
         className
       )}
-      style={{ backgroundColor: backgroundColor }}
+      style={{ backgroundColor: backgroundColor || undefined }}
     >
-      <header className="min-h-[24vh] sticky top-0 z-3">
-        <hgroup className="flex" style={{ backgroundColor: backgroundColor }}>
+      <header className="min-h-[18vh] sticky top-0 z-3 max-w-content-width p-6">
+        <hgroup className="flex" style={{ backgroundColor: backgroundColor || undefined }}>
           <h2 className="mix-blend-overlay brightness-200 min-w-drop-cap pr-4 text-400">
             Article #{articleNumber.toString().padStart(3, "0")}
           </h2>
@@ -39,7 +42,12 @@ export function Article({ articleNumber = 0, className }: ArticleProps) {
           </h1>
         </hgroup>
       </header>
-      <div className={classes(styles.articleContent, "mix-blend-overlay")}>
+      <div
+        className={classes(
+          styles.articleContent,
+          "mix-blend-overlay max-w-content-width p-6"
+        )}
+      >
         <p>
           <span className="drop-cap mix-blend-overlay">W</span>
           hen I was three years old, my mom wrote in my baby book “Andy is going

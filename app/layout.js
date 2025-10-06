@@ -74,7 +74,7 @@ export default function RootLayout({ children }) {
       <body
         className={`${ringsideRegular.variable} ${crimsonCurse.variable} ${decimal.variable} antialiased bg-light text-dark dark:bg-dark dark:text-light`}
       >
-        <div className="bg-fixed bg-[radial-gradient(#999_1px,transparent_2px)] bg-size-[20px_20px] fixed -inset-8 -rotate-[1.5deg] z-1" />
+        <div className="bg-fixed bg-[radial-gradient(#bbb_1px,transparent_2px)] bg-size-[20px_20px] fixed -inset-8 -rotate-[1.5deg] z-1" />
         <div className={classes("relative flex z-3 align-top flex-col min-h-screen gap-8", /*"pointer-events-none"*/)}>
           <div className="flex grow items-start">
             <Letters className="z-2" />

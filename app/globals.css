@@ -42,6 +42,7 @@
 
   /* Space */
   --spacing-drop-cap: 160px;
+  --spacing-content-width: 900px;
 }
 
 @media (prefers-color-scheme: dark) {
