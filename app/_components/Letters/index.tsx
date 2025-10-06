@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import MatterJS from "matter-js";
 import MatterWrap from "matter-wrap";
 import "pathseg";
@@ -28,6 +28,9 @@ import {
 } from "./consts";
 
 export function Letters({ className }: { className?: string }) {
+  const [colors, setColors] = useState<string[] | null>(null);
+  const [letters, setLetters] = useState<typeof LETTERS | null>(null);
+
   MatterJS.use(MatterWrap);
 
   // Refs
@@ -39,11 +42,13 @@ export function Letters({ className }: { className?: string }) {
   const initialDimensionsRef = useRef({ width: 0, height: 0 });
 
   // Randomize COLORS and LETTERS.
-  const colors = useMemo(() => shuffle(COLORS), []);
-  const letters = useMemo(() => shuffle(LETTERS), []);
+  useEffect(() => {
+    setColors(shuffle(COLORS));
+    setLetters(shuffle(LETTERS));
+  }, []);
 
   useEffect(() => {
-    if (!containerRef.current) return;
+    if (!containerRef.current || !colors || !letters) return;
     
     const { Bodies, Common, Composite, Engine, Mouse, MouseConstraint, Render, Runner, Svg, Vertices } = MatterJS;
 
@@ -57,7 +62,12 @@ export function Letters({ className }: { className?: string }) {
     initialDimensionsRef.current = { width, height };
 
     // create engine
-    const engine = Engine.create();
+    const engine = Engine.create({
+      constraintIterations: 20, // Use a higher value for increased stability
+    });
+    engine.positionIterations = 200;
+    engine.velocityIterations = 200;
+
     const { world } = engine;
     engineRef.current = engine;
     engine.timing.timeScale = 2;
@@ -117,39 +127,37 @@ export function Letters({ className }: { className?: string }) {
     // *******************************************************************************************************
     // SVGs
     // *******************************************************************************************************
+    // Create a local copy of colors to avoid state updates
+    const availableColors = [...(colors || [])];
+    
     const loadAndPrepareSVG = async (path) => {
       return await loadSvg(path).then((root) => {
-        const color = Common.choose(colors);
+        const color = Common.choose(availableColors);
+
+        // Remove the selected color from the local array so no letters have the same color
+        const colorIndex = availableColors.indexOf(color);
+        if (colorIndex > -1) {
+          availableColors.splice(colorIndex, 1);
+        }
 
         const vertex = select(root, "path")
           .map((path) => {
-            const vertices = Svg.pathToVertices(path, 20);
+            const vertices = Svg.pathToVertices(path, 10);
             const scaledVertices = Vertices.scale(vertices, INITIAL_SIZE, INITIAL_SIZE);
             return scaledVertices;
           });
+        
         const randomX =
           Math.random() * (width * X_POSITION_OFFSET) -
           (width * X_POSITION_OFFSET) / 2 +
           width / 2;
+        
         const letter = Bodies.fromVertices(
           randomX,
           -(height / 2),
           vertex,
           {
             ...LETTER_PHYSICS,
-            // set the body's wrapping bounds
-            // plugin: {
-            //   wrap: {
-            //     min: {
-            //       x: 0,
-            //       y: -height,
-            //     },
-            //     max: {
-            //       x: width,
-            //       y: height,
-            //     },
-            //   },
-            // },
             render: {
               fillStyle: color,
               strokeStyle: color,
@@ -166,6 +174,9 @@ export function Letters({ className }: { className?: string }) {
         }
         
         return letter;
+      }).catch(error => {
+        console.error('Error loading SVG:', error);
+        return null;
       });
     };
 
@@ -174,8 +185,8 @@ export function Letters({ className }: { className?: string }) {
      */
     const loadLetters = async () => {
       // Load all letters in parallel for better performance
-      const letterPromises = letters.map(async (letterData, i) => {
-        const { path = null } = letterData;
+      const letterPromises = letters?.map(async (letterData, i) => {
+        const { path = null } = letterData || {};
         if (path) {
           try {
             const letter = await loadAndPrepareSVG(path);
