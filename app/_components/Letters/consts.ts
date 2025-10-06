@@ -3,7 +3,7 @@ export const INITIAL_SIZE = 0.99;
 export const BASE_WIDTH = 1000;
 export const BASE_HEIGHT = 700;
 export const X_POSITION_OFFSET = 0.5; // Percentage of window width.
-export const ENTRANCE_OFFSET = 500; // Milliseconds
+export const ENTRANCE_OFFSET = 1000; // Milliseconds
 export const COLORS = [
   "#d31815",
   "#e76e5b",
@@ -19,7 +19,6 @@ export const COLORS = [
   "#0c1943",
   "#6866bf",
   "#131113",
-  "#ffffff",
   "#e64c9d",
   "#ec1049",
   "#520f20",
@@ -29,11 +28,5 @@ export const COLORS = [
 export const LETTER_PHYSICS = {
   // friction: 0.3,
   // frictionAir: 0.00001,
-  // restitution: 0.85,
-  // frictionAir: 0.001,
-  // restitution: 0.7,
-
-  // friction: 0.3,
-  // frictionAir: 0.00001,
-  restitution: 0.6,
+  restitution: 0.7,
 };

@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useRef } from "react";
 import MatterJS from "matter-js";
+import MatterWrap from "matter-wrap";
 import "pathseg";
 
 // Content
@@ -10,6 +11,11 @@ import { LETTERS } from "./content";
 // Utilities
 import { loadSvg, select } from "./utils";
 import { classes, shuffle } from "@/utils";
+
+// Types
+interface ExtendedMouse extends MatterJS.Mouse {
+  mousewheel: EventListener;
+}
 
 // Consts
 import {
@@ -22,6 +28,8 @@ import {
 } from "./consts";
 
 export function Letters({ className }: { className?: string }) {
+  MatterJS.use(MatterWrap);
+
   // Refs
   const containerRef = useRef(null);
   const engineRef = useRef(null);
@@ -36,7 +44,7 @@ export function Letters({ className }: { className?: string }) {
 
   useEffect(() => {
     if (!containerRef.current) return;
-
+    
     const { Bodies, Common, Composite, Engine, Mouse, MouseConstraint, Render, Runner, Svg, Vertices } = MatterJS;
 
     // provide concave decomposition support library
@@ -86,21 +94,21 @@ export function Letters({ className }: { className?: string }) {
         { isStatic: true }
       ),
       // Right
-      // Bodies.rectangle(
-      //   width + THICKNESS / 2,
-      //   height / 2,
-      //   THICKNESS,
-      //   height * 100,
-      //   { isStatic: true }
-      // ),
+      Bodies.rectangle(
+        width + THICKNESS / 2,
+        height / 2,
+        THICKNESS,
+        height * 100,
+        { isStatic: true }
+      ),
       // Left
-      // Bodies.rectangle(
-      //   -THICKNESS / 2,
-      //   height / 2,
-      //   THICKNESS,
-      //   height * 100,
-      //   { isStatic: true }
-      // ),
+      Bodies.rectangle(
+        -THICKNESS / 2,
+        height / 2,
+        THICKNESS,
+        height * 100,
+        { isStatic: true }
+      ),
     ];
     
     wallsRef.current = walls;
@@ -129,6 +137,19 @@ export function Letters({ className }: { className?: string }) {
           vertex,
           {
             ...LETTER_PHYSICS,
+            // set the body's wrapping bounds
+            // plugin: {
+            //   wrap: {
+            //     min: {
+            //       x: 0,
+            //       y: -height,
+            //     },
+            //     max: {
+            //       x: width,
+            //       y: height,
+            //     },
+            //   },
+            // },
             render: {
               fillStyle: color,
               strokeStyle: color,
@@ -195,7 +216,12 @@ export function Letters({ className }: { className?: string }) {
         },
       },
     });
-    
+
+    mouse.element.removeEventListener(
+      "wheel",
+      (mouse as ExtendedMouse).mousewheel
+    );
+
     Composite.add(world, mouseConstraint);
 
     // keep the mouse in sync with rendering

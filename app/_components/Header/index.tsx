@@ -26,7 +26,7 @@ export function Header({ className }: { className?: string }) {
   return (
     <header
       className={classes(
-        "sticky top-0 basis-1/2 p-6 flex items-start mix-blend-difference",
+        "sticky top-0 basis-1/2 p-6 flex items-start mix-blend-overlay",
         className
       )}
     >

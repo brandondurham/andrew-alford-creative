@@ -6,11 +6,18 @@
   --base-padding: 1.5rem;
 }
 
+@theme {
+  --animate-fade-in: fadeIn 450ms ease-out 1;
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }}
+
 @theme inline {
   --color-dark: var(--dark);
   --color-light: var(--light);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono); */
 
   /* Theme Colors */
   --color-theme-a: #d31815;
@@ -32,6 +39,9 @@
   --color-theme-q: #ec1049;
   --color-theme-r: #520f20;
   --color-theme-s: #e69cae;
+
+  /* Space */
+  --spacing-drop-cap: 160px;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -49,6 +59,7 @@ body {
   font-size: 2.15rem;
   font-feature-settings: "tnum" on;
   line-height: 1.2;
+  text-wrap: balance;
 }
 
 a {
@@ -56,3 +67,5 @@ a {
   text-underline-offset: 0.25em;
   text-decoration-thickness: 0.07em;
 }
+
+h1, h2, h3, h4, h5, h6 { font-weight: inherit; }
