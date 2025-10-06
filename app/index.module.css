@@ -1,0 +1,38 @@
+.content {
+  background-image:
+    linear-gradient(90deg, #ccc 1px, transparent 1px),
+    linear-gradient(#ccc 1px, transparent 1px);
+  background-size: 20px 20px;
+  background-repeat: repeat;
+
+  :global(.small) {
+    font-size: 1.3rem;
+    font-weight: 600;
+    line-height: 1.4;
+  }
+
+  :global(.title) {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: -1em;
+  }
+
+  :global(.title)::after,
+  :global(.title)::before {
+    content:  "+++";
+    display: block;
+  }
+
+  :global(.fancy) {
+    font-family: "Chronicle Disp Comp";
+    font-size: 2em;
+    font-weight: 200;
+    line-height: 1;
+    text-align: center;
+    text-wrap: balance;
+  }
+
+  :global(.content) {
+    text-wrap: balance;
+  }
+}

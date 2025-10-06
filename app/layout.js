@@ -1,6 +1,15 @@
 import { Geist, Geist_Mono } from "next/font/google";
-import Link from "next/link";
 
+// Components
+import { Letters } from "./_components/Letters";
+import { Header } from "./_components/Header";
+import { Content } from "./_components/Content";
+import { Footer } from "./_components/Footer";
+
+// Utils
+import { classes } from "@/utils";
+
+// Styles
 import "./globals.css";
 
 const geistSans = Geist({
@@ -22,29 +31,17 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-fixed bg-[radial-gradient(#999_1px,transparent_2px)] bg-size-[20px_20px] `}
+        className={`${geistSans.variable} ${geistMono.variable}  font-['Ringside Regular'] antialiased bg-light text-dark dark:bg-dark dark:text-light`}
       >
-        <div className="bg-fixed bg-[#cccccc] bg-[radial-gradient(#999_1px,transparent_2px)] bg-size-[20px_20px] absolute -inset-8 -rotate-[1.5deg] z-1" />
-        <header className="pointer-events-none absolute inset-0 p-6 font-['Ringside Regular'] text-4xl z-3 mix-blend-difference text-white flex flex-col justify-between">
-          <hgroup className="pointer-events-auto">
-            <h1>Andrew Alford Creative</h1>
-            <h2>
-              <Link href="/">Entrance</Link>, <Link href="/">Articles</Link>,{" "}
-              <Link href="/">Contact</Link>.
-            </h2>
-          </hgroup>
-          <nav className="flex gap-4 justify-between">
-            <div>
-              <Link href="/">About</Link>, <Link href="/">News</Link>.
-            </div>
-            <div className="text-2xl">
-              &copy; 2025 All rights reserved.
-            </div>
-          </nav>
-        </header>
-        <main className="">
-          {children}
-        </main>
+        <div className="bg-fixed bg-[radial-gradient(#999_1px,transparent_2px)] bg-size-[20px_20px] fixed -inset-8 -rotate-[1.5deg] z-1" />
+        <div className={classes("relative flex z-3 align-top flex-col min-h-screen gap-8", /*"pointer-events-none"*/)}>
+          <div className="flex grow items-start">
+            <Letters className="z-2" />
+            <Header className="z-3" />
+            <Content className="pointer-events-auto relative z-3">{children}</Content>
+          </div>
+          <Footer className="z-2" />
+        </div>
       </body>
     </html>
   );
