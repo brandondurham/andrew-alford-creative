@@ -1,3 +1,5 @@
+import { useMemo } from "react";
+
 // Utils
 import { classes, shuffle } from "@/utils";
 
@@ -10,8 +12,8 @@ import styles from "@/app/index.module.css";
 // Types
 import { ArticleProps } from "./types";
 
-export function Article({ articleNumber = 0, className, id }: ArticleProps) {
-  const backgroundColor = shuffle(COLORS)[0];
+export function Article({ articleNumber = 0, className }: ArticleProps) {
+  const backgroundColor = useMemo(() => shuffle(COLORS)[0], []);
   return (
     <article
       className={classes(
@@ -21,19 +23,16 @@ export function Article({ articleNumber = 0, className, id }: ArticleProps) {
       style={{ backgroundColor }}
     >
       <header className="min-h-[24vh] sticky top-0 z-3">
-        <hgroup
-          className="flex"
-          style={{ backgroundColor }}
-        >
+        <hgroup className="flex" style={{ backgroundColor }}>
           <h2 className="mix-blend-overlay brightness-200 min-w-drop-cap pr-4 text-400">
-            Article #{articleNumber.toString().padStart(3, '0')}
+            Article #{articleNumber.toString().padStart(3, "0")}
           </h2>
           <h1 className="title font-normal">
             Designer vs. Artist: Crushing Control vs Feelings of Freedom
           </h1>
         </hgroup>
       </header>
-      <div className={classes(styles.articleContent, 'mix-blend-overlay')}>
+      <div className={classes(styles.articleContent, "mix-blend-overlay")}>
         <p>
           <span className="drop-cap mix-blend-overlay">W</span>
           hen I was three years old, my mom wrote in my baby book “Andy is going
