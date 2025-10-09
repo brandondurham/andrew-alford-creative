@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 
 // Utils
 import { classes, shuffle } from "@/utils";
@@ -13,13 +13,14 @@ import styles from "./index.module.css";
 
 // Types
 import { ArticleProps } from "./types";
+import type { Color } from "@/app/_components/Letters/types";
 
 export function Article({ articleNumber = 0, className }: ArticleProps) {
-  const [backgroundColor, setBackgroundColor] = useState<string | null>(null);
+  const [backgroundColor, setBackgroundColor] = useState<Color['var'] | null>('#fff');
 
   useEffect(() => {
     // Only set the color on the client side to avoid hydration mismatches
-    setBackgroundColor(shuffle(COLORS)[0]);
+    setBackgroundColor(shuffle(COLORS)[0].var);
   }, []);
 
   if (!backgroundColor) return null;
@@ -27,7 +28,8 @@ export function Article({ articleNumber = 0, className }: ArticleProps) {
   return (
     <article
       className={classes(
-        "flex flex-col gap-[1.11em] text-white mix-blend-difference",
+        "flex flex-col gap-[1.11em] text-white",
+        // "mix-blend-difference",
         className
       )}
       style={{ backgroundColor: backgroundColor || undefined }}
@@ -37,7 +39,12 @@ export function Article({ articleNumber = 0, className }: ArticleProps) {
           className="flex p-6"
           style={{ backgroundColor: backgroundColor || undefined }}
         >
-          <h2 className="mix-blend-overlay brightness-200 min-w-drop-cap pr-4 text-400">
+          <h2
+            className={classes(
+              "min-w-drop-cap pr-4 text-400"
+              // "mix-blend-overlay brightness-200"
+            )}
+          >
             Article #{articleNumber.toString().padStart(3, "0")}
           </h2>
           <h1 className="title font-normal">
@@ -48,11 +55,12 @@ export function Article({ articleNumber = 0, className }: ArticleProps) {
       <div
         className={classes(
           styles.articleContent,
-          "mix-blend-overlay max-w-content-width p-6"
+          "max-w-content-width p-6",
+          // "mix-blend-overlay"
         )}
       >
         <p>
-          <span className="drop-cap mix-blend-difference">W</span>
+          <span className="drop-cap">W</span>
           hen I was three years old, my mom wrote in my baby book “Andy is going
           to be an artist when he grows up.” Since the early days of Covid, her
           observation has been front and center in my brain. Her words sparked

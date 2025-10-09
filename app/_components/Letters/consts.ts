@@ -1,32 +1,34 @@
 export const THICKNESS = 50;
-export const INITIAL_SIZE = 0.99;
 export const BASE_WIDTH = 1000;
 export const BASE_HEIGHT = 700;
 export const X_POSITION_OFFSET = 0.5; // Percentage of window width.
 export const ENTRANCE_OFFSET = 1000; // Milliseconds
 export const COLORS = [
-  "#d31815",
-  "#e76e5b",
-  "#ec6c12",
-  "#f29e18",
-  "#96783d",
-  "#515049",
-  "#f3c512",
-  "#167c37",
-  "#0da862",
-  "#0b464e",
-  "#17b5d7",
-  "#0c1943",
-  "#6866bf",
-  "#131113",
-  "#e64c9d",
-  "#ec1049",
-  "#520f20",
-  "#e69cae",
+  { hex: "#d31815", var: "var(--color-theme-a)" },
+  { hex: "#e76e5b", var: "var(--color-theme-b)" },
+  { hex: "#ec6c12", var: "var(--color-theme-c)" },
+  { hex: "#f29e18", var: "var(--color-theme-d)" },
+  { hex: "#96783d", var: "var(--color-theme-e)" },
+  { hex: "#515049", var: "var(--color-theme-f)" },
+  { hex: "#f3c512", var: "var(--color-theme-g)" },
+  { hex: "#167c37", var: "var(--color-theme-h)" },
+  { hex: "#0da862", var: "var(--color-theme-i)" },
+  { hex: "#0b464e", var: "var(--color-theme-j)" },
+  { hex: "#17b5d7", var: "var(--color-theme-k)" },
+  { hex: "#0c1943", var: "var(--color-theme-l)" },
+  { hex: "#6866bf", var: "var(--color-theme-m)" },
+  { hex: "#131113", var: "var(--color-theme-n)" },
+  // { hex: "#ffffff", var: "var(--color-theme-0)" },
+  { hex: "#e64c9d", var: "var(--color-theme-p)" },
+  { hex: "#ec1049", var: "var(--color-theme-q)" },
+  { hex: "#520f20", var: "var(--color-theme-r)" },
+  { hex: "#e69cae", var: "var(--color-theme-s)" },
 ];
 
 export const LETTER_PHYSICS = {
-  // friction: 0.3,
-  // frictionAir: 0.00001,
-  restitution: 1,
+  friction: 0,
+  frictionAir: 0.00001,
+  // restitution: 0.8,
+
+  restitution: 0.3,
 };

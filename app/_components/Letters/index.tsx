@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from "react";
 import MatterJS from "matter-js";
-import MatterWrap from "matter-wrap";
 import "pathseg";
 
 // Content
@@ -13,6 +12,7 @@ import { loadSvg, select } from "./utils";
 import { classes, shuffle } from "@/utils";
 
 // Types
+import type { Color } from './types'
 interface ExtendedMouse extends MatterJS.Mouse {
   mousewheel: EventListener;
 }
@@ -22,16 +22,13 @@ import {
   COLORS,
   ENTRANCE_OFFSET,
   THICKNESS,
-  INITIAL_SIZE,
   LETTER_PHYSICS,
   X_POSITION_OFFSET,
 } from "./consts";
 
 export function Letters({ className }: { className?: string }) {
-  const [colors, setColors] = useState<string[] | null>(null);
+  const [colors, setColors] = useState<Color[] | null>(null);
   const [letters, setLetters] = useState<typeof LETTERS | null>(null);
-
-  MatterJS.use(MatterWrap);
 
   // Refs
   const containerRef = useRef(null);
@@ -62,15 +59,11 @@ export function Letters({ className }: { className?: string }) {
     initialDimensionsRef.current = { width, height };
 
     // create engine
-    const engine = Engine.create({
-      constraintIterations: 20, // Use a higher value for increased stability
-    });
-    engine.positionIterations = 200;
-    engine.velocityIterations = 200;
+    const engine = Engine.create();
+    engine.timing.timeScale = 2;
 
     const { world } = engine;
     engineRef.current = engine;
-    // engine.timing.timeScale = 2;
 
     // create renderer
     const render = Render.create({
@@ -89,6 +82,7 @@ export function Letters({ className }: { className?: string }) {
 
     // create runner
     const runner = Runner.create();
+    runner.isFixed = true;
     Runner.run(runner, engine);
 
     // *******************************************************************************************************
@@ -128,7 +122,7 @@ export function Letters({ className }: { className?: string }) {
     // SVGs
     // *******************************************************************************************************
     // Create a local copy of colors to avoid state updates
-    const availableColors = [...(colors || [])];
+    const availableColors = colors.map(color => color.hex);
     
     const loadAndPrepareSVG = async (path) => {
       return await loadSvg(path).then((root) => {
@@ -140,18 +134,29 @@ export function Letters({ className }: { className?: string }) {
           availableColors.splice(colorIndex, 1);
         }
 
-        const vertex = select(root, "path")
-          .map((path) => {
-            const vertices = Svg.pathToVertices(path, 10);
-            const scaledVertices = Vertices.scale(vertices, INITIAL_SIZE, INITIAL_SIZE);
-            return scaledVertices;
-          });
-        
+        // Get the SVG's original dimensions for scaling.
+        const sourceProperties = LETTERS.find((letter) => letter.path === path);
+        const { height: sourceHeight, width: sourceWidth } = sourceProperties;
+
+        const vertex = select(root, "path").map((path) => {
+          const vertices = Svg.pathToVertices(path, 10);
+          const scaleFactor =
+            width < height
+              ? (width / sourceWidth) * 0.2
+              : (height / sourceHeight) * 0.75;
+          const scaledVertices = Vertices.scale(
+            vertices,
+            scaleFactor,
+            scaleFactor
+          );
+          return scaledVertices;
+        });
+
         const randomX =
           Math.random() * (width * X_POSITION_OFFSET) -
           (width * X_POSITION_OFFSET) / 2 +
           width / 2;
-        
+
         const letter = Bodies.fromVertices(
           randomX,
           -(height / 2),
@@ -166,13 +171,13 @@ export function Letters({ className }: { className?: string }) {
           },
           true
         );
-        
+
         // Check if the body was created successfully before rotating
         if (letter) {
           // Rotate the entire body by a random angle between 0 and 360 degrees
           MatterJS.Body.rotate(letter, Math.random() * Math.PI * 2);
-        }
-        
+        } else console.log("NO LETTER", letter);
+
         return letter;
       }).catch(error => {
         console.error('Error loading SVG:', error);
@@ -254,6 +259,38 @@ export function Letters({ className }: { className?: string }) {
       Engine.clear(engine);
     };
   }, [colors, letters]);
+
+  useEffect(() => {
+    const resizeListener = () => {
+      const width = containerRef.current.clientWidth;
+      const height = containerRef.current.clientHeight;
+
+      // Canvas
+      renderRef.current.canvas.width = width;
+      renderRef.current.canvas.height = height;
+
+      // Floor
+      MatterJS.Body.setPosition(wallsRef.current[0], { x: width / 2, y: height + THICKNESS / 2 });
+
+      // Right Wall
+      MatterJS.Body.setPosition(wallsRef.current[1], { x: width + THICKNESS / 2, y: height / 2 });
+
+      // Left Wall
+      MatterJS.Body.setPosition(wallsRef.current[2], { x: -THICKNESS / 2, y: height / 2 });
+
+      // Render
+      // Render.lookAt(renderRef.current, {
+      //   min: { x: 0, y: 0 },
+      //   max: { x: width, y: height },
+      // });
+    };
+
+    window.addEventListener("resize", resizeListener);
+
+    return () => {
+      window.removeEventListener("resize", resizeListener);
+    };
+  }, [colors]);
 
   return (
     <div className={classes("fixed inset-0", className)} ref={containerRef} />

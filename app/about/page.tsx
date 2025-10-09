@@ -8,7 +8,7 @@ import styles from "@/components/Article/index.module.css";
 import { COLORS } from "@/app/_components/Letters/consts";
 
 export default function About() {
-  const backgroundColor = shuffle(COLORS)[0];
+  const backgroundColor = shuffle(COLORS)[0].var;
   return (
     <section
       className="animate-fade-in flex flex-col gap-[1.11em] text-white min-h-screen mix-blend-difference"

@@ -1,7 +1,7 @@
 "use client";
 
 // Components
-import { Links } from "../Links";
+import { Links } from "../../../components/Links";
 
 // Utils
 import { classes } from "@/utils";
