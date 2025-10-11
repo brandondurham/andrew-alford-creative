@@ -1,13 +1,17 @@
 "use client";
 
-import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-// Styles
-import { classes as classNames } from "@/utils";
+// Components
+import { Link } from "../Link";
+
+// Context
+import { useDragging } from "@/context/DraggingContext";
+
+// Utils
+import { classes } from "@/utils";
 
 export function Links({
-  classes = [],
   className,
   decorated = true,
   fonts = undefined,
@@ -15,7 +19,6 @@ export function Links({
   separator = undefined,
   spacing = 'gap-2',
 }: {
-  classes?: string[];
   className?: string;
   decorated?: boolean;
   fonts?: string[];
@@ -24,29 +27,30 @@ export function Links({
   spacing?: string;
 }) {
   const pathname = usePathname();
-
+  const { isDragging } = useDragging();
   return (
-    <ul className={classNames("flex flex-wrap", spacing, className)}>
-      {links.map(({ href, name }, index) => (
-        <li className="flex items-baseline gap-1" key={name}>
-          {/* {pathname === href && (
-            <span className="font-[var(--font-decimal)] text-[0.8em]">▶</span>
-          )} */}
-          <span>
-            <Link
-              className={classNames(
-                fonts?.[index],
-                classes?.[index],
-                decorated && "underline underline-offset-[0.25em] decoration-1"
-              )}
-              href={href}
-            >
-              {name}
-            </Link>
-            {separator && index < links.length - 1 && ", "}
-          </span>
-        </li>
-      ))}
+    <ul className={classes("flex flex-wrap", spacing, className)}>
+      {links.map(({ href, name }, index) => {
+        const isSelected = pathname === href;
+        return (
+          <li className="flex items-baseline gap-1" key={name}>
+            <span>
+              <Link
+                className={classes(
+                  fonts?.[index],
+                  isDragging ? "pointer-events-none" : "pointer-events-auto",
+                  isSelected && "text-outline-none"
+                )}
+                decorated={decorated}
+                href={href}
+              >
+                {name}
+              </Link>
+              {separator && index < links.length - 1 && ", "}
+            </span>
+          </li>
+        );
+      })}
     </ul>
   );
 }

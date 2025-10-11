@@ -14,6 +14,17 @@ export const ringsideRegular = localFont({
       style: "italic",
     },
     {
+      path: "../assets/fonts/RingsideRegular-Medium.woff2",
+      weight: "500",
+      style: "normal",
+    },
+    {
+      path: "../assets/fonts/RingsideRegular-MediumItalic.woff2",
+      weight: "500",
+      style: "italic",
+    },
+
+    {
       path: "../assets/fonts/RingsideRegular-Semibold.woff2",
       weight: "600",
       style: "normal",
@@ -79,5 +90,11 @@ export const championMiddleweight = localFont({
 export const championHeviweight = localFont({
   src: "../assets/fonts/Champion-Heviweight.woff2",
   variable: "--font-champion-heviweight",
+  display: "swap",
+});
+
+export const plainBlack = localFont({
+  src: "../assets/fonts/Plain_Black.woff",
+  variable: "--font-plain-black",
   display: "swap",
 });

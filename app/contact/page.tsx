@@ -2,7 +2,7 @@
 import { shuffle } from "@/utils";
 
 // Consts
-import { COLORS } from "@/app/_components/Letters/consts";
+import { COLORS } from "@/components/Letters/consts";
 
 export default function Contact() {
   const backgroundColor = shuffle(COLORS)[0].var;

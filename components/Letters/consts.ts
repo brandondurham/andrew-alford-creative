@@ -1,8 +1,6 @@
-export const THICKNESS = 50;
-export const BASE_WIDTH = 1000;
-export const BASE_HEIGHT = 700;
+export const THICKNESS = 100;
 export const X_POSITION_OFFSET = 0.5; // Percentage of window width.
-export const ENTRANCE_OFFSET = 1000; // Milliseconds
+export const ENTRANCE_OFFSET = 100; // Milliseconds
 export const COLORS = [
   { hex: "#d31815", var: "var(--color-theme-a)" },
   { hex: "#e76e5b", var: "var(--color-theme-b)" },
@@ -18,7 +16,6 @@ export const COLORS = [
   { hex: "#0c1943", var: "var(--color-theme-l)" },
   { hex: "#6866bf", var: "var(--color-theme-m)" },
   { hex: "#131113", var: "var(--color-theme-n)" },
-  // { hex: "#ffffff", var: "var(--color-theme-0)" },
   { hex: "#e64c9d", var: "var(--color-theme-p)" },
   { hex: "#ec1049", var: "var(--color-theme-q)" },
   { hex: "#520f20", var: "var(--color-theme-r)" },
@@ -28,7 +25,5 @@ export const COLORS = [
 export const LETTER_PHYSICS = {
   friction: 0,
   frictionAir: 0.00001,
-  // restitution: 0.8,
-
-  restitution: 0.3,
+  restitution: 0.6,
 };

@@ -1,79 +1,71 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import Image from "next/image";
+
+// Components
+import { ThemeBackground } from "@/components/ThemeBackground";
 
 // Utils
-import { classes, shuffle } from "@/utils";
-
-// Consts
-import { COLORS } from "@/app/_components/Letters/consts";
+import { classes } from "@/utils";
 
 // Styles
 import styles from "./index.module.css";
 
 // Types
 import { ArticleProps } from "./types";
-import type { Color } from "@/app/_components/Letters/types";
 
 export function Article({ articleNumber = 0, className }: ArticleProps) {
-  const [backgroundColor, setBackgroundColor] = useState<Color['var'] | null>('#fff');
-
-  useEffect(() => {
-    // Only set the color on the client side to avoid hydration mismatches
-    setBackgroundColor(shuffle(COLORS)[0].var);
-  }, []);
-
-  if (!backgroundColor) return null;
-
   return (
     <article
       className={classes(
-        "flex flex-col gap-[1.11em] text-white",
-        // "mix-blend-difference",
+        "relative flex flex-col",
+        styles.article,
         className
       )}
-      style={{ backgroundColor: backgroundColor || undefined }}
     >
-      <header className="min-h-[18vh] sticky top-0 z-3 max-w-content-width">
-        <hgroup
-          className="flex p-6"
-          style={{ backgroundColor: backgroundColor || undefined }}
-        >
-          <h2
-            className={classes(
-              "min-w-drop-cap pr-4 text-400"
-              // "mix-blend-overlay brightness-200"
-            )}
-          >
-            Article #{articleNumber.toString().padStart(3, "0")}
-          </h2>
-          <h1 className="title font-normal">
-            Designer vs. Artist: Crushing Control vs Feelings of Freedom
+      <ThemeBackground className="absolute inset-0 z-[-1]" />
+      <figure className="pl-[50vw]">
+        <Image
+          alt="Article 1"
+          className="w-full"
+          height={798}
+          src="/toucan-bw.jpg"
+          width={1200}
+        />
+      </figure>
+      <header className="flex flex-col justify-end pl-[50vw] min-h-[18vh] my-[4.5vh] px-[1vw]">
+        <hgroup className="font-champion-bantamweight text-[7vw] leading-[0.91] text-pretty uppercase">
+          <h1 className={classes(styles.articleHeading, "text-balance")}>
+            <span className="inline-block text-[#00000060]">
+              Article #{articleNumber.toString().padStart(3, "0")}
+            </span>
+            <span className="inline-block">
+              Designer vs. Artist: Crushing Control vs Feelings of Freedom
+            </span>
           </h1>
         </hgroup>
+        <div className="uppercase text-foreground text-[0.9rem] font-[600] tracking-wide opacity-80">
+          <span className="flex gap-2">
+            <span>Written by Andrew Alford</span> <span>•</span>{" "}
+            <span>October 9, 2025</span>
+          </span>
+        </div>
       </header>
-      <div
-        className={classes(
-          styles.articleContent,
-          "max-w-content-width p-6",
-          // "mix-blend-overlay"
-        )}
-      >
+      <div className={classes(styles.articleContent, "pl-[50vw] px-[1vw]")}>
         <p>
-          <span className="drop-cap">W</span>
-          hen I was three years old, my mom wrote in my baby book “Andy is going
-          to be an artist when he grows up.” Since the early days of Covid, her
-          observation has been front and center in my brain. Her words sparked
-          the question in my head, “What am I, an artist or a designer?” When
-          thinking about the latter, I realized there’s a certain amount of
-          pressure that comes with the label “designer.” In magazines, social
-          media, and business development, my experience has been that a
-          designer is expected to manifest an image of a perfect life. Beautiful
-          home. Beautiful clothes. Beautiful exotic travel. A beautiful flawless
-          façade. I put pressure on myself to live up to that trope for nearly
-          two decades, until the forced stillness of Covid gave me the
-          opportunity to realize and accept that at I always wanted the life of
-          an artist, not a designer.
+          When I was three years old, my mom wrote in my baby book “Andy is
+          going to be an artist when he grows up.” Since the early days of
+          Covid, her observation has been front and center in my brain. Her
+          words sparked the question in my head, “What am I, an artist or a
+          designer?” When thinking about the latter, I realized there’s a
+          certain amount of pressure that comes with the label “designer.” In
+          magazines, social media, and business development, my experience has
+          been that a designer is expected to manifest an image of a perfect
+          life. Beautiful home. Beautiful clothes. Beautiful exotic travel. A
+          beautiful flawless façade. I put pressure on myself to live up to that
+          trope for nearly two decades, until the forced stillness of Covid gave
+          me the opportunity to realize and accept that at I always wanted the
+          life of an artist, not a designer.
         </p>
         <p>
           What does that mean to me? I’m still a hospitality designer and there

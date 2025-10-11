@@ -1,5 +1,6 @@
 "use client";
 
+import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import MatterJS from "matter-js";
 import "pathseg";
@@ -7,15 +8,12 @@ import "pathseg";
 // Content
 import { LETTERS } from "./content";
 
+// Context
+import { useDragging } from "@/context/DraggingContext";
+
 // Utilities
 import { loadSvg, select } from "./utils";
 import { classes, shuffle } from "@/utils";
-
-// Types
-import type { Color } from './types'
-interface ExtendedMouse extends MatterJS.Mouse {
-  mousewheel: EventListener;
-}
 
 // Consts
 import {
@@ -23,10 +21,21 @@ import {
   ENTRANCE_OFFSET,
   THICKNESS,
   LETTER_PHYSICS,
-  X_POSITION_OFFSET,
 } from "./consts";
 
-export function Letters({ className }: { className?: string }) {
+// Types
+import type { Color } from './types'
+interface ExtendedMouse extends MatterJS.Mouse {
+  mousewheel: EventListener;
+}
+
+interface LettersProps {
+  className?: string;
+}
+
+export function Letters({ className }: LettersProps) {
+  const pathname = usePathname();
+  const { setIsDragging } = useDragging();
   const [colors, setColors] = useState<Color[] | null>(null);
   const [letters, setLetters] = useState<typeof LETTERS | null>(null);
 
@@ -44,10 +53,32 @@ export function Letters({ className }: { className?: string }) {
     setLetters(shuffle(LETTERS));
   }, []);
 
+  // Handle mousedown/mouseup to update dragging state
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    const handleMouseDown = () => {
+      setIsDragging(true);
+    };
+
+    const handleMouseUp = () => {
+      setIsDragging(false);
+    };
+
+    container.addEventListener('mousedown', handleMouseDown);
+    document.addEventListener('mouseup', handleMouseUp);
+
+    return () => {
+      container.removeEventListener('mousedown', handleMouseDown);
+      document.removeEventListener('mouseup', handleMouseUp);
+    };
+  }, [setIsDragging]);
+
   useEffect(() => {
     if (!containerRef.current || !colors || !letters) return;
     
-    const { Bodies, Common, Composite, Engine, Mouse, MouseConstraint, Render, Runner, Svg, Vertices } = MatterJS;
+    const { Bodies, Body, Common, Composite, Engine, Mouse, MouseConstraint, Render, Runner, Svg, Vertices } = MatterJS;
 
     // provide concave decomposition support library
     Common.setDecomp(require("poly-decomp"));
@@ -60,7 +91,7 @@ export function Letters({ className }: { className?: string }) {
 
     // create engine
     const engine = Engine.create();
-    engine.timing.timeScale = 2;
+    engine.timing.timeScale = 1.5;
 
     const { world } = engine;
     engineRef.current = engine;
@@ -124,7 +155,15 @@ export function Letters({ className }: { className?: string }) {
     // Create a local copy of colors to avoid state updates
     const availableColors = colors.map(color => color.hex);
     
-    const loadAndPrepareSVG = async (path) => {
+    // Calculate uniform scale factor based on the largest letter dimension
+    const isPortrait = width < height;
+    const maxLetterDimension = isPortrait
+      ? Math.max(...letters.map(letter => letter.width))
+      : Math.max(...letters.map(letter => letter.height));
+    const viewportConstraint = isPortrait ? width : height;
+    const uniformScaleFactor = (viewportConstraint / maxLetterDimension) * 0.95;
+    
+    const loadAndPrepareSVG = async (path, index) => {
       return await loadSvg(path).then((root) => {
         const color = Common.choose(availableColors);
 
@@ -134,35 +173,29 @@ export function Letters({ className }: { className?: string }) {
           availableColors.splice(colorIndex, 1);
         }
 
-        // Get the SVG's original dimensions for scaling.
-        const sourceProperties = LETTERS.find((letter) => letter.path === path);
-        const { height: sourceHeight, width: sourceWidth } = sourceProperties;
-
         const vertex = select(root, "path").map((path) => {
-          const vertices = Svg.pathToVertices(path, 10);
-          const scaleFactor =
-            width < height
-              ? (width / sourceWidth) * 0.2
-              : (height / sourceHeight) * 0.75;
+          const vertices = Svg.pathToVertices(path, 5);
+          
+          // Use the uniform scale factor for all letters
           const scaledVertices = Vertices.scale(
             vertices,
-            scaleFactor,
-            scaleFactor
+            uniformScaleFactor,
+            uniformScaleFactor
           );
           return scaledVertices;
         });
 
-        const randomX =
-          Math.random() * (width * X_POSITION_OFFSET) -
-          (width * X_POSITION_OFFSET) / 2 +
-          width / 2;
+        const yPosition = -(height * (index + 1)) + height / 2;
 
         const letter = Bodies.fromVertices(
-          randomX,
-          -(height / 2),
+          width / 2,
+          yPosition,
           vertex,
           {
             ...LETTER_PHYSICS,
+            collisionFilter: { group: -1 },
+            // isSensor: true,
+            // inertia: 2000,
             render: {
               fillStyle: color,
               strokeStyle: color,
@@ -175,8 +208,9 @@ export function Letters({ className }: { className?: string }) {
         // Check if the body was created successfully before rotating
         if (letter) {
           // Rotate the entire body by a random angle between 0 and 360 degrees
-          MatterJS.Body.rotate(letter, Math.random() * Math.PI * 2);
-        } else console.log("NO LETTER", letter);
+          Body.rotate(letter, Math.random() * Math.PI * 2);
+          // Body.setInertia(letter, 10000);
+        }
 
         return letter;
       }).catch(error => {
@@ -194,7 +228,7 @@ export function Letters({ className }: { className?: string }) {
         const { path = null } = letterData || {};
         if (path) {
           try {
-            const letter = await loadAndPrepareSVG(path);
+            const letter = await loadAndPrepareSVG(path, i);
             if (letter) {
               return { letter, index: i };
             }
@@ -204,6 +238,16 @@ export function Letters({ className }: { className?: string }) {
         }
         return null;
       });
+
+      // const scaleBodies = () => {
+      //   const allBodies = Composite.allBodies(world);
+      //   allBodies.forEach((body) => {
+      //     if (body.isStatic === true) return;
+      //     Body.scale(body, uniformScaleFactor, uniformScaleFactor);
+      //     // MatterJS.Body.setScale(body, uniformScaleFactor, uniformScaleFactor);
+      //   });
+      // };
+      // scaleBodies();
 
       // Wait for all letters to load
       const loadedLetters = await Promise.all(letterPromises);
@@ -277,12 +321,6 @@ export function Letters({ className }: { className?: string }) {
 
       // Left Wall
       MatterJS.Body.setPosition(wallsRef.current[2], { x: -THICKNESS / 2, y: height / 2 });
-
-      // Render
-      // Render.lookAt(renderRef.current, {
-      //   min: { x: 0, y: 0 },
-      //   max: { x: width, y: height },
-      // });
     };
 
     window.addEventListener("resize", resizeListener);
@@ -292,7 +330,10 @@ export function Letters({ className }: { className?: string }) {
     };
   }, [colors]);
 
+
+  const isHome = pathname === "/";
+
   return (
-    <div className={classes("fixed inset-0", className)} ref={containerRef} />
+    <div className={classes("fixed inset-0 transition-opacity duration-300", isHome ? "opacity-100" : "opacity-100", className)} ref={containerRef} />
   );
 }
