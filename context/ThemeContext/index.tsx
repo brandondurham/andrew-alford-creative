@@ -79,36 +79,31 @@ interface ThemeProviderProps {
 }
 
 export function ThemeProvider({ children, defaultTheme = undefined }: ThemeProviderProps) {
-  const [theme, setTheme] = useState<Theme>(defaultTheme || ThemeNames.BLUE);
+  const [theme, setTheme] = useState<Theme>(defaultTheme);
 
   useEffect(() => {
     if (defaultTheme) {
-      // Update the core CSS variables for foreground and background colors.
-      document.documentElement.style.setProperty(
-        "--background",
-        ThemeColors[defaultTheme].background
-      );
-      document.documentElement.style.setProperty(
-        "--foreground",
-        ThemeColors[defaultTheme].foreground
-      );
       setTheme(defaultTheme);
     } else {
       const themeOptions = Object.values(ThemeNames);
       const randomTheme = shuffle(themeOptions)[0] as Theme;
-
-      // Update the core CSS variables for foreground and background colors.
-      document.documentElement.style.setProperty(
-        "--background",
-        ThemeColors[randomTheme].background
-      );
-      document.documentElement.style.setProperty(
-        "--foreground",
-        ThemeColors[randomTheme].foreground
-      );
       setTheme(randomTheme);
     }
   }, [defaultTheme]);
+
+  // Update CSS variables whenever theme changes
+  useEffect(() => {
+    if (theme) {
+      document.documentElement.style.setProperty(
+        "--background",
+        ThemeColors[theme].background
+      );
+      document.documentElement.style.setProperty(
+        "--foreground",
+        ThemeColors[theme].foreground
+      );
+    }
+  }, [theme]);
 
   return (
     <ThemeContext.Provider value={{ theme, setTheme }}>

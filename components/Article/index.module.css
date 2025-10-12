@@ -1,18 +1,16 @@
-.articleContent {
+.article {
   font-family: var(--font-ringside-regular);
-  font-size: 0.7em;
-  font-weight: 600;
-  line-height: 1.2;
+  font-size: 0.8em;
+  font-weight: 500;
+  line-height: 1.35;
   padding-bottom: 2em;
   text-wrap: pretty;
+
+  font-size: clamp(1rem, 1.7vw, 26px);
 
   p:not(:first-of-type,:last-of-type) {
     text-indent: 6vw;
     &.note { background: black; }
-  }
-
-  p.note:last-of-type {
-    text-indent: 0;
   }
 
   :global(.note) {
@@ -27,11 +25,12 @@
     &::before {
       content: "(*)";
       display: inline-block;
-      mix-blend-mode: overlay;
       text-indent: calc(var(--width) * -1);
     }
   }
 }
+
+.articleContent {}
 
 .articleHeading {
   font-size: clamp(4rem, 7vw, 8rem);

@@ -23,7 +23,7 @@ export function Footer({ className }) {
   return (
     <footer
       className={classes(
-        "text-foreground flex items-start gap-4 justify-between px-6 pt-6 w-full sticky bottom-6 mix-blend-overlay text-[0.7em]",
+        "text-foreground flex items-start gap-4 justify-between px-6 pt-6 w-full text-[0.7em]",
         className
       )}
     >

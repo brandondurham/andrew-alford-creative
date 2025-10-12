@@ -100,7 +100,7 @@
 }
 
 body {
-  background: var(--background);
+  background: black;
   color: var(--foreground);
   font-family: var(--font-ringside-regular), 'Helvetica Neue', sans-serif;
   font-size: 2rem;

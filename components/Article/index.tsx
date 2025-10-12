@@ -1,9 +1,10 @@
 "use client";
 
-import Image from "next/image";
-
 // Components
 import { ThemeBackground } from "@/components/ThemeBackground";
+
+// Context
+import { useTheme } from "@/context/ThemeContext";
 
 // Utils
 import { classes } from "@/utils";
@@ -11,47 +12,48 @@ import { classes } from "@/utils";
 // Styles
 import styles from "./index.module.css";
 
+// Consts
+import { ThemeNames } from "@/context/ThemeContext";
+
 // Types
 import { ArticleProps } from "./types";
 
 export function Article({ articleNumber = 0, className }: ArticleProps) {
+  const { theme } = useTheme();
+
   return (
     <article
       className={classes(
-        "relative flex flex-col",
+        "relative pointer-events-none subpixel-antialiased",
         styles.article,
+        theme === ThemeNames.YELLOW ? "text-black" : "inherit",
         className
       )}
     >
-      <ThemeBackground className="absolute inset-0 z-[-1]" />
-      <figure className="pl-[50vw]">
-        <Image
-          alt="Article 1"
-          className="w-full"
-          height={798}
-          src="/toucan-bw.jpg"
-          width={1200}
-        />
-      </figure>
-      <header className="flex flex-col justify-end pl-[50vw] min-h-[18vh] my-[4.5vh] px-[1vw]">
-        <hgroup className="font-champion-bantamweight text-[7vw] leading-[0.91] text-pretty uppercase">
-          <h1 className={classes(styles.articleHeading, "text-balance")}>
-            <span className="inline-block text-[#00000060]">
+      <ThemeBackground className="fixed inset-0 z-[-1] opacity-90" />
+      <header className="pointer-events-auto font-[700] pb-[4vh] pt-[4vh] ml-[50vw] pr-[1vw] text-balance flex flex-col gap-2 min-h-[30vh] justify-end">
+        <hgroup className="">
+          <h1 className="flex flex-col">
+            <span className="text-[inherit] mix-blend-difference">
               Article #{articleNumber.toString().padStart(3, "0")}
             </span>
-            <span className="inline-block">
+            <span className="text-balance">
               Designer vs. Artist: Crushing Control vs Feelings of Freedom
             </span>
           </h1>
         </hgroup>
-        <div className="uppercase text-foreground text-[0.9rem] font-[600] tracking-wide opacity-80">
-          <span className="flex gap-2">
-            <span>Written by Andrew Alford</span> <span>•</span>{" "}
-            <span>October 9, 2025</span>
-          </span>
+        <div className="uppercase text-[15px] tracking-wider flex gap-2 opacity-70">
+          <span>Written by Andrew Alford</span>
+          <span>•</span>
+          <span>October 9, 2025</span>
         </div>
       </header>
-      <div className={classes(styles.articleContent, "pl-[50vw] px-[1vw]")}>
+      <div
+        className={classes(
+          styles.articleContent,
+          "pointer-events-auto ml-[50vw] pr-[1vw]"
+        )}
+      >
         <p>
           When I was three years old, my mom wrote in my baby book “Andy is
           going to be an artist when he grows up.” Since the early days of
@@ -134,6 +136,7 @@ export function Article({ articleNumber = 0, className }: ArticleProps) {
           Contact me me for pricing and availability if your home or project
           needs an antidote for beige.
         </p>
+        <div className="sticky bottom-0 h-[20vh] w-full bg-gradient-to-t to-transparent from-background from-50% opacity-90" />
       </div>
     </article>
   );

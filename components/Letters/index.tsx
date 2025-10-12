@@ -30,10 +30,13 @@ interface ExtendedMouse extends MatterJS.Mouse {
 }
 
 interface LettersProps {
+  allowCollisions?: boolean;
   className?: string;
+  engineTimeScale?: number;
+  scaleFactor?: number;
 }
 
-export function Letters({ className }: LettersProps) {
+export function Letters({ className, engineTimeScale = 1.3, scaleFactor = 0.8, allowCollisions = true }: LettersProps) {
   const pathname = usePathname();
   const { setIsDragging } = useDragging();
   const [colors, setColors] = useState<Color[] | null>(null);
@@ -45,7 +48,7 @@ export function Letters({ className }: LettersProps) {
   const renderRef = useRef(null);
   const wallsRef = useRef([]);
   const lettersRef = useRef([]);
-  const initialDimensionsRef = useRef({ width: 0, height: 0 });
+  const currentScaleFactorRef = useRef(1);
 
   // Randomize COLORS and LETTERS.
   useEffect(() => {
@@ -53,50 +56,66 @@ export function Letters({ className }: LettersProps) {
     setLetters(shuffle(LETTERS));
   }, []);
 
-  // Handle mousedown/mouseup to update dragging state
+  /**
+   * Handle mousedown/mouseup to update dragging state.
+   * When mousedown is triggers, we disable pointer-events so that you can drag over all content on the page.
+   */
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
 
-    const handleMouseDown = () => {
-      setIsDragging(true);
-    };
+    const handleMouseDown = () => setIsDragging(true);
+    const handleMouseUp = () => setIsDragging(false);
 
-    const handleMouseUp = () => {
-      setIsDragging(false);
-    };
-
-    container.addEventListener('mousedown', handleMouseDown);
-    document.addEventListener('mouseup', handleMouseUp);
+    container.addEventListener("mousedown", handleMouseDown);
+    document.addEventListener("mouseup", handleMouseUp);
 
     return () => {
-      container.removeEventListener('mousedown', handleMouseDown);
-      document.removeEventListener('mouseup', handleMouseUp);
+      container.removeEventListener("mousedown", handleMouseDown);
+      document.removeEventListener("mouseup", handleMouseUp);
     };
   }, [setIsDragging]);
 
   useEffect(() => {
     if (!containerRef.current || !colors || !letters) return;
-    
-    const { Bodies, Body, Common, Composite, Engine, Mouse, MouseConstraint, Render, Runner, Svg, Vertices } = MatterJS;
 
-    // provide concave decomposition support library
+    const {
+      Bodies,
+      Body,
+      Common,
+      Composite,
+      Engine,
+      Mouse,
+      MouseConstraint,
+      Render,
+      Runner,
+      Svg,
+      Vertices,
+    } = MatterJS;
+
+    /**
+     * Provide concave decomposition support library.
+     */
     Common.setDecomp(require("poly-decomp"));
 
+    /**
+     * Store the container’s width and height.
+     */
     const width = containerRef.current.clientWidth;
     const height = containerRef.current.clientHeight;
 
-    // Store initial dimensions
-    initialDimensionsRef.current = { width, height };
-
-    // create engine
+    /**
+     * Create engine to update the physics engine.
+     */
     const engine = Engine.create();
-    engine.timing.timeScale = 1.5;
+    engine.timing.timeScale = engineTimeScale;
 
     const { world } = engine;
     engineRef.current = engine;
 
-    // create renderer
+    /**
+     * Create renderer to render the physics engine.
+     */
     const render = Render.create({
       element: containerRef.current,
       engine,
@@ -111,14 +130,16 @@ export function Letters({ className }: LettersProps) {
     renderRef.current = render;
     Render.run(render);
 
-    // create runner
+    /**
+     * Create runner to update the physics engine.
+     */
     const runner = Runner.create();
     runner.isFixed = true;
     Runner.run(runner, engine);
 
-    // *******************************************************************************************************
-    // WALLS
-    // *******************************************************************************************************
+    /**
+     * Create walls to prevent letters from escaping the container.
+     */
     const walls = [
       // Bottom
       Bodies.rectangle(
@@ -137,86 +158,92 @@ export function Letters({ className }: LettersProps) {
         { isStatic: true }
       ),
       // Left
-      Bodies.rectangle(
-        -THICKNESS / 2,
-        height / 2,
-        THICKNESS,
-        height * 100,
-        { isStatic: true }
-      ),
+      Bodies.rectangle(-THICKNESS / 2, height / 2, THICKNESS, height * 100, {
+        isStatic: true,
+      }),
     ];
-    
+
     wallsRef.current = walls;
     Composite.add(world, walls);
 
-    // *******************************************************************************************************
-    // SVGs
-    // *******************************************************************************************************
-    // Create a local copy of colors to avoid state updates
-    const availableColors = colors.map(color => color.hex);
-    
-    // Calculate uniform scale factor based on the largest letter dimension
+    /**
+     * SVGs. Create a local copy of colors to avoid state updates.
+     */
+    const availableColors = colors.map((color) => color.hex);
+
+    /**
+     * Calculate uniform scale factor based on the largest letter dimension.
+     */
     const isPortrait = width < height;
     const maxLetterDimension = isPortrait
-      ? Math.max(...letters.map(letter => letter.width))
-      : Math.max(...letters.map(letter => letter.height));
+      ? Math.max(...letters.map((letter) => letter.width))
+      : Math.max(...letters.map((letter) => letter.height));
     const viewportConstraint = isPortrait ? width : height;
-    const uniformScaleFactor = (viewportConstraint / maxLetterDimension) * 0.95;
+    const uniformScaleFactor =
+      (viewportConstraint / maxLetterDimension) * scaleFactor;
     
+    // Store the initial scale factor
+    currentScaleFactorRef.current = uniformScaleFactor;
+
+    /**
+     * Load a single SVG and convert to vertices for Matter.
+     */
     const loadAndPrepareSVG = async (path, index) => {
-      return await loadSvg(path).then((root) => {
-        const color = Common.choose(availableColors);
+      return await loadSvg(path)
+        .then((root) => {
+          const color = Common.choose(availableColors);
 
-        // Remove the selected color from the local array so no letters have the same color
-        const colorIndex = availableColors.indexOf(color);
-        if (colorIndex > -1) {
-          availableColors.splice(colorIndex, 1);
-        }
+          // Remove the selected color from the local array so no letters have the same color
+          const colorIndex = availableColors.indexOf(color);
+          if (colorIndex > -1) {
+            availableColors.splice(colorIndex, 1);
+          }
 
-        const vertex = select(root, "path").map((path) => {
-          const vertices = Svg.pathToVertices(path, 5);
-          
-          // Use the uniform scale factor for all letters
-          const scaledVertices = Vertices.scale(
-            vertices,
-            uniformScaleFactor,
-            uniformScaleFactor
-          );
-          return scaledVertices;
-        });
+          const vertex = select(root, "path").map((path) => {
+            const vertices = Svg.pathToVertices(path, 5);
 
-        const yPosition = -(height * (index + 1)) + height / 2;
+            // Use the uniform scale factor for all letters
+            const scaledVertices = Vertices.scale(
+              vertices,
+              uniformScaleFactor,
+              uniformScaleFactor
+            );
+            return scaledVertices;
+            return vertices;
+          });
 
-        const letter = Bodies.fromVertices(
-          width / 2,
-          yPosition,
-          vertex,
-          {
-            ...LETTER_PHYSICS,
-            collisionFilter: { group: -1 },
-            // isSensor: true,
-            // inertia: 2000,
-            render: {
-              fillStyle: color,
-              strokeStyle: color,
-              lineWidth: 1,
+          // Position each letter index x 100vh.
+          const yPosition = -(height * (index + 1)) + height / 2;
+
+          const letter = Bodies.fromVertices(
+            width / 2,
+            yPosition,
+            vertex,
+            {
+              ...LETTER_PHYSICS,
+              // Allow bodies to overlap, removing all collision detection.
+              collisionFilter: { group: allowCollisions ? 0 : -1 },
+              render: {
+                fillStyle: color,
+                strokeStyle: color,
+                lineWidth: 1,
+              },
             },
-          },
-          true
-        );
+            true
+          );
 
-        // Check if the body was created successfully before rotating
-        if (letter) {
-          // Rotate the entire body by a random angle between 0 and 360 degrees
-          Body.rotate(letter, Math.random() * Math.PI * 2);
-          // Body.setInertia(letter, 10000);
-        }
+          // Check if the body was created successfully before rotating
+          if (letter) {
+            // Rotate the entire body by a random angle between 0 and 360 degrees
+            Body.rotate(letter, Math.random() * Math.PI * 2);
+          }
 
-        return letter;
-      }).catch(error => {
-        console.error('Error loading SVG:', error);
-        return null;
-      });
+          return letter;
+        })
+        .catch((error) => {
+          console.error("Error loading SVG:", error);
+          return null;
+        });
     };
 
     /**
@@ -239,24 +266,18 @@ export function Letters({ className }: LettersProps) {
         return null;
       });
 
-      // const scaleBodies = () => {
-      //   const allBodies = Composite.allBodies(world);
-      //   allBodies.forEach((body) => {
-      //     if (body.isStatic === true) return;
-      //     Body.scale(body, uniformScaleFactor, uniformScaleFactor);
-      //     // MatterJS.Body.setScale(body, uniformScaleFactor, uniformScaleFactor);
-      //   });
-      // };
-      // scaleBodies();
-
       // Wait for all letters to load
       const loadedLetters = await Promise.all(letterPromises);
-      const validLoadedLetters = loadedLetters.filter(item => item !== null);
-      
+      const validLoadedLetters = loadedLetters.filter((item) => item !== null);
+
       // Render letters with staggered timing to prevent overlap
       validLoadedLetters.forEach(({ letter, index }) => {
         setTimeout(() => {
           Composite.add(world, letter);
+
+          // Scale the letter after adding it to the world
+          // Body.scale(letter, uniformScaleFactor, uniformScaleFactor);
+
           lettersRef.current = [...lettersRef.current, letter];
         }, index * ENTRANCE_OFFSET);
       });
@@ -302,10 +323,12 @@ export function Letters({ className }: LettersProps) {
       Runner.stop(runner);
       Engine.clear(engine);
     };
-  }, [colors, letters]);
+  }, [allowCollisions, colors, engineTimeScale, letters, scaleFactor]);
 
   useEffect(() => {
     const resizeListener = () => {
+      if (!containerRef.current || !letters) return;
+
       const width = containerRef.current.clientWidth;
       const height = containerRef.current.clientHeight;
 
@@ -314,13 +337,44 @@ export function Letters({ className }: LettersProps) {
       renderRef.current.canvas.height = height;
 
       // Floor
-      MatterJS.Body.setPosition(wallsRef.current[0], { x: width / 2, y: height + THICKNESS / 2 });
+      MatterJS.Body.setPosition(wallsRef.current[0], {
+        x: width / 2,
+        y: height + THICKNESS / 2,
+      });
 
       // Right Wall
-      MatterJS.Body.setPosition(wallsRef.current[1], { x: width + THICKNESS / 2, y: height / 2 });
+      MatterJS.Body.setPosition(wallsRef.current[1], {
+        x: width + THICKNESS / 2,
+        y: height / 2,
+      });
 
       // Left Wall
-      MatterJS.Body.setPosition(wallsRef.current[2], { x: -THICKNESS / 2, y: height / 2 });
+      MatterJS.Body.setPosition(wallsRef.current[2], {
+        x: -THICKNESS / 2,
+        y: height / 2,
+      });
+
+      // Recalculate scale factor for new viewport size
+      const isPortrait = width <= height;
+      const maxLetterDimension = isPortrait
+        ? Math.max(...letters.map((letter) => letter.width))
+        : Math.max(...letters.map((letter) => letter.height));
+      const viewportConstraint = isPortrait ? width : height;
+      const newScaleFactor =
+        (viewportConstraint / maxLetterDimension) * scaleFactor;
+
+      // Calculate the ratio between new and current scale
+      const scaleRatio = newScaleFactor / currentScaleFactorRef.current;
+
+      // Scale all letter bodies with the ratio
+      lettersRef.current.forEach((letter) => {
+        if (letter && !letter.isStatic) {
+          MatterJS.Body.scale(letter, scaleRatio, scaleRatio);
+        }
+      });
+
+      // Update the current scale factor
+      currentScaleFactorRef.current = newScaleFactor;
     };
 
     window.addEventListener("resize", resizeListener);
@@ -328,12 +382,18 @@ export function Letters({ className }: LettersProps) {
     return () => {
       window.removeEventListener("resize", resizeListener);
     };
-  }, [colors]);
-
+  }, [colors, letters, scaleFactor]);
 
   const isHome = pathname === "/";
 
   return (
-    <div className={classes("fixed inset-0 transition-opacity duration-300", isHome ? "opacity-100" : "opacity-100", className)} ref={containerRef} />
+    <div
+      className={classes(
+        "fixed inset-0 transition-opacity duration-300",
+        isHome ? "opacity-100" : "opacity-100",
+        className
+      )}
+      ref={containerRef}
+    />
   );
 }

@@ -3,14 +3,15 @@ import { Letters } from "@/components/Letters";
 import { Content } from "@/components/Content";
 import { Footer } from "@/components/Footer";
 import { SiteMasthead } from "@/components/SiteMasthead";
-// import { ThemeBackground } from "@/components/ThemeBackground";
+import { ThemeBackground } from "@/components/ThemeBackground";
+import { ThemeSwitcher } from "@/components/ThemeSwitcher";
 
 // Context
 import { DraggingProvider } from "@/context/DraggingContext";
-import { ThemeProvider, ThemeNames, type Theme } from "@/context/ThemeContext";
+import { ThemeProvider } from "@/context/ThemeContext";
 
 // Utils
-import { classes, shuffle } from "@/utils";
+import { classes } from "@/utils";
 
 // Styles
 import "./globals.css";
@@ -23,32 +24,23 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   const fontData = Object.keys(Fonts).map((font) => Fonts[font].variable);
-  const themeOptions = Object.values(ThemeNames);
-  const backgroundColor = shuffle(themeOptions)[0] as Theme;
 
   return (
     <html lang="en">
-      <body
-        className={classes(
-          "bg-background",
-          fontData.join(" "),
-          "antialiased"
-        )}
-      >
-        <ThemeProvider defaultTheme={backgroundColor}>
+      <body className={classes(fontData.join(" "), "antialiased")}>
+        <ThemeProvider>
           <DraggingProvider>
-            {/* <ThemeBackground /> */}
-            <Letters className="z-3" />
-            <SiteMasthead />
-            <div className={classes("relative flex z-4 align-top flex-col min-h-screen pointer-events-none")}>
-              <div className="flex grow items-start">
-                <Content className="pointer-events-auto relative z-4">
-                  {children}
-                </Content>
-              </div>
-              <Footer className="z-4" />
-            </div>
+            <Content className="min-h-screen relative z-4">
+              <ThemeBackground className="fixed inset-0 z-[-1]" />
+              <Letters className="pointer-events-auto z-3" />
+              <SiteMasthead />
+              <main className="grow pointer-events-none relative z-4">
+                {children}
+              </main>
+              <Footer className="sticky bottom-6 z-4" />
+            </Content>
           </DraggingProvider>
+          <ThemeSwitcher />
         </ThemeProvider>
       </body>
     </html>

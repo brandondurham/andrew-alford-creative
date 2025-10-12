@@ -1,12 +1,11 @@
 "use client";
 
 import NextLink from "next/link";
-import { usePathname } from "next/navigation";
+// import { usePathname } from "next/navigation";
 
 // Components
 import { Links } from "@/components/Links";
-import { ThemeSwitcher } from "@/components/ThemeSwitcher";
-import { ThemeBackground } from "@/components/ThemeBackground";
+// import { ThemeSwitcher } from "@/components/ThemeSwitcher";
 
 // Context
 import { useDragging } from "@/context/DraggingContext";
@@ -32,7 +31,7 @@ const PAGES = [
 ];
 
 export function SiteMasthead({ className }: { className?: string }) {
-  const pathname = usePathname();
+  // const pathname = usePathname();
   const { isDragging } = useDragging();
   const { theme } = useTheme();
   const { blendMode = null } = ThemeColors[theme];
@@ -42,13 +41,11 @@ export function SiteMasthead({ className }: { className?: string }) {
       className={classes(
         "uppercase relative z-[10] text-outline-[currentColor] text-foreground",
         "pointer-events-none",
+        blendMode,
         className
       )}
     >
-      {pathname !== "/" && (
-        <ThemeBackground className="absolute inset-0 z-[-1]" />
-      )}
-      <h1 className={classes("pb-[1vw] flex flex-col", blendMode)}>
+      <h1 className="pb-[1vw] flex flex-col">
         <NextLink
           className={classes(
             "block py-[1vw] translate-y-[0.042em] text-[9.21vw] leading-[0.8] text-center indent-2 hover:text-outline-none hover:text-white",
@@ -79,7 +76,7 @@ export function SiteMasthead({ className }: { className?: string }) {
           spacing="gap-[0.5vw]"
         />
       </h1>
-      <ThemeSwitcher />
+      {/* <ThemeSwitcher /> */}
     </header>
   );
 }
