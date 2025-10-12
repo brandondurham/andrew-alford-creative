@@ -1,7 +1,6 @@
 "use client";
 
-import { usePathname } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import MatterJS from "matter-js";
 import "pathseg";
 
@@ -37,7 +36,6 @@ interface LettersProps {
 }
 
 export function Letters({ className, engineTimeScale = 1.3, scaleFactor = 0.8, allowCollisions = true }: LettersProps) {
-  const pathname = usePathname();
   const { setIsDragging } = useDragging();
   const [colors, setColors] = useState<Color[] | null>(null);
   const [letters, setLetters] = useState<typeof LETTERS | null>(null);
@@ -50,11 +48,46 @@ export function Letters({ className, engineTimeScale = 1.3, scaleFactor = 0.8, a
   const lettersRef = useRef([]);
   const currentScaleFactorRef = useRef(1);
 
+  // Memoize max letter dimensions to avoid recalculation
+  const maxLetterDimensions = useMemo(() => ({
+    width: Math.max(...(letters?.map(l => l.width) ?? [0])),
+    height: Math.max(...(letters?.map(l => l.height) ?? [0]))
+  }), [letters]);
+
+  // Cache MatterJS modules to avoid destructuring on every render
+  const MatterModules = useMemo(() => ({
+    Bodies: MatterJS.Bodies,
+    Body: MatterJS.Body,
+    Common: MatterJS.Common,
+    Composite: MatterJS.Composite,
+    Engine: MatterJS.Engine,
+    Mouse: MatterJS.Mouse,
+    MouseConstraint: MatterJS.MouseConstraint,
+    Render: MatterJS.Render,
+    Runner: MatterJS.Runner,
+    Svg: MatterJS.Svg,
+    Vertices: MatterJS.Vertices,
+  }), []);
+
+  // Extract scale calculation to avoid duplication
+  const calculateScaleFactor = useCallback((width: number, height: number) => {
+    const isPortrait = width <= height;
+    const maxLetterDimension = isPortrait
+      ? maxLetterDimensions.width
+      : maxLetterDimensions.height;
+    const viewportConstraint = isPortrait ? width : height;
+    return (viewportConstraint / maxLetterDimension) * scaleFactor;
+  }, [maxLetterDimensions, scaleFactor]);
+
   // Randomize COLORS and LETTERS.
   useEffect(() => {
     setColors(shuffle(COLORS));
     setLetters(shuffle(LETTERS));
   }, []);
+
+  // Memoize event handlers
+  const handleMouseDown = useCallback(() => setIsDragging(true), [setIsDragging]);
+  const handleMouseUp = useCallback(() => setIsDragging(false), [setIsDragging]);
 
   /**
    * Handle mousedown/mouseup to update dragging state.
@@ -64,9 +97,6 @@ export function Letters({ className, engineTimeScale = 1.3, scaleFactor = 0.8, a
     const container = containerRef.current;
     if (!container) return;
 
-    const handleMouseDown = () => setIsDragging(true);
-    const handleMouseUp = () => setIsDragging(false);
-
     container.addEventListener("mousedown", handleMouseDown);
     document.addEventListener("mouseup", handleMouseUp);
 
@@ -74,7 +104,7 @@ export function Letters({ className, engineTimeScale = 1.3, scaleFactor = 0.8, a
       container.removeEventListener("mousedown", handleMouseDown);
       document.removeEventListener("mouseup", handleMouseUp);
     };
-  }, [setIsDragging]);
+  }, [handleMouseDown, handleMouseUp]);
 
   useEffect(() => {
     if (!containerRef.current || !colors || !letters) return;
@@ -91,7 +121,7 @@ export function Letters({ className, engineTimeScale = 1.3, scaleFactor = 0.8, a
       Runner,
       Svg,
       Vertices,
-    } = MatterJS;
+    } = MatterModules;
 
     /**
      * Provide concave decomposition support library.
@@ -174,13 +204,7 @@ export function Letters({ className, engineTimeScale = 1.3, scaleFactor = 0.8, a
     /**
      * Calculate uniform scale factor based on the largest letter dimension.
      */
-    const isPortrait = width < height;
-    const maxLetterDimension = isPortrait
-      ? Math.max(...letters.map((letter) => letter.width))
-      : Math.max(...letters.map((letter) => letter.height));
-    const viewportConstraint = isPortrait ? width : height;
-    const uniformScaleFactor =
-      (viewportConstraint / maxLetterDimension) * scaleFactor;
+    const uniformScaleFactor = calculateScaleFactor(width, height);
     
     // Store the initial scale factor
     currentScaleFactorRef.current = uniformScaleFactor;
@@ -323,74 +347,71 @@ export function Letters({ className, engineTimeScale = 1.3, scaleFactor = 0.8, a
       Runner.stop(runner);
       Engine.clear(engine);
     };
-  }, [allowCollisions, colors, engineTimeScale, letters, scaleFactor]);
+  }, [MatterModules, allowCollisions, calculateScaleFactor, colors, engineTimeScale, letters]);
 
   useEffect(() => {
+    let timeoutId: NodeJS.Timeout;
+    
     const resizeListener = () => {
-      if (!containerRef.current || !letters) return;
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => {
+        if (!containerRef.current || !letters) return;
 
-      const width = containerRef.current.clientWidth;
-      const height = containerRef.current.clientHeight;
+        const width = containerRef.current.clientWidth;
+        const height = containerRef.current.clientHeight;
 
-      // Canvas
-      renderRef.current.canvas.width = width;
-      renderRef.current.canvas.height = height;
+        // Canvas
+        renderRef.current.canvas.width = width;
+        renderRef.current.canvas.height = height;
 
-      // Floor
-      MatterJS.Body.setPosition(wallsRef.current[0], {
-        x: width / 2,
-        y: height + THICKNESS / 2,
-      });
+        // Floor
+        MatterModules.Body.setPosition(wallsRef.current[0], {
+          x: width / 2,
+          y: height + THICKNESS / 2,
+        });
 
-      // Right Wall
-      MatterJS.Body.setPosition(wallsRef.current[1], {
-        x: width + THICKNESS / 2,
-        y: height / 2,
-      });
+        // Right Wall
+        MatterModules.Body.setPosition(wallsRef.current[1], {
+          x: width + THICKNESS / 2,
+          y: height / 2,
+        });
 
-      // Left Wall
-      MatterJS.Body.setPosition(wallsRef.current[2], {
-        x: -THICKNESS / 2,
-        y: height / 2,
-      });
+        // Left Wall
+        MatterModules.Body.setPosition(wallsRef.current[2], {
+          x: -THICKNESS / 2,
+          y: height / 2,
+        });
 
-      // Recalculate scale factor for new viewport size
-      const isPortrait = width <= height;
-      const maxLetterDimension = isPortrait
-        ? Math.max(...letters.map((letter) => letter.width))
-        : Math.max(...letters.map((letter) => letter.height));
-      const viewportConstraint = isPortrait ? width : height;
-      const newScaleFactor =
-        (viewportConstraint / maxLetterDimension) * scaleFactor;
+        // Recalculate scale factor for new viewport size
+        const newScaleFactor = calculateScaleFactor(width, height);
 
-      // Calculate the ratio between new and current scale
-      const scaleRatio = newScaleFactor / currentScaleFactorRef.current;
+        // Calculate the ratio between new and current scale
+        const scaleRatio = newScaleFactor / currentScaleFactorRef.current;
 
-      // Scale all letter bodies with the ratio
-      lettersRef.current.forEach((letter) => {
-        if (letter && !letter.isStatic) {
-          MatterJS.Body.scale(letter, scaleRatio, scaleRatio);
-        }
-      });
+        // Scale all letter bodies with the ratio
+        lettersRef.current.forEach((letter) => {
+          if (letter && !letter.isStatic) {
+            MatterModules.Body.scale(letter, scaleRatio, scaleRatio);
+          }
+        });
 
-      // Update the current scale factor
-      currentScaleFactorRef.current = newScaleFactor;
+        // Update the current scale factor
+        currentScaleFactorRef.current = newScaleFactor;
+      }, 150);
     };
 
     window.addEventListener("resize", resizeListener);
 
     return () => {
+      clearTimeout(timeoutId);
       window.removeEventListener("resize", resizeListener);
     };
-  }, [colors, letters, scaleFactor]);
-
-  const isHome = pathname === "/";
+  }, [MatterModules, calculateScaleFactor, letters]);
 
   return (
     <div
       className={classes(
-        "fixed inset-0 transition-opacity duration-300",
-        isHome ? "opacity-100" : "opacity-100",
+        "fixed inset-0 opacity-100 transition-opacity duration-300",
         className
       )}
       ref={containerRef}
