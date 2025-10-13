@@ -12,7 +12,7 @@ export const ThemeColors: Record<Theme, Themes> = {
     foreground: "#e51545",
   },
   [ThemeNames.YELLOW]: {
-    background: "#fbcb39",
+    background: "#f6de00",
     classes: "mix-blend-exclusion",
     // colors: ["#ff00ff", "ffff00", "00ffff"],
     foreground: "#e76611",

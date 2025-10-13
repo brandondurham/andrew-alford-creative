@@ -356,6 +356,15 @@ export function Letters({ className, engineTimeScale = 1.3, scaleFactor = 0.9, a
       Render.stop(render);
       Runner.stop(runner);
       Engine.clear(engine);
+      
+      // Remove the canvas element from the DOM
+      if (render.canvas && render.canvas.parentNode) {
+        render.canvas.parentNode.removeChild(render.canvas);
+      }
+      
+      // Clear refs
+      lettersRef.current = [];
+      wallsRef.current = [];
     };
   }, [MatterModules, allowCollisions, calculateScaleFactor, colors, engineTimeScale, letters]);
 
@@ -416,10 +425,12 @@ export function Letters({ className, engineTimeScale = 1.3, scaleFactor = 0.9, a
     <div
       className={classes(
         "fixed inset-0 transition-opacity duration-300",
-        pathname === "/" ? "opacity-100" : "opacity-30",
+        pathname === "/" ? "opacity-100" : "opacity-20",
         className
       )}
       ref={containerRef}
     />
   );
 }
+
+Letters.displayName = "Letters";

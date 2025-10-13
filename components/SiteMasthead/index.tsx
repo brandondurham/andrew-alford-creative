@@ -21,11 +21,6 @@ import type { Link as LinkType } from "@/components/Links/types";
 
 const PAGES: LinkType[] = [
   {
-    id: "about",
-    label: "About",
-    href: "/about",
-  },
-  {
     id: "select-projects",
     label: "Select Projects",
     href: "/select-projects",
@@ -34,6 +29,11 @@ const PAGES: LinkType[] = [
     id: "thoughts",
     label: "Thoughts",
     href: "/thoughts",
+  },
+  {
+    id: "info",
+    label: "Info",
+    href: "/info",
   },
   {
     id: "client-portal",
@@ -51,6 +51,7 @@ export function SiteMasthead({ className }: { className?: string }) {
   const { theme } = useTheme();
   const pathname = usePathname();
   const { isDragging } = useDragging();
+  console.log('isDragging', isDragging);
 
   return (
     <header
@@ -58,21 +59,19 @@ export function SiteMasthead({ className }: { className?: string }) {
         "p-[1vw] w-full text-[0.75em] uppercase",
         theme === ThemeNames.YELLOW
           ? "text-background mix-blend-plus-lighter"
-          : "text-foreground mix-blend-darken",
-        "flex flex-col gap-[1vw]",
+          : "text-foreground mix-blend-luminosity",
+        "flex flex-col gap-[0.5vw]",
+        isDragging ? "pointer-events-none" : "pointer-events-auto",
         className
       )}
     >
-      <h1>
+      <h1 className={pathname === "/" ? "pointer-events-none" : "pointer-events-auto"}>
         <NextLink
           className={classes(
             "flex text-center",
             "text-[9.194vw] leading-[0.8]",
             "justify-center pl-[0.02em]",
-            "[&>span]:translate-y-[0.041em]",
-            pathname === "/" || isDragging
-              ? "pointer-events-none"
-              : "pointer-events-auto"
+            "[&>span]:translate-y-[0.041em]"
           )}
           href="/"
         >
@@ -82,22 +81,18 @@ export function SiteMasthead({ className }: { className?: string }) {
         </NextLink>
       </h1>
       <Links
-        className="pointer-events-auto font-[400] !justify-center text-center font-[RingsideExtraWide-Semi]"
-        separator=","
+        className={classes(
+          "whitespace-nowrap flex-nowrap font-[400] !justify-center text-center [&_a]:hover:text-[#090c8d]",
+          "font-[Knockout-74FullSumo] text-[2.14vw]"
+          // isDragging ? "pointer-events-none" : "pointer-events-auto"
+        )}
+        decorated={false}
+        separator={<span className="px-[0.75vw]">•</span>}
+        spacing="gap-0"
         links={PAGES}
       />
-      {/* <div className="pointer-events-auto text-[15px] text-right grow">
-        A{" "}
-        <Link
-          decorated
-          href="https://www.thisassembly.com/"
-          target="_blank"
-        >
-          This Assembly
-        </Link>{" "}
-        company.
-        &copy;{new Date().getFullYear()} All rights reserved.
-      </div> */}
     </header>
   );
 }
+
+SiteMasthead.displayName = "SiteMasthead";

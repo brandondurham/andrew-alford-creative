@@ -26,35 +26,34 @@ export function Links({
   decorated?: boolean;
   fonts?: string[];
   links: Link[];
-  separator?: string;
+  separator?: React.ReactNode;
   spacing?: string;
 }) {
   const pathname = usePathname();
   const { isDragging } = useDragging();
   return (
-    <ul className={classes("flex flex-wrap items-baseline", spacing, className)}>
+    <ul className={classes("flex items-baseline", spacing, className)}>
       {links.map(({ href, id, label }, index) => {
         const isSelected = pathname === href;
         return (
           <li className="flex items-baseline" key={id}>
             {href ? (
-            <NextLink
-              className={classes(
-                fonts?.[index],
-                isDragging ? "pointer-events-none" : "pointer-events-auto",
-                isSelected && "text-outline-none"
-              )}
-              decorated={decorated}
-              href={href}
-            >
-              {label as string}
-            </NextLink>
+              <NextLink
+                className={classes(
+                  fonts?.[index],
+                  isDragging ? "pointer-events-none" : "pointer-events-auto",
+                  isSelected && "text-outline-none",
+                  "mix-blend-normal"
+                )}
+                decorated={decorated}
+                href={href}
+              >
+                {label as string}
+              </NextLink>
             ) : (
-              <div>
-                {label}
-              </div>
+              <div>{label}</div>
             )}
-            {separator && index < links.length - 1 && ", "}
+            {separator && index < links.length - 1 && separator}
           </li>
         );
       })}

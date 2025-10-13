@@ -1,6 +1,7 @@
 "use client";
 
 import { createContext, useContext, useState, ReactNode, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 
 // Utils
 import { shuffle } from "@/utils";
@@ -45,15 +46,20 @@ interface ThemeProviderProps {
 export function ThemeProvider({ children, defaultTheme = undefined }: ThemeProviderProps) {
   const [theme, setTheme] = useState<Theme>(defaultTheme);
 
+  const searchParams = useSearchParams();
+  const explicitTheme = searchParams.get("theme");
+
   useEffect(() => {
     if (defaultTheme) {
       setTheme(defaultTheme);
+    } else if (explicitTheme) {
+      setTheme(explicitTheme as Theme);
     } else {
       const themeOptions = Object.values(ThemeNames);
       const randomTheme = shuffle(themeOptions)[0] as Theme;
       setTheme(randomTheme);
     }
-  }, [defaultTheme]);
+  }, [defaultTheme, explicitTheme]);
 
   // Update CSS variables whenever theme changes
   useEffect(() => {

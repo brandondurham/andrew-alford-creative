@@ -12,3 +12,4 @@ export function ThemeBackground({ className }: { className?: string }) {
   );
 }
 
+ThemeBackground.displayName = "ThemeBackground";

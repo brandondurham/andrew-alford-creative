@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Children, isValidElement, useEffect, useState } from "react";
 
 // Context
 import { useTheme } from "@/context/ThemeContext";
@@ -18,6 +18,37 @@ export function Content({
   const [showGuides, setShowGuides] = useState(false);
 
   const { theme } = useTheme();
+
+  const child = Children.map(children, (child) => {
+    // Check if child is a valid React element
+    if (isValidElement(child)) {
+      const childType = child.type as any;
+      
+      // Log full type information for debugging
+      console.log("child.type:", childType);
+      console.log("typeof child.type:", typeof childType);
+      console.log("child.type.displayName:", childType?.displayName);
+      console.log("child.type.name:", childType?.name);
+      console.log("Keys on child.type:", Object.keys(childType || {}));
+      
+      // Try different ways to get the name
+      const displayName = 
+        childType?.displayName || 
+        childType?.name || 
+        childType?.render?.displayName ||
+        childType?.render?.name ||
+        childType?.type?.displayName ||
+        childType?.type?.name ||
+        'Unknown';
+      
+      console.log("Resolved displayName:", displayName);
+      console.log("---");
+      
+      // Example: Filter by displayName
+      // if (displayName === "Article") return child;
+    }
+    return null;
+  });
 
   useEffect(() => {
     const handleGlobalKeyDown = (event: KeyboardEvent) => {
