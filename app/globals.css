@@ -16,10 +16,19 @@
   --animate-bg-scroll: backgroundScroll 20s linear infinite;
   @keyframes backgroundScroll {
     0% {
-      background-position: -50% center;
+      /* background-position: -50% center; */
+      background-size: 100% 100%;
+      background-position: center center;
+    }
+    50% {
+      /* background-position: -50% center; */
+      background-size: 200% 200%;
+      background-position: center center;
     }
     100% {
-      background-position: 150% center;
+      /* background-position: 150% center; */
+      background-size: 100% 100%;
+      background-position: center center;
     }
   }
 }
@@ -29,25 +38,24 @@
   --color-foreground: var(--foreground);
 
   /* Theme Colors */
-  --color-theme-a: #d31815;
-  --color-theme-b: #e76e5b;
-  --color-theme-c: #ec6c12;
-  --color-theme-d: #f29e18;
-  --color-theme-e: #96783d;
-  --color-theme-f: #515049;
-  --color-theme-g: #f3c512;
-  --color-theme-h: #167c37;
-  --color-theme-i: #0da862;
-  --color-theme-j: #0b464e;
-  --color-theme-k: #17b5d7;
-  --color-theme-l: #0c1943;
-  --color-theme-m: #6866bf;
-  --color-theme-n: #131113;
-  --color-theme-0: #ffffff;
-  --color-theme-p: #e64c9d;
-  --color-theme-q: #ec1049;
-  --color-theme-r: #520f20;
-  --color-theme-s: #e69cae;
+  --color-theme-a: #cd1b12;
+  --color-theme-b: #e06a57;
+  --color-theme-c: #e66611;
+  --color-theme-d: #eb981a;
+  --color-theme-e: #8f7439;
+  --color-theme-f: #ebbe0a;
+  --color-theme-g: #127834;
+  --color-theme-h: #05a15e;
+  --color-theme-i: #0a454a;
+  --color-theme-j: #14b0d0;
+  --color-theme-k: #0b1740;
+  --color-theme-l: #6662b8;
+  --color-theme-m: #121013;
+  --color-theme-n: #f7f6f7;
+  --color-theme-0: #e04998;
+  --color-theme-p: #e51545;
+  --color-theme-q: #4f101f;
+  --color-theme-r: #e096a9;
 
   /* Fonts */
   --font-crimson-curse: var(--font-crimson-curse);
@@ -65,11 +73,16 @@
   /* Space */
   --spacing-drop-cap: 160px;
   --spacing-content-width: 900px;
+
+  /* Misc. */
+  --marker: "—";
 }
 
 /* Text Outline Utilities */
 @utility text-outline-* {
-  -webkit-text-stroke: clamp(0.5px, 1.5px, 2px) --value(--color-*, [color]);
+  -webkit-text-stroke-color: --value(--color-*, [color]);
+  /* -webkit-text-stroke-width: clamp(0.5px, 0.1vw, 2px); */
+  -webkit-text-stroke-width: clamp(1px, 0.3vw, 2.5px);
   -webkit-text-fill-color: transparent;
 }
 
@@ -100,8 +113,8 @@
 }
 
 body {
-  background: black;
-  color: var(--foreground);
+  background: var(--foreground);
+  color: black;
   font-family: var(--font-ringside-regular), 'Helvetica Neue', sans-serif;
   font-size: 2rem;
   font-feature-settings: "tnum" on;

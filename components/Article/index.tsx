@@ -1,142 +1,75 @@
 "use client";
 
-// Components
-import { ThemeBackground } from "@/components/ThemeBackground";
-
-// Context
-import { useTheme } from "@/context/ThemeContext";
-
 // Utils
 import { classes } from "@/utils";
 
 // Styles
 import styles from "./index.module.css";
 
-// Consts
-import { ThemeNames } from "@/context/ThemeContext";
-
 // Types
 import { ArticleProps } from "./types";
 
-export function Article({ articleNumber = 0, className }: ArticleProps) {
-  const { theme } = useTheme();
+export function Article({
+  articleID = 0,
+  authors = [],
+  className,
+  content,
+  date,
+  title
+}: ArticleProps) {
+  const words = title.split(" ");
+  const numWordsInTitle = words.length;
+  const longestWordInTitle = words.reduce((longest, current) => current.length > longest ? current.length : longest, 0);
+
+  const titleFace =
+    numWordsInTitle <= 3 && longestWordInTitle <= 6
+      ? "font-champion-heviweight -tracking-[0.03em] leading-[0.86]"
+      : numWordsInTitle <= 8 && longestWordInTitle <= 10
+        ? "font-champion-middleweight -tracking-[0.03em] leading-[0.85]"
+        : "font-champion-bantamweight -tracking-[0.008em] leading-[0.92]";
 
   return (
     <article
       className={classes(
-        "relative pointer-events-none subpixel-antialiased",
-        styles.article,
-        theme === ThemeNames.YELLOW ? "text-black" : "inherit",
+        "flex flex-col font-ringside-regular font-[500] [font-size:clamp(1rem,1.7vw,26px)] leading-[1.35] text-pretty",
         className
       )}
     >
-      <ThemeBackground className="fixed inset-0 z-[-1] opacity-90" />
-      <header className="pointer-events-auto font-[700] pb-[4vh] pt-[4vh] ml-[50vw] pr-[1vw] text-balance flex flex-col gap-2 min-h-[30vh] justify-end">
-        <hgroup className="">
-          <h1 className="flex flex-col">
-            <span className="text-[inherit] mix-blend-difference">
-              Article #{articleNumber.toString().padStart(3, "0")}
-            </span>
-            <span className="text-balance">
-              Designer vs. Artist: Crushing Control vs Feelings of Freedom
-            </span>
-          </h1>
-        </hgroup>
-        <div className="uppercase text-[15px] tracking-wider flex gap-2 opacity-70">
-          <span>Written by Andrew Alford</span>
-          <span>•</span>
-          <span>October 9, 2025</span>
+      <header className="relative z-10 flex flex-col gap-2 text-center py-[6vh] px-[1vw] bg-white">
+        <div className="text-[0.8em] font-[700] leading-[1.1]">
+          #{articleID.toString().padStart(3, "0")}
+        </div>
+        <h1
+          className={classes(
+            "relative uppercase z-11 text-[9.25vw] -translate-x-[0.012em] text-balance flex flex-col",
+            titleFace
+          )}
+        >
+          <span className="translate-y-[0.04em] text-background">{title}</span>
+          {/* <span>{title}</span> */}
+        </h1>
+        <div className="leading-[1.1] text-[0.6em] font-[700] uppercase tracking-wide flex gap-3 justify-center">
+          <span>Written by {authors.join(", ")}</span>
+          <span className="opacity-40">{date}</span>
         </div>
       </header>
       <div
+        aria-hidden
+        className="gap-2 h-[52px] -mt-[52px] flex items-center bg-white/96 text-[0.9rem] font-[600] p-[1vw] sticky top-[52px] z-9 uppercase justify-center"
+      >
+        <span className="opacity-40 shrink-0">
+          #{articleID.toString().padStart(3, "0")}
+        </span>
+        <span className="truncate grow">{title}</span>
+        <span className="opacity-40 shrink-0">{date}</span>
+      </div>
+      <div
         className={classes(
           styles.articleContent,
-          "pointer-events-auto ml-[50vw] pr-[1vw]"
+          "px-[1vw] pb-[6vh] text-[0.8em] font-[600] leading-[1.3] text-justify hyphens-auto"
         )}
       >
-        <p>
-          When I was three years old, my mom wrote in my baby book “Andy is
-          going to be an artist when he grows up.” Since the early days of
-          Covid, her observation has been front and center in my brain. Her
-          words sparked the question in my head, “What am I, an artist or a
-          designer?” When thinking about the latter, I realized there’s a
-          certain amount of pressure that comes with the label “designer.” In
-          magazines, social media, and business development, my experience has
-          been that a designer is expected to manifest an image of a perfect
-          life. Beautiful home. Beautiful clothes. Beautiful exotic travel. A
-          beautiful flawless façade. I put pressure on myself to live up to that
-          trope for nearly two decades, until the forced stillness of Covid gave
-          me the opportunity to realize and accept that at I always wanted the
-          life of an artist, not a designer.
-        </p>
-        <p>
-          What does that mean to me? I’m still a hospitality designer and there
-          are few things that bring me as much joy as my career, but pivoting to
-          the label of artist truly liberated me. I’ve always approached my
-          hotel projects as elaborate experiential sculptures that touch the
-          hearts and souls of every guest who walks through the doors. Interior
-          design is functional art to me, and as such, the title of artist
-          supersedes the title of designer. That mental pivot gave me the
-          freedom to explore other creative ventures and it relieved the
-          internalized pressure of presenting myself as an eccentric
-          perfectionist living an interiors magazine life.{" "}
-        </p>
-        <p>
-          An artist has zero boundaries or preconceived notions of image, and as
-          the band Fischerspooner used to have on their tour tees, “Artists have
-          more fun.” Truer words have never been spoken. After liberating myself
-          from the designer label, I found my interiors brain grow in expansive
-          new ways and my day-to-day life felt freer and more satisfying. I now
-          say that I earn my living as a designer, but my soul lives as an
-          artist. My love language shifted from facade to freedom.{" "}
-        </p>
-        <p>
-          When approaching my painting style, I intentionally sought to increase
-          my sense of liberation by lowering my chances of self-perceived
-          failure. The goal was letting go of control, not creating something
-          with the intent of sales or commercial success. The absence of that
-          pressure allows me to get into a state of mental flow where my brain
-          can wander to new places inspired by the forms developing in front of
-          me. Unlike an interiors project where precision is paramount, I was
-          able to develop a style where there are almost no ways to make errors.
-          Imperfection is a feature, not a flaw. That freedom allows me to get
-          into a meditative state where I feel as if inspiration comes from the
-          ether. That place of beautiful limbo results in hospitality design
-          ideas no one has ever seen, which has always been the cornerstone and
-          guiding light of my career.
-        </p>
-        <p>
-          Making these paintings are an exercise in mindfulness to me, but the
-          chaotic abstraction represents a more concrete reality of my life. I’m
-          a parent to the most incredible thirteen-year-old daughter who I love
-          on a scale that brings both transcendent joy and unfathomable fear.
-          Jewel tone neon rainbows and terrifying black holes. I’m sure any
-          parent can understand that contrast of emotions. These paintings are
-          an exploration of those often-overwhelming feelings and the
-          realization that ultimately, we can’t control our children’s
-          destinies. Rather than using paint brushes, I use ice and water to
-          create the forms. The technique is about accepting that as a parent, I
-          can do my best to fill her life with beautiful colors and ideas, but
-          ultimately the water is going to flow where it wants to flow, and the
-          colors will blend in unpredictable ways. To me, that’s the epitome of
-          raising a child. We can do our best to provide them with the best
-          ingredients, but ultimately, we can’t control what they make with
-          them.
-        </p>
-        <p>
-          I can confidently and unequivocally say that this process of
-          acceptance, self-realization, and exploration has helped me grow as a
-          designer and reinforced my belief that art heals all. A creative
-          healer is the artist, designer, and father I want to be and the
-          imaginative being my mom saw from the start.
-        </p>
-        <p className="note">
-          Side note: A couple of paragraphs ago I said that selling art wasn’t
-          the primary goal of creating these paintings, but hey, I’m human.
-          Contact me me for pricing and availability if your home or project
-          needs an antidote for beige.
-        </p>
-        <div className="sticky bottom-0 h-[20vh] w-full bg-gradient-to-t to-transparent from-background from-50% opacity-90" />
+        {content}
       </div>
     </article>
   );

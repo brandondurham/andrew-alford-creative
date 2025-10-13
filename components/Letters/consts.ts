@@ -1,25 +1,27 @@
+import { ThemeNames } from "@/context/ThemeContext/types";
+
 export const THICKNESS = 100;
 export const X_POSITION_OFFSET = 0.5; // Percentage of window width.
 export const ENTRANCE_OFFSET = 100; // Milliseconds
 export const COLORS = [
-  { hex: "#d31815", var: "var(--color-theme-a)" },
-  { hex: "#e76e5b", var: "var(--color-theme-b)" },
-  { hex: "#ec6c12", var: "var(--color-theme-c)" },
-  { hex: "#f29e18", var: "var(--color-theme-d)" },
-  { hex: "#96783d", var: "var(--color-theme-e)" },
-  { hex: "#515049", var: "var(--color-theme-f)" },
-  { hex: "#f3c512", var: "var(--color-theme-g)" },
-  { hex: "#167c37", var: "var(--color-theme-h)" },
-  { hex: "#0da862", var: "var(--color-theme-i)" },
-  { hex: "#0b464e", var: "var(--color-theme-j)" },
-  { hex: "#17b5d7", var: "var(--color-theme-k)" },
-  { hex: "#0c1943", var: "var(--color-theme-l)" },
-  { hex: "#6866bf", var: "var(--color-theme-m)" },
-  { hex: "#131113", var: "var(--color-theme-n)" },
-  { hex: "#e64c9d", var: "var(--color-theme-p)" },
-  { hex: "#ec1049", var: "var(--color-theme-q)" },
-  { hex: "#520f20", var: "var(--color-theme-r)" },
-  { hex: "#e69cae", var: "var(--color-theme-s)" },
+  { hex: "#cd1b12", var: "var(--color-theme-a)", themes: [ThemeNames.BLUE, ThemeNames.YELLOW] },
+  { hex: "#e06a57", var: "var(--color-theme-b)", themes: [ThemeNames.BLUE] },
+  { hex: "#e66611", var: "var(--color-theme-c)", themes: [ThemeNames.BLUE, ThemeNames.YELLOW, ThemeNames.RED] },
+  { hex: "#eb981a", var: "var(--color-theme-d)", themes: [ThemeNames.BLUE, ThemeNames.RED] },
+  { hex: "#8f7439", var: "var(--color-theme-e)", themes: [ThemeNames.BLUE, ThemeNames.YELLOW] },
+  { hex: "#ebbe0a", var: "var(--color-theme-f)", themes: [ThemeNames.BLUE, ThemeNames.RED] },
+  { hex: "#127834", var: "var(--color-theme-g)", themes: [ThemeNames.BLUE, ThemeNames.YELLOW, ThemeNames.RED] },
+  { hex: "#05a15e", var: "var(--color-theme-h)", themes: [ThemeNames.BLUE, ThemeNames.YELLOW, ThemeNames.RED] },
+  { hex: "#0a454a", var: "var(--color-theme-i)", themes: [ThemeNames.YELLOW, ThemeNames.RED] },
+  { hex: "#14b0d0", var: "var(--color-theme-j)", themes: [ThemeNames.BLUE, ThemeNames.YELLOW, ThemeNames.RED] },
+  { hex: "#0b1740", var: "var(--color-theme-k)", themes: [ThemeNames.YELLOW, ThemeNames.RED] },
+  { hex: "#6662b8", var: "var(--color-theme-l)", themes: [ThemeNames.YELLOW, ThemeNames.RED] },
+  { hex: "#121013", var: "var(--color-theme-m)", themes: [ThemeNames.BLUE, ThemeNames.YELLOW, ThemeNames.RED] },
+  { hex: "#f7f6f7", var: "var(--color-theme-n)", themes: [ThemeNames.BLUE, ThemeNames.YELLOW, ThemeNames.RED] },
+  { hex: "#e04998", var: "var(--color-theme-o)", themes: [ThemeNames.BLUE, ThemeNames.YELLOW, ThemeNames.RED] },
+  { hex: "#e51545", var: "var(--color-theme-p)", themes: [ThemeNames.BLUE, ThemeNames.YELLOW, ThemeNames.RED] },
+  { hex: "#4f101f", var: "var(--color-theme-q)", themes: [ThemeNames.BLUE, ThemeNames.YELLOW, ThemeNames.RED] },
+  { hex: "#e096a9", var: "var(--color-theme-r)", themes: [ThemeNames.BLUE, ThemeNames.YELLOW, ThemeNames.RED] },
 ];
 
 export const LETTER_PHYSICS = {

@@ -4,6 +4,26 @@ import localFont from "next/font/local";
 export const ringsideRegular = localFont({
   src: [
     {
+      path: "../assets/fonts/RingsideRegular-Thin.woff2",
+      weight: "200",
+      style: "normal",
+    },
+    {
+      path: "../assets/fonts/RingsideRegular-ThinItalic.woff2",
+      weight: "200",
+      style: "italic",
+    },
+    {
+      path: "../assets/fonts/RingsideRegular-Light.woff2",
+      weight: "300",
+      style: "normal",
+    },
+    {
+      path: "../assets/fonts/RingsideRegular-LightItalic.woff2",
+      weight: "300",
+      style: "italic",
+    },
+    {
       path: "../assets/fonts/RingsideRegular-Book.woff2",
       weight: "400",
       style: "normal",
@@ -23,7 +43,6 @@ export const ringsideRegular = localFont({
       weight: "500",
       style: "italic",
     },
-
     {
       path: "../assets/fonts/RingsideRegular-Semibold.woff2",
       weight: "600",
@@ -32,6 +51,36 @@ export const ringsideRegular = localFont({
     {
       path: "../assets/fonts/RingsideRegular-SemiboldItalic.woff2",
       weight: "600",
+      style: "italic",
+    },
+    {
+      path: "../assets/fonts/RingsideRegular-Bold.woff2",
+      weight: "700",
+      style: "normal",
+    },
+    {
+      path: "../assets/fonts/RingsideRegular-BoldItalic.woff2",
+      weight: "700",
+      style: "italic",
+    },
+    {
+      path: "../assets/fonts/RingsideRegular-Black.woff2",
+      weight: "800",
+      style: "normal",
+    },
+    {
+      path: "../assets/fonts/RingsideRegular-BlackItalic.woff2",
+      weight: "800",
+      style: "italic",
+    },
+    {
+      path: "../assets/fonts/RingsideRegular-Ultra.woff2",
+      weight: "900",
+      style: "normal",
+    },
+    {
+      path: "../assets/fonts/RingsideRegular-UltraItalic.woff2",
+      weight: "900",
       style: "italic",
     },
   ],

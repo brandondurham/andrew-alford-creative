@@ -1,57 +1,78 @@
 "use client";
 
 import NextLink from "next/link";
-// import { usePathname } from "next/navigation";
+import { usePathname } from "next/navigation";
 
 // Components
 import { Links } from "@/components/Links";
-// import { ThemeSwitcher } from "@/components/ThemeSwitcher";
 
 // Context
 import { useDragging } from "@/context/DraggingContext";
-import { useTheme, ThemeColors } from "@/context/ThemeContext";
 
 // Utils
 import { classes } from "@/utils";
 
+// Context
+import { useTheme } from "@/context/ThemeContext";
+import { ThemeNames } from "@/context/ThemeContext/types";
+
 // Consts
-const PAGES = [
+import type { Link as LinkType } from "@/components/Links/types";
+
+const PAGES: LinkType[] = [
   {
-    name: "Select Projects",
+    id: "about",
+    label: "About",
+    href: "/about",
+  },
+  {
+    id: "select-projects",
+    label: "Select Projects",
     href: "/select-projects",
   },
   {
-    name: "Articles",
-    href: "/articles",
+    id: "thoughts",
+    label: "Thoughts",
+    href: "/thoughts",
   },
   {
-    name: "Contact",
+    id: "client-portal",
+    label: "Client Portal",
+    href: "/clients",
+  },
+  {
+    id: "contact",
+    label: "Contact",
     href: "/contact",
   },
 ];
 
 export function SiteMasthead({ className }: { className?: string }) {
-  // const pathname = usePathname();
-  const { isDragging } = useDragging();
   const { theme } = useTheme();
-  const { blendMode = null } = ThemeColors[theme];
+  const pathname = usePathname();
+  const { isDragging } = useDragging();
 
   return (
     <header
       className={classes(
-        "uppercase relative z-[10] text-outline-[currentColor] text-foreground",
-        "pointer-events-none",
-        blendMode,
+        "p-[1vw] w-full text-[0.75em] uppercase",
+        theme === ThemeNames.YELLOW
+          ? "text-background mix-blend-plus-lighter"
+          : "text-foreground mix-blend-darken",
+        "flex flex-col gap-[1vw]",
         className
       )}
     >
-      <h1 className="pb-[1vw] flex flex-col">
+      <h1>
         <NextLink
           className={classes(
-            "block py-[1vw] translate-y-[0.042em] text-[9.21vw] leading-[0.8] text-center indent-2 hover:text-outline-none hover:text-white",
-            // "bg-[url('https://d1hhug17qm51in.cloudfront.net/www-media/2018/08/24235310/AD16.169_01_H02-Large-TIFF_4000-pixels-long-scaled.jpg')] bg-[left_center] bg-size-[200%] [-webkit-background-clip:text] [-webkit-text-fill-color:transparent] [background-clip:text]",
-            // "animate-bg-scroll",
-            isDragging ? "pointer-events-none" : "pointer-events-auto"
+            "flex text-center",
+            "text-[9.194vw] leading-[0.8]",
+            "justify-center pl-[0.02em]",
+            "[&>span]:translate-y-[0.041em]",
+            pathname === "/" || isDragging
+              ? "pointer-events-none"
+              : "pointer-events-auto"
           )}
           href="/"
         >
@@ -59,24 +80,24 @@ export function SiteMasthead({ className }: { className?: string }) {
           <span className="font-champion-welterweight">Alford</span>
           <span className="font-champion-heviweight">Creative</span>
         </NextLink>
-        <Links
-          className={classes(
-            "flex translate-y-[0.042em] text-[7.06vw] leading-[0.8] justify-center [&_a]:hover:text-outline-none [&_a]:hover:text-white"
-          )}
-          decorated={false}
-          fonts={[
-            "font-champion-liteweight",
-            "font-champion-heviweight",
-            "font-champion-bantamweight",
-          ]}
-          links={PAGES.map((page) => ({
-            ...page,
-            name: page.name.replace(" ", ""),
-          }))}
-          spacing="gap-[0.5vw]"
-        />
       </h1>
-      {/* <ThemeSwitcher /> */}
+      <Links
+        className="pointer-events-auto font-[400] !justify-center text-center font-[RingsideExtraWide-Semi]"
+        separator=","
+        links={PAGES}
+      />
+      {/* <div className="pointer-events-auto text-[15px] text-right grow">
+        A{" "}
+        <Link
+          decorated
+          href="https://www.thisassembly.com/"
+          target="_blank"
+        >
+          This Assembly
+        </Link>{" "}
+        company.
+        &copy;{new Date().getFullYear()} All rights reserved.
+      </div> */}
     </header>
   );
 }

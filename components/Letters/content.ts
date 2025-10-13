@@ -11,12 +11,6 @@ export const LETTERS = [
     path: "/a-2.svg",
     width: 203.4376,
   },
-  // {
-  //   height: 658.33,
-  //   id: "08c9d184-ef4a-47cf-aacc-ed0eaeef60b6",
-  //   path: "/c-1.svg",
-  //   width: 700,
-  // },
   {
     height: 350,
     id: "3c36e726-a270-4b10-b363-8e4936b5bdae",

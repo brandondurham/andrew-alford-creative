@@ -1,12 +1,33 @@
+import createMDX from '@next/mdx'
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  images: {
-    remotePatterns: [
-      new URL(
-        "https://image.invaluable.com/**"
-      ),
-    ],
+  pageExtensions: ["js", "jsx", "md", "mdx", "ts", "tsx"],
+  webpack(config) {
+    const fileLoaderRule = config.module.rules.find((rule) =>
+      rule.test?.test?.(".svg")
+    );
+
+    config.module.rules.push(
+      {
+        test: /\.svg$/i,
+        issuer: fileLoaderRule.issuer,
+        resourceQuery: { not: [...fileLoaderRule.resourceQuery.not, /url/] },
+        use: ["@svgr/webpack"],
+      },
+      {
+        test: /\.svg$/i,
+        type: "asset",
+        resourceQuery: /url/,
+      }
+    );
+
+    fileLoaderRule.exclude = /\.svg$/i;
+
+    return config;
   },
 };
 
-export default nextConfig;
+const withMDX = createMDX()
+
+export default withMDX(nextConfig);

@@ -5,6 +5,9 @@ import { createContext, useContext, useState, ReactNode, useEffect } from "react
 // Utils
 import { shuffle } from "@/utils";
 
+import { ThemeNames, type Theme } from "./types";
+import { ThemeColors } from "./consts";
+
 /**
  * Theme Context for managing app-wide theme state
  * 
@@ -26,45 +29,6 @@ import { shuffle } from "@/utils";
  * 
  * That's it! The theme will now be available throughout the app.
  */
-
-/**
- * Theme names enum
- */
-export enum ThemeNames {
-  BLUE = "blue",
-  YELLOW = "yellow",
-  RED = "red",
-}
-
-/**
- * Theme type derived from ThemeNames
- */
-export type Theme = `${ThemeNames}`;
-
-/**
- * Theme color mappings
- * Add corresponding colors for new themes here
- */
-export const ThemeColors: Record<
-  Theme,
-  { background: string; foreground: string; blendMode: string | null }
-> = {
-  [ThemeNames.BLUE]: {
-    background: "#1418ea",
-    foreground: "#ffffff",
-    blendMode: "mix-blend-difference",
-  },
-  [ThemeNames.YELLOW]: {
-    background: "#fbe733",
-    foreground: "#ffffff",
-    blendMode: "mix-blend-difference",
-  },
-  [ThemeNames.RED]: {
-    background: "#ff000e",
-    foreground: "#ffffff",
-    blendMode: "mix-blend-difference",
-  },
-};
 
 interface ThemeContextType {
   theme: Theme;

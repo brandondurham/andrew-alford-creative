@@ -1,7 +1,8 @@
 // Components
+import { Link } from "@/components/Link";
 import { Letters } from "@/components/Letters";
 import { Content } from "@/components/Content";
-import { Footer } from "@/components/Footer";
+// import { Footer } from "@/components/Footer";
 import { SiteMasthead } from "@/components/SiteMasthead";
 import { ThemeBackground } from "@/components/ThemeBackground";
 import { ThemeSwitcher } from "@/components/ThemeSwitcher";
@@ -12,6 +13,9 @@ import { ThemeProvider } from "@/context/ThemeContext";
 
 // Utils
 import { classes } from "@/utils";
+
+// Assets
+import Logo from "@/assets/svg/logo.svg";
 
 // Styles
 import "./globals.css";
@@ -28,16 +32,17 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={classes(fontData.join(" "), "antialiased")}>
+        <Link className="fixed bottom-4 left-4 z-50 text-foreground mix-blend-luminosity" href="/">
+          <Logo className="w-[70px]" />
+        </Link>
         <ThemeProvider>
           <DraggingProvider>
             <Content className="min-h-screen relative z-4">
               <ThemeBackground className="fixed inset-0 z-[-1]" />
               <Letters className="pointer-events-auto z-3" />
-              <SiteMasthead />
-              <main className="grow pointer-events-none relative z-4">
-                {children}
-              </main>
-              <Footer className="sticky bottom-6 z-4" />
+              <SiteMasthead className="sticky z-4" />
+              {/* <Footer className="sticky z-4" /> */}
+              <main className="grow">{children}</main>
             </Content>
           </DraggingProvider>
           <ThemeSwitcher />

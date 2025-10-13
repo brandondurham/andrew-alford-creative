@@ -8,11 +8,13 @@ export function Link({
   className,
   decorated = true,
   href,
+  ...rest
 }: {
-  children: string;
+  children: React.ReactNode;
   className?: string;
   decorated?: boolean;
   href: string;
+  [key: string]: any;
 }) {
   return (
     <NextLink
@@ -21,6 +23,7 @@ export function Link({
         className
       )}
       href={href}
+      {...rest}
     >
       {children}
     </NextLink>

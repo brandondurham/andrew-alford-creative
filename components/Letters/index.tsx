@@ -3,12 +3,14 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import MatterJS from "matter-js";
 import "pathseg";
+import { usePathname } from "next/navigation";
 
 // Content
 import { LETTERS } from "./content";
 
 // Context
 import { useDragging } from "@/context/DraggingContext";
+import { useTheme } from "@/context/ThemeContext";
 
 // Utilities
 import { loadSvg, select } from "./utils";
@@ -35,7 +37,9 @@ interface LettersProps {
   scaleFactor?: number;
 }
 
-export function Letters({ className, engineTimeScale = 1.3, scaleFactor = 0.8, allowCollisions = true }: LettersProps) {
+export function Letters({ className, engineTimeScale = 1.3, scaleFactor = 0.9, allowCollisions = true }: LettersProps) {
+  const pathname = usePathname();
+  const { theme } = useTheme();
   const { setIsDragging } = useDragging();
   const [colors, setColors] = useState<Color[] | null>(null);
   const [letters, setLetters] = useState<typeof LETTERS | null>(null);
@@ -81,9 +85,15 @@ export function Letters({ className, engineTimeScale = 1.3, scaleFactor = 0.8, a
 
   // Randomize COLORS and LETTERS.
   useEffect(() => {
-    setColors(shuffle(COLORS));
+    if (!theme) return;
+    
+    // Filter colors by the current theme
+    const filteredColors = COLORS.filter(color => 
+      color.themes.some(t => t === theme)
+    );
+    setColors(shuffle(filteredColors));
     setLetters(shuffle(LETTERS));
-  }, []);
+  }, [theme]);
 
   // Memoize event handlers
   const handleMouseDown = useCallback(() => setIsDragging(true), [setIsDragging]);
@@ -350,60 +360,54 @@ export function Letters({ className, engineTimeScale = 1.3, scaleFactor = 0.8, a
   }, [MatterModules, allowCollisions, calculateScaleFactor, colors, engineTimeScale, letters]);
 
   useEffect(() => {
-    let timeoutId: NodeJS.Timeout;
-    
     const resizeListener = () => {
-      clearTimeout(timeoutId);
-      timeoutId = setTimeout(() => {
-        if (!containerRef.current || !letters) return;
+      if (!containerRef.current || !letters) return;
 
-        const width = containerRef.current.clientWidth;
-        const height = containerRef.current.clientHeight;
+      const width = containerRef.current.clientWidth;
+      const height = containerRef.current.clientHeight;
 
-        // Canvas
-        renderRef.current.canvas.width = width;
-        renderRef.current.canvas.height = height;
+      // Canvas
+      renderRef.current.canvas.width = width;
+      renderRef.current.canvas.height = height;
 
-        // Floor
-        MatterModules.Body.setPosition(wallsRef.current[0], {
-          x: width / 2,
-          y: height + THICKNESS / 2,
-        });
+      // Floor
+      MatterModules.Body.setPosition(wallsRef.current[0], {
+        x: width / 2,
+        y: height + THICKNESS / 2,
+      });
 
-        // Right Wall
-        MatterModules.Body.setPosition(wallsRef.current[1], {
-          x: width + THICKNESS / 2,
-          y: height / 2,
-        });
+      // Right Wall
+      MatterModules.Body.setPosition(wallsRef.current[1], {
+        x: width + THICKNESS / 2,
+        y: height / 2,
+      });
 
-        // Left Wall
-        MatterModules.Body.setPosition(wallsRef.current[2], {
-          x: -THICKNESS / 2,
-          y: height / 2,
-        });
+      // Left Wall
+      MatterModules.Body.setPosition(wallsRef.current[2], {
+        x: -THICKNESS / 2,
+        y: height / 2,
+      });
 
-        // Recalculate scale factor for new viewport size
-        const newScaleFactor = calculateScaleFactor(width, height);
+      // Recalculate scale factor for new viewport size
+      const newScaleFactor = calculateScaleFactor(width, height);
 
-        // Calculate the ratio between new and current scale
-        const scaleRatio = newScaleFactor / currentScaleFactorRef.current;
+      // Calculate the ratio between new and current scale
+      const scaleRatio = newScaleFactor / currentScaleFactorRef.current;
 
-        // Scale all letter bodies with the ratio
-        lettersRef.current.forEach((letter) => {
-          if (letter && !letter.isStatic) {
-            MatterModules.Body.scale(letter, scaleRatio, scaleRatio);
-          }
-        });
+      // Scale all letter bodies with the ratio
+      lettersRef.current.forEach((letter) => {
+        if (letter && !letter.isStatic) {
+          MatterModules.Body.scale(letter, scaleRatio, scaleRatio);
+        }
+      });
 
-        // Update the current scale factor
-        currentScaleFactorRef.current = newScaleFactor;
-      }, 150);
+      // Update the current scale factor
+      currentScaleFactorRef.current = newScaleFactor;
     };
 
     window.addEventListener("resize", resizeListener);
 
     return () => {
-      clearTimeout(timeoutId);
       window.removeEventListener("resize", resizeListener);
     };
   }, [MatterModules, calculateScaleFactor, letters]);
@@ -411,7 +415,8 @@ export function Letters({ className, engineTimeScale = 1.3, scaleFactor = 0.8, a
   return (
     <div
       className={classes(
-        "fixed inset-0 opacity-100 transition-opacity duration-300",
+        "fixed inset-0 transition-opacity duration-300",
+        pathname === "/" ? "opacity-100" : "opacity-30",
         className
       )}
       ref={containerRef}

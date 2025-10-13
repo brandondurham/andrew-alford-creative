@@ -1,6 +1,8 @@
 "use client";
 
-import { useTheme, ThemeNames, ThemeColors, type Theme } from "@/context/ThemeContext";
+import { useTheme } from "@/context/ThemeContext";
+import { ThemeNames, type Theme } from "@/context/ThemeContext/types";
+import { ThemeColors } from "@/context/ThemeContext/consts";
 
 // Utils
 import { classes } from "@/utils";
@@ -16,7 +18,7 @@ export function ThemeSwitcher() {
   const themes = Object.values(ThemeNames) as Theme[];
 
   return (
-    <div className="fixed top-[50vh] left-4 flex flex-col gap-4 z-20 translate-y-[-50%]">
+    <div className="fixed top-[50vh] left-4 flex flex-col gap-2 z-20 translate-y-[-50%]">
       {themes.map((t) => (
         <button
           className={classes(

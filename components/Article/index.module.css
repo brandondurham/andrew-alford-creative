@@ -1,16 +1,18 @@
-.article {
-  font-family: var(--font-ringside-regular);
-  font-size: 0.8em;
-  font-weight: 500;
-  line-height: 1.35;
-  padding-bottom: 2em;
-  text-wrap: pretty;
+.articleContent {
+  ol {
+    list-style-type: decimal;
+    margin: 1em 0;
+    padding-left: 6vw;
+  }
 
-  font-size: clamp(1rem, 1.7vw, 26px);
+  ul {
+    list-style-type: var(--marker);
+    margin: 1em 0;
+    padding-left: 6vw;
+  }
 
-  p:not(:first-of-type,:last-of-type) {
+  p:not(:first-of-type) {
     text-indent: 6vw;
-    &.note { background: black; }
   }
 
   :global(.note) {
@@ -20,7 +22,8 @@
     line-height: 1.3;
     margin-top: 2vw;
     padding-left: var(--width);
-    text-indent: 0;
+
+    && { text-indent: 0; }
 
     &::before {
       content: "(*)";
@@ -29,8 +32,6 @@
     }
   }
 }
-
-.articleContent {}
 
 .articleHeading {
   font-size: clamp(4rem, 7vw, 8rem);
