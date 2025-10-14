@@ -5,11 +5,20 @@ const nextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
+  experimental: {
+    webpackMemoryOptimizations: true,
+  },
   pageExtensions: ["js", "jsx", "md", "mdx", "ts", "tsx"],
   typescript: {
     ignoreBuildErrors: true,
   },
-  webpack(config) {
+  webpack(config, { dev }) {
+    if (config.cache && !dev) {
+      config.cache = Object.freeze({
+        type: "memory",
+      });
+    }
+    
     const fileLoaderRule = config.module.rules.find((rule) =>
       rule.test?.test?.(".svg")
     );
