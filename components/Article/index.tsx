@@ -45,10 +45,12 @@ export function Article({
         <h1
           className={classes(
             "relative uppercase z-11 text-[9.25vw] -translate-x-[0.012em] text-balance flex flex-col",
+            "text-background",
+            // "block w-full text-transparent bg-clip-text bg-gradient-to-r from-white to-sky-500/10",
             titleFace
           )}
         >
-          <span className="translate-y-[0.04em] text-background">{title}</span>
+          <span className="translate-y-[0.04em]">{title}</span>
         </h1>
         <div className="mt-[0.5vw] leading-[1.1] text-[0.6em] font-bold uppercase tracking-wide flex gap-3 justify-center">
           <span>Written by {authors.join(", ")}</span>

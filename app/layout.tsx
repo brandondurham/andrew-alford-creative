@@ -1,6 +1,6 @@
 // Components
 import { Letters } from "@/components/Letters";
-import { Content } from "@/components/Content";
+import { SiteFrame } from "@/components/SiteFrame";
 import { Footer } from "@/components/Footer";
 import { SiteMasthead } from "@/components/SiteMasthead";
 import { ThemeBackground } from "@/components/ThemeBackground";
@@ -30,13 +30,13 @@ export default function RootLayout({ children }) {
       <body className={classes(fontData.join(" "), "antialiased")}>
         <ThemeProvider>
           <DraggingProvider>
-            <Content className="min-h-screen">
+            <SiteFrame className="min-h-screen">
               <ThemeBackground className="fixed inset-0" />
               <Letters className="pointer-events-auto" />
               <SiteMasthead className="sticky" />
               <Main className="grow">{children}</Main>
               <Footer className="fixed inset-0 p-[1vw] top-auto text-foreground" />
-            </Content>
+            </SiteFrame>
           </DraggingProvider>
         </ThemeProvider>
       </body>

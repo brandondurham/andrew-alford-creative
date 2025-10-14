@@ -159,3 +159,9 @@ export const plainBlack = localFont({
   variable: "--font-plain-black",
   display: "swap",
 });
+
+export const monaspaceNeon = localFont({
+  src: "../assets/fonts/MonaspaceNeon-Regular.woff2",
+  variable: "--font-monaspace-neon",
+  display: "swap",
+});
