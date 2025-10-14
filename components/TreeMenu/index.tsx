@@ -120,7 +120,7 @@ export const TreeMenu: FC<TreeMenuProps> = ({
             </span>
           )}
           {item.year && (
-            <Chip className="font-normal text-[0.45em]">{item.year}</Chip>
+            <Chip className="font-normal text-[0.4em]">{item.year}</Chip>
           )}
           {numbered && `${index + 1}.`} {item.label}
         </Link>
@@ -139,6 +139,7 @@ export const TreeMenu: FC<TreeMenuProps> = ({
   return (
     <ul
       className={classes(
+        level === 0 && "[&>li]:mt-4",
         styles.tree,
         indent(level),
         className

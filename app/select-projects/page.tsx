@@ -146,7 +146,7 @@ export default function SelectProjects({ className }: { className?: string }) {
       <ContentMasthead>Select Projects</ContentMasthead>
       <article
         className={classes(
-          "flex flex-col font-ringside-regular font-medium leading-[1.35] text-pretty bg-gray-100 grow justify-end",
+          "flex flex-col font-ringside-regular font-medium leading-[1.2] text-pretty bg-gray-100",
           "p-[2vw] lg:p-[1vw] pb-[6vh] lg:pb-[6vh] font-semibold text-justify hyphens-auto"
         )}
       >
