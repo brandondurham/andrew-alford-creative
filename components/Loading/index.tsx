@@ -18,16 +18,10 @@ function LoadingLine() {
     <div
       className={classes(
         "uppercase",
-        "font-[Knockout-94UltmtSumo] -indent-[0.046em] leading-[0.665] text-[16.862vw]"
+        "font-knockout-ultimate font-black -indent-[0.046em] leading-[0.665] text-[16.862vw]"
       )}
     >
-      <span
-        className={classes(
-          "block -translate-y-[0.026em]"
-        )}
-      >
-        Loading
-      </span>
+      <span className={classes("block -translate-y-[0.026em]")}>Loading</span>
     </div>
   );
 }
