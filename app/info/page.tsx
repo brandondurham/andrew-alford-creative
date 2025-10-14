@@ -1,8 +1,5 @@
 "use client";
 
-// Components
-import { ThemeBackground } from "@/components/ThemeBackground";
-
 // Consts
 import { ThemeNames } from "@/context/ThemeContext/types";
 
@@ -27,7 +24,6 @@ export default function About({ className }: { className?: string }) {
         className
       )}
     >
-      <ThemeBackground className="fixed inset-0 z-[-1] opacity-84" />
       <header className="pointer-events-auto font-[700] pb-[4vh] pt-[4vh] ml-[50vw] pr-[1vw] text-balance flex flex-col gap-2 justify-end">
         <h1 className="text-balance">About</h1>
       </header>

@@ -1,0 +1,20 @@
+// Utils
+import { classes } from "@/utils";
+
+// Types
+import { ArticleBannerProps } from "./types";
+
+export function ArticleBanner({ articleID, className, date, title }: ArticleBannerProps) {
+  return (
+    <div
+      aria-hidden
+      className={classes("bg-background/96 gap-2 h-[52px] -mt-[52px] flex items-center text-[0.9rem] font-[500] p-[1vw] sticky top-[52px] z-9 uppercase justify-center text-white", className)}
+    >
+      <span className="opacity-60 shrink-0">
+        #{articleID.toString().padStart(3, "0")}
+      </span>
+      <span className="normal-case truncate grow">{title}</span>
+      <span className="opacity-60 shrink-0">{date}</span>
+    </div>
+  );
+}

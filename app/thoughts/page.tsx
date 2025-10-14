@@ -12,16 +12,16 @@ import { useDragging } from "@/context/DraggingContext";
 import { classes } from "@/utils";
 
 // Content
-import { articles } from "@/content/articles";
+import { articles } from "@/content/thoughts";
 
-export default function Home() {
+export default function Thoughts() {
   const { isDragging } = useDragging();
   const router = useRouter();
 
   return (
     <section
       className={classes(
-        "fixed bottom-0 top-0 left-[50vw] right-0 z-100 overflow-auto bg-white",
+        "shadow-xl/30 rounded-lg fixed bottom-[1vw] top-[1vw] left-[50vw] right-[1vw] z-100 overflow-auto",
         "animate-fade-in",
         isDragging ? "pointer-events-none" : "pointer-events-auto"
       )}

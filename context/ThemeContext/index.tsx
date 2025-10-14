@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useState, ReactNode, useEffect } from "react";
+import { createContext, useContext, useState, ReactNode, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 
 // Utils
@@ -43,23 +43,37 @@ interface ThemeProviderProps {
   defaultTheme?: Theme;
 }
 
-export function ThemeProvider({ children, defaultTheme = undefined }: ThemeProviderProps) {
-  const [theme, setTheme] = useState<Theme>(defaultTheme);
-
+/**
+ * Inner component that uses useSearchParams
+ * This is separated to be wrapped in Suspense
+ */
+function ThemeInitializer({ 
+  defaultTheme, 
+  onThemeInit 
+}: { 
+  defaultTheme?: Theme;
+  onThemeInit: (theme: Theme) => void;
+}) {
   const searchParams = useSearchParams();
   const explicitTheme = searchParams.get("theme");
 
   useEffect(() => {
     if (defaultTheme) {
-      setTheme(defaultTheme);
+      onThemeInit(defaultTheme);
     } else if (explicitTheme) {
-      setTheme(explicitTheme as Theme);
+      onThemeInit(explicitTheme as Theme);
     } else {
       const themeOptions = Object.values(ThemeNames);
       const randomTheme = shuffle(themeOptions)[0] as Theme;
-      setTheme(randomTheme);
+      onThemeInit(randomTheme);
     }
-  }, [defaultTheme, explicitTheme]);
+  }, [defaultTheme, explicitTheme, onThemeInit]);
+
+  return null;
+}
+
+export function ThemeProvider({ children, defaultTheme = undefined }: ThemeProviderProps) {
+  const [theme, setTheme] = useState<Theme>(defaultTheme);
 
   // Update CSS variables whenever theme changes
   useEffect(() => {
@@ -77,6 +91,9 @@ export function ThemeProvider({ children, defaultTheme = undefined }: ThemeProvi
 
   return (
     <ThemeContext.Provider value={{ theme, setTheme }}>
+      <Suspense fallback={null}>
+        <ThemeInitializer defaultTheme={defaultTheme} onThemeInit={setTheme} />
+      </Suspense>
       {children}
     </ThemeContext.Provider>
   );

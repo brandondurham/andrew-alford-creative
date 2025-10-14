@@ -1,5 +1,8 @@
 "use client";
 
+// Components
+import { ArticleBanner } from "@/components/ArticleBanner";
+
 // Utils
 import { classes } from "@/utils";
 
@@ -31,11 +34,11 @@ export function Article({
   return (
     <article
       className={classes(
-        "flex flex-col font-ringside-regular font-[500] [font-size:clamp(1rem,1.7vw,26px)] leading-[1.35] text-pretty",
+        "flex flex-col font-ringside-regular font-[500] [font-size:clamp(1rem,1.7vw,26px)] leading-[1.35] text-pretty bg-gray-100",
         className
       )}
     >
-      <header className="relative z-10 flex flex-col gap-[0.75vw] text-center py-[6vh] px-[1vw] bg-white">
+      <header className="relative z-10 flex flex-col gap-[0.75vw] text-center py-[6vh] px-[1vw] bg-inherit">
         <div className="text-[0.9em] font-[900] leading-[0.75]">
           #{articleID.toString().padStart(3, "0")}
         </div>
@@ -45,23 +48,16 @@ export function Article({
             titleFace
           )}
         >
-          <span className="translate-y-[0.04em] text-background">{title}</span>
+          <span className="bg-clip-text text-transparent bg-gradient-to-b from-background to-foreground translate-y-[0.04em]">
+            {title}
+          </span>
         </h1>
         <div className="mt-[0.5vw] leading-[1.1] text-[0.6em] font-[700] uppercase tracking-wide flex gap-3 justify-center">
           <span>Written by {authors.join(", ")}</span>
           <span className="opacity-40">{date}</span>
         </div>
       </header>
-      <div
-        aria-hidden
-        className="bg-background/96 gap-2 h-[52px] -mt-[52px] flex items-center text-[0.9rem] font-[600] p-[1vw] sticky top-[52px] z-9 uppercase justify-center text-white"
-      >
-        <span className="opacity-60 shrink-0">
-          #{articleID.toString().padStart(3, "0")}
-        </span>
-        <span className="truncate grow font-[500]">{title}</span>
-        <span className="opacity-60 shrink-0">{date}</span>
-      </div>
+      <ArticleBanner articleID={articleID} date={date} title={title} />
       <div
         className={classes(
           styles.articleContent,
