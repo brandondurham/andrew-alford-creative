@@ -5,7 +5,6 @@ import { Footer } from "@/components/Footer";
 import { SiteMasthead } from "@/components/SiteMasthead";
 import { ThemeBackground } from "@/components/ThemeBackground";
 import { Main } from "@/components/Main";
-// import { ThemeSwitcher } from "@/components/ThemeSwitcher";
 
 // Context
 import { DraggingProvider } from "@/context/DraggingContext";
@@ -25,7 +24,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   const fontData = Object.keys(Fonts).map((font) => Fonts[font].variable);
-  console.log("fontData", fontData);
+
   return (
     <html lang="en">
       <body className={classes(fontData.join(" "), "antialiased")}>
@@ -39,7 +38,6 @@ export default function RootLayout({ children }) {
               <Footer className="fixed inset-0 p-[1vw] top-auto text-foreground" />
             </Content>
           </DraggingProvider>
-          {/* <ThemeSwitcher /> */}
         </ThemeProvider>
       </body>
     </html>

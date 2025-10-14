@@ -11,6 +11,9 @@ import {
 // Project Settings
 import { StackingContext } from "@/settings";
 
+// Components
+import { ThemeSwitcher } from "@/components/ThemeSwitcher";
+
 // Context
 import { useTheme } from "@/context/ThemeContext";
 
@@ -107,7 +110,10 @@ export function Content({
     >
       {enhancedChildren}
       {showGuides && (
-        <div className="fixed inset-[1vw] z-50 [box-shadow:0_0_0_1px_cyan] pointer-events-none" />
+        <>
+          <div className="fixed inset-[1vw] z-50 [box-shadow:0_0_0_1px_cyan] pointer-events-none" />
+          <ThemeSwitcher />
+        </>
       )}
     </div>
   );

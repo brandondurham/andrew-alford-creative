@@ -22,7 +22,7 @@ export function Footer({ className }) {
         "flex justify-between pointer-events-none text-[15px] items-end",
         theme === ThemeNames.YELLOW
           ? "text-background mix-blend-plus-lighter"
-          : "text-foreground mix-blend-multiply",
+          : "text-foreground mix-blend-luminosity",
         className
       )}
     >

@@ -6,9 +6,11 @@ const nextConfig = {
     ignoreDuringBuilds: true,
   },
   experimental: {
+    serverSourceMaps: false,
     webpackMemoryOptimizations: true,
   },
   pageExtensions: ["js", "jsx", "md", "mdx", "ts", "tsx"],
+  productionBrowserSourceMaps: false,
   typescript: {
     ignoreBuildErrors: true,
   },
