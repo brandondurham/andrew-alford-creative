@@ -19,12 +19,12 @@ export default function About({ className }: { className?: string }) {
         theme === ThemeNames.YELLOW ? "text-black" : "inherit",
         theme === ThemeNames.YELLOW && "subpixel-antialiased",
         "font-ringside-regular",
-        "font-[500] [font-size:clamp(1rem,1.7vw,26px)]",
+        "font-medium [font-size:clamp(1rem,1.7vw,26px)]",
         "leading-[1.35] text-pretty",
         className
       )}
     >
-      <header className="pointer-events-auto font-[700] pb-[4vh] pt-[4vh] ml-[50vw] pr-[1vw] text-balance flex flex-col gap-2 justify-end">
+      <header className="pointer-events-auto font-bold pb-[4vh] pt-[4vh] ml-[50vw] pr-[1vw] text-balance flex flex-col gap-2 justify-end">
         <h1 className="text-balance">About</h1>
       </header>
     </article>

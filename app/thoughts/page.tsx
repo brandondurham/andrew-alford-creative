@@ -27,7 +27,7 @@ export default function Thoughts() {
         isDragging ? "pointer-events-none" : "pointer-events-auto"
       )}
     >
-      <nav className="uppercase flex justify-between sticky top-0 z-100 bg-white/96 px-[1vw] text-[0.9rem] font-[600] h-[52px] items-center text-black/70">
+      <nav className="uppercase flex justify-between sticky top-0 z-100 bg-white/96 px-[1vw] text-[0.9rem] font-semibold h-[52px] items-center text-black/70">
         <div className="basis-[25%]">
           <button
             className="flex items-center gap-2 cursor-pointer uppercase"

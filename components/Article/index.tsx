@@ -34,12 +34,12 @@ export function Article({
   return (
     <article
       className={classes(
-        "flex flex-col font-ringside-regular font-[500] [font-size:clamp(1rem,1.7vw,26px)] leading-[1.35] text-pretty bg-gray-100",
+        "flex flex-col font-ringside-regular font-medium [font-size:clamp(1rem,1.7vw,26px)] leading-[1.35] text-pretty bg-gray-100",
         className
       )}
     >
       <header className="relative z-10 flex flex-col gap-[0.75vw] text-center py-[6vh] px-[1vw] bg-inherit">
-        <div className="text-[0.9em] font-[900] leading-[0.75]">
+        <div className="text-[0.9em] font-black leading-[0.75]">
           #{articleID.toString().padStart(3, "0")}
         </div>
         <h1
@@ -50,7 +50,7 @@ export function Article({
         >
           <span className="translate-y-[0.04em] text-background">{title}</span>
         </h1>
-        <div className="mt-[0.5vw] leading-[1.1] text-[0.6em] font-[700] uppercase tracking-wide flex gap-3 justify-center">
+        <div className="mt-[0.5vw] leading-[1.1] text-[0.6em] font-bold uppercase tracking-wide flex gap-3 justify-center">
           <span>Written by {authors.join(", ")}</span>
           <span className="opacity-40">{date}</span>
         </div>
@@ -59,7 +59,7 @@ export function Article({
       <div
         className={classes(
           styles.articleContent,
-          "px-[1vw] pb-[6vh] text-[0.8em] font-[600] leading-[1.2] text-justify hyphens-auto"
+          "px-[1vw] pb-[6vh] text-[0.8em] font-semibold leading-[1.2] text-justify hyphens-auto"
         )}
       >
         {content}

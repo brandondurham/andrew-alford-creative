@@ -85,7 +85,7 @@ export function SiteMasthead({ className }: { className?: string }) {
       </h1>
       <Links
         className={classes(
-          "whitespace-nowrap flex-nowrap font-[400] !justify-center text-center [&_a]:hover:text-white/80",
+          "whitespace-nowrap flex-nowrap font-normal !justify-center text-center [&_a]:hover:text-white/80",
           "font-[Knockout-74FullSumo] text-[2.14vw] leading-[0.7]",
           "[&_a]:underline [&_a]:underline-offset-[0.5vw] [&_a]:text-decoration-thickness-0.05em",
           "[&_a]:hover:underline"
