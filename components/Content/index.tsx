@@ -15,7 +15,7 @@ export function Content({
     <section
       className={classes(
         "flex flex-col bg-gray-100",
-        "shadow-xl/30 rounded-lg fixed bottom-[1vw] top-[1vw] left-[50vw] right-[1vw] z-100 overflow-auto",
+        "shadow-xl/30 rounded-lg fixed bottom-[2vw] top-[2vw] left-[2vw] right-[2vw] lg:bottom-[1vw] lg:top-[1vw] lg:left-[50vw] lg:right-[1vw] z-100 overflow-auto",
         "animate-fade-in",
         isDragging ? "pointer-events-none" : "pointer-events-auto",
         className

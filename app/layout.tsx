@@ -35,7 +35,7 @@ export default function RootLayout({ children }) {
               <Letters className="pointer-events-auto" />
               <SiteMasthead className="sticky" />
               <Main className="grow">{children}</Main>
-              <Footer className="fixed inset-0 p-[1vw] top-auto text-foreground" />
+              <Footer className="fixed inset-0 top-auto" />
             </SiteFrame>
           </DraggingProvider>
         </ThemeProvider>

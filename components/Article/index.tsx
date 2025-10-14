@@ -34,7 +34,7 @@ export function Article({
   return (
     <article
       className={classes(
-        "flex flex-col font-ringside-regular font-medium [font-size:clamp(1rem,1.7vw,26px)] leading-[1.35] text-pretty bg-gray-100",
+        "flex flex-col font-ringside-regular font-medium [font-size:clamp(1.2rem,2vw,25px)] leading-[1.35] text-pretty bg-gray-100",
         className
       )}
     >
@@ -44,15 +44,14 @@ export function Article({
         </div>
         <h1
           className={classes(
-            "relative uppercase z-11 text-[9.25vw] -translate-x-[0.012em] text-balance flex flex-col",
+            "relative uppercase z-11 text-[18vw] lg:text-[9.25vw] -translate-x-[0.012em] text-balance flex flex-col",
             "text-background",
-            // "block w-full text-transparent bg-clip-text bg-gradient-to-r from-white to-sky-500/10",
             titleFace
           )}
         >
           <span className="translate-y-[0.04em]">{title}</span>
         </h1>
-        <div className="mt-[0.5vw] leading-[1.1] text-[0.6em] font-bold uppercase tracking-wide flex gap-3 justify-center">
+        <div className="leading-[1.1] text-[0.6em] font-bold uppercase tracking-wide flex gap-3 justify-center">
           <span>Written by {authors.join(", ")}</span>
           <span className="opacity-40">{date}</span>
         </div>
@@ -61,7 +60,7 @@ export function Article({
       <div
         className={classes(
           styles.articleContent,
-          "px-[1vw] pb-[6vh] text-[0.8em] font-semibold leading-[1.2] text-justify hyphens-auto"
+          "px-[2vw] lg:px-[1vw] pb-[6vh] text-[0.8em] font-semibold leading-[1.2] text-justify hyphens-auto"
         )}
       >
         {content}

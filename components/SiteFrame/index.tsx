@@ -8,13 +8,14 @@ import {
   useMemo,
   useState,
 } from "react";
+import dynamic from "next/dynamic";
 
 // Project Settings
 import { StackingContext } from "@/settings";
 
 // Components
 import { ThemeSwitcher } from "@/components/ThemeSwitcher";
-import { Loading } from "@/components/Loading";
+const Loading = dynamic(() => import("@/components/Loading").then(mod => mod.Loading), { ssr: false });
 
 // Context
 import { useTheme } from "@/context/ThemeContext";
@@ -108,7 +109,7 @@ export function SiteFrame({
       {enhancedChildren}
       {showGuides && (
         <>
-          <div className="fixed inset-[1vw] z-50 [box-shadow:0_0_0_1px_cyan] pointer-events-none" />
+          <div className="fixed inset-[2vw] lg:inset-[1vw] z-50 [box-shadow:0_0_0_1px_cyan] pointer-events-none" />
           <ThemeSwitcher />
         </>
       )}
