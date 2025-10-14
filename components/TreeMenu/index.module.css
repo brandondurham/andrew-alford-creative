@@ -1,0 +1,30 @@
+@reference "../../app/globals.css";
+
+.tree {
+  --left: calc(-2ch + 1px);
+}
+
+.tree > li {
+  @apply relative;
+}
+
+.tree li[data-expandable="false"]::before,
+.tree li[data-expandable="false"]::after {
+  @apply absolute bg-foreground content-[''];
+}
+
+.tree li::before {
+  @apply h-full inset-[0_auto_0_var(--left)] w-[1px];
+}
+
+.tree li:last-of-type::before {
+  @apply h-[1ch];
+}
+
+.tree li::after {
+  @apply h-[1px] inset-[1ch_auto_auto_var(--left)] w-[1ch];
+}
+
+.tree li[aria-expanded="true"] {
+  @apply mb-line;
+}

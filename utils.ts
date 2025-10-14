@@ -15,3 +15,10 @@ export function classes(...args: (string | undefined | null)[]): string {
 export function shuffle(array: any[]): any[] {
   return array.sort(() => Math.random() - 0.5);
 }
+
+/**
+ * Helper function to generate random year between two years
+ */
+export function getRandomYear(start: number = 2000, end: number = 2025): number {
+  return Math.floor(Math.random() * (end - start + 1)) + start;
+}
