@@ -5,6 +5,7 @@ import {
   cloneElement,
   isValidElement,
   useEffect,
+  useMemo,
   useState,
 } from "react";
 
@@ -13,6 +14,7 @@ import { StackingContext } from "@/settings";
 
 // Components
 import { ThemeSwitcher } from "@/components/ThemeSwitcher";
+import { Loading } from "@/components/Loading";
 
 // Context
 import { useTheme } from "@/context/ThemeContext";
@@ -94,12 +96,7 @@ export function SiteFrame({
     };
   }, []);
 
-  if (!theme)
-    return (
-      <div className="fixed inset-0 flex items-center justify-center transition-opacity duration-300">
-        Loading…
-      </div>
-    );
+  if (!theme) return <Loading />;
 
   return (
     <div
