@@ -48,9 +48,7 @@ export function Article({
             titleFace
           )}
         >
-          <span className="bg-clip-text text-transparent bg-gradient-to-b from-background to-foreground translate-y-[0.04em]">
-            {title}
-          </span>
+          <span className="translate-y-[0.04em] text-background">{title}</span>
         </h1>
         <div className="mt-[0.5vw] leading-[1.1] text-[0.6em] font-[700] uppercase tracking-wide flex gap-3 justify-center">
           <span>Written by {authors.join(", ")}</span>
