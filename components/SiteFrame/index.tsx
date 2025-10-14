@@ -58,8 +58,18 @@ export function SiteFrame({
   className?: string;
 }) {
   const [showGuides, setShowGuides] = useState(false);
+  const [isMinimumLoadingTimeMet, setIsMinimumLoadingTimeMet] = useState(false);
 
   const { theme } = useTheme();
+
+  // Ensure loading screen shows for at least 2 seconds
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsMinimumLoadingTimeMet(true);
+    }, 2000);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   // Apply stacking context classes to children based on their displayName
   const enhancedChildren = Children.map(children, (child) => {
@@ -97,7 +107,7 @@ export function SiteFrame({
     };
   }, []);
 
-  if (!theme) return <Loading />;
+  if (!theme || !isMinimumLoadingTimeMet) return <Loading />;
 
   return (
     <div

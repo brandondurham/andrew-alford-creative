@@ -134,7 +134,7 @@ export const TreeMenu: FC<TreeMenuProps> = ({
         )}
       </li>
     );
-  }, [className, expandedItems, handleItemClick, level]);
+  }, [className, expandedItems, handleItemClick, level, numbered]);
 
   return (
     <ul

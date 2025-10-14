@@ -107,7 +107,6 @@
 }
 
 body {
-  background: var(--foreground);
   color: black;
   font-family: var(--font-ringside-regular), 'Helvetica Neue', sans-serif;
   font-size: 2rem;
