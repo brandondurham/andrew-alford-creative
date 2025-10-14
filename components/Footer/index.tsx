@@ -26,7 +26,9 @@ export function Footer({ className }) {
         className
       )}
     >
-      <Logo className="w-[80px]" />
+      <Link className="pointer-events-auto" href="/">
+        <Logo className="w-[80px]" />
+      </Link>
       <div>
         A{" "}
         <Link

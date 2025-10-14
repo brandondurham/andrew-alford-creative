@@ -51,7 +51,6 @@ export function SiteMasthead({ className }: { className?: string }) {
   const { theme } = useTheme();
   const pathname = usePathname();
   const { isDragging } = useDragging();
-  console.log('isDragging', isDragging);
 
   return (
     <header
@@ -60,12 +59,16 @@ export function SiteMasthead({ className }: { className?: string }) {
         theme === ThemeNames.YELLOW
           ? "text-background mix-blend-plus-lighter"
           : "text-foreground mix-blend-luminosity",
-        "flex flex-col gap-[0.5vw]",
+        "flex flex-col gap-[1vw]",
         isDragging ? "pointer-events-none" : "pointer-events-auto",
         className
       )}
     >
-      <h1 className={pathname === "/" ? "pointer-events-none" : "pointer-events-auto"}>
+      <h1
+        className={
+          pathname === "/" ? "pointer-events-none" : "pointer-events-auto"
+        }
+      >
         <NextLink
           className={classes(
             "flex text-center",
@@ -82,9 +85,10 @@ export function SiteMasthead({ className }: { className?: string }) {
       </h1>
       <Links
         className={classes(
-          "whitespace-nowrap flex-nowrap font-[400] !justify-center text-center [&_a]:hover:text-[#090c8d]",
-          "font-[Knockout-74FullSumo] text-[2.14vw]"
-          // isDragging ? "pointer-events-none" : "pointer-events-auto"
+          "whitespace-nowrap flex-nowrap font-[400] !justify-center text-center [&_a]:hover:text-white/80",
+          "font-[Knockout-74FullSumo] text-[2.14vw] leading-[0.7]",
+          "[&_a]:underline [&_a]:underline-offset-[0.5vw] [&_a]:text-decoration-thickness-0.05em",
+          "[&_a]:hover:underline"
         )}
         decorated={false}
         separator={<span className="px-[0.75vw]">•</span>}

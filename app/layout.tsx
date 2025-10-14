@@ -4,6 +4,7 @@ import { Content } from "@/components/Content";
 import { Footer } from "@/components/Footer";
 import { SiteMasthead } from "@/components/SiteMasthead";
 import { ThemeBackground } from "@/components/ThemeBackground";
+import { Main } from "@/components/Main";
 // import { ThemeSwitcher } from "@/components/ThemeSwitcher";
 
 // Context
@@ -30,12 +31,12 @@ export default function RootLayout({ children }) {
       <body className={classes(fontData.join(" "), "antialiased")}>
         <ThemeProvider>
           <DraggingProvider>
-            <Content className="min-h-screen relative z-4">
-              <ThemeBackground className="fixed inset-0 z-[-1]" />
-              <Letters className="pointer-events-auto z-3" />
-              <SiteMasthead className="sticky z-4" />
-              <main className="grow">{children}</main>
-              <Footer className="fixed inset-0 p-[1vw] top-auto z-4 text-foreground" />
+            <Content className="min-h-screen">
+              <ThemeBackground className="fixed inset-0" />
+              <Letters className="pointer-events-auto" />
+              <SiteMasthead className="sticky" />
+              <Main className="grow">{children}</Main>
+              <Footer className="fixed inset-0 p-[1vw] top-auto text-foreground" />
             </Content>
           </DraggingProvider>
           {/* <ThemeSwitcher /> */}

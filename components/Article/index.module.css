@@ -1,4 +1,7 @@
 .articleContent {
+  /**
+   * Lists.
+   */
   ol {
     list-style-type: decimal;
     margin: 1em 0;
@@ -11,6 +14,9 @@
     padding-left: 6vw;
   }
 
+  /**
+   * Paragraphs.
+   */
   p:not(:first-of-type) {
     text-indent: 6vw;
   }

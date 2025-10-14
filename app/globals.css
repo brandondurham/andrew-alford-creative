@@ -105,6 +105,10 @@
   text-decoration-thickness: 0.05em;
 }
 
+@utility underline-overline {
+  text-decoration-line: underline overline;
+}
+
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;

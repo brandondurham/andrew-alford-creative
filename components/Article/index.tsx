@@ -35,8 +35,8 @@ export function Article({
         className
       )}
     >
-      <header className="relative z-10 flex flex-col gap-2 text-center py-[6vh] px-[1vw] bg-white">
-        <div className="text-[0.8em] font-[700] leading-[1.1]">
+      <header className="relative z-10 flex flex-col gap-[0.75vw] text-center py-[6vh] px-[1vw] bg-white">
+        <div className="text-[0.9em] font-[900] leading-[0.75]">
           #{articleID.toString().padStart(3, "0")}
         </div>
         <h1
@@ -46,27 +46,26 @@ export function Article({
           )}
         >
           <span className="translate-y-[0.04em] text-background">{title}</span>
-          {/* <span>{title}</span> */}
         </h1>
-        <div className="leading-[1.1] text-[0.6em] font-[700] uppercase tracking-wide flex gap-3 justify-center">
+        <div className="mt-[0.5vw] leading-[1.1] text-[0.6em] font-[700] uppercase tracking-wide flex gap-3 justify-center">
           <span>Written by {authors.join(", ")}</span>
           <span className="opacity-40">{date}</span>
         </div>
       </header>
       <div
         aria-hidden
-        className="gap-2 h-[52px] -mt-[52px] flex items-center bg-white/96 text-[0.9rem] font-[600] p-[1vw] sticky top-[52px] z-9 uppercase justify-center"
+        className="bg-background/96 gap-2 h-[52px] -mt-[52px] flex items-center text-[0.9rem] font-[600] p-[1vw] sticky top-[52px] z-9 uppercase justify-center text-white"
       >
-        <span className="opacity-40 shrink-0">
+        <span className="opacity-60 shrink-0">
           #{articleID.toString().padStart(3, "0")}
         </span>
-        <span className="truncate grow">{title}</span>
-        <span className="opacity-40 shrink-0">{date}</span>
+        <span className="truncate grow font-[500]">{title}</span>
+        <span className="opacity-60 shrink-0">{date}</span>
       </div>
       <div
         className={classes(
           styles.articleContent,
-          "px-[1vw] pb-[6vh] text-[0.8em] font-[600] leading-[1.3] text-justify hyphens-auto"
+          "px-[1vw] pb-[6vh] text-[0.8em] font-[600] leading-[1.2] text-justify hyphens-auto"
         )}
       >
         {content}

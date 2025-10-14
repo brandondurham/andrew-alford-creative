@@ -22,6 +22,7 @@ export default function Home() {
     <section
       className={classes(
         "fixed bottom-0 top-0 left-[50vw] right-0 z-100 overflow-auto bg-white",
+        "animate-fade-in",
         isDragging ? "pointer-events-none" : "pointer-events-auto"
       )}
     >
