@@ -69,6 +69,7 @@
   --font-champion-middleweight: var(--font-champion-middleweight);
   --font-champion-heviweight: var(--font-champion-heviweight);
   --font-plain-black: var(--font-plain-black);
+  --font-knockout-full: var(--font-knockout-full);
 
   /* Space */
   --spacing-drop-cap: 160px;

@@ -25,7 +25,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   const fontData = Object.keys(Fonts).map((font) => Fonts[font].variable);
-
+  console.log("fontData", fontData);
   return (
     <html lang="en">
       <body className={classes(fontData.join(" "), "antialiased")}>

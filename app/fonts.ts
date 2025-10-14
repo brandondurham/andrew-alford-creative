@@ -88,6 +88,18 @@ export const ringsideRegular = localFont({
   display: "swap",
 });
 
+export const knockoutFull = localFont({
+  src: [
+    {
+      path: "../assets/fonts/Knockout-74.woff2",
+      weight: "900",
+      style: "normal",
+    },
+  ],
+  variable: "--font-knockout-full",
+  display: "swap",
+});
+
 export const crimsonCurse = localFont({
   src: "../assets/fonts/Crimson-Curse.woff2",
   variable: "--font-crimson-curse",
