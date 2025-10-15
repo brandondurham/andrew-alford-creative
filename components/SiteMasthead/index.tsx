@@ -70,16 +70,14 @@ export function SiteMasthead({ className }: { className?: string }) {
         }
       >
         <NextLink
-          className={classes(
-            "flex flex-col gap-[2vw] lg:gap-0 text-center lg:flex-row justify-center items-center pl-[0.02em]"
-          )}
+          className="bg-white flex flex-col gap-[2vw] lg:gap-0 text-center lg:flex-row justify-center items-center pl-[0.02em] leading-[0.8] lg:leading-[0.8]"
           href="/"
         >
-          <div className="flex leading-[0.8] lg:leading-[0.8] text-[21.5vw] lg:text-[9.21vw] [&>span]:translate-y-[0.041em]">
+          <div className="flex text-[21.5vw] lg:text-[9.21vw] [&>span]:translate-y-[0.041em]">
             <span className="font-champion-bantamweight">Andrew</span>
             <span className="font-champion-welterweight">Alford</span>
           </div>
-          <div className="flex leading-[0.8] lg:leading-[0.8] text-[15.8vw] lg:text-[9.21vw] [&>span]:translate-y-[0.041em] -indent-[0.05em] lg:-indent-[0.01em]">
+          <div className="flex text-[15.8vw] lg:text-[9.21vw] [&>span]:translate-y-[0.041em] -indent-[0.05em] lg:-indent-[0.01em]">
             <span className="font-champion-heviweight">Creative</span>
           </div>
         </NextLink>
