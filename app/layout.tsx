@@ -35,7 +35,7 @@ export default function RootLayout({ children }) {
             <SiteFrame className="min-h-screen">
               <ThemeBackground className="fixed inset-0" />
               <Letters className="pointer-events-auto" />
-              <SiteMasthead className="sticky" />
+              <SiteMasthead className="sticky top-0" />
               <Main className="grow">{children}</Main>
               <Footer className="fixed inset-0 top-auto" />
             </SiteFrame>

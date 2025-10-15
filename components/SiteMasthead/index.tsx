@@ -64,13 +64,9 @@ export function SiteMasthead({ className }: { className?: string }) {
         className
       )}
     >
-      <h1
-        className={
-          pathname === "/" ? "pointer-events-none" : "pointer-events-auto"
-        }
-      >
+      <h1 className={pathname === "/" ? "pointer-events-none" : "pointer-events-auto"}>
         <NextLink
-          className="bg-white flex flex-col gap-[2vw] lg:gap-0 text-center lg:flex-row justify-center items-center pl-[0.02em] leading-[0.8] lg:leading-[0.8]"
+          className="relative z-1 flex flex-col gap-[2vw] lg:gap-0 text-center lg:flex-row justify-center items-center pl-[0.02em] leading-[0.8] lg:leading-[0.8]"
           href="/"
         >
           <div className="flex text-[21.5vw] lg:text-[9.21vw] [&>span]:translate-y-[0.041em]">
@@ -84,7 +80,7 @@ export function SiteMasthead({ className }: { className?: string }) {
       </h1>
       <Links
         className={classes(
-          "whitespace-nowrap flex-nowrap text-center [&_a]:hover:text-white/80",
+          "relative z-2 whitespace-nowrap flex-nowrap text-center [&_a]:hover:text-white/80",
           "font-knockout-full font-black",
           "[&_a]:underline [&_a]:underline-offset-[0.5vw] [&_a]:text-decoration-thickness-0.05em",
           "[&_a]:hover:underline",
