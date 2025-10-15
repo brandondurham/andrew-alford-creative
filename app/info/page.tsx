@@ -28,11 +28,12 @@ export default function Info() {
       >
         <figure className="sticky top-[52px] [aspect-ratio:1067/1048] overflow-hidden -ml-[2vw] w-[calc(100%+4vw)] -mt-[2vw] lg:-ml-[1vw] lg:w-[calc(100%+2vw)] lg:-mt-[1vw] mb-[2vw] lg:mb-[1vw]">
           <Image
-            src="/headshot.jpg"
             alt="Info"
-            onLoad={() => setIsLoaded(true)}
-            width={1067}
+            className="w-full"
             height={1048}
+            onLoad={() => setIsLoaded(true)}
+            src="/headshot.jpg"
+            width={1067}
           />
           <figcaption className="font-champion-liteweight font-normal flex flex-col items-center justify-center absolute inset-0 text-[48vw] lg:text-[24vw] uppercase leading-[0.95] pt-[0.08em] text-[#e60d27] mix-blend-multiply">
             <span className="text-[1.004em]">F$@!</span>{" "}
