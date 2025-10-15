@@ -35,7 +35,7 @@ const indent = (level: TreeMenuProps["level"] = 0) => {
     case 0:
       return "pl-0";
     default:
-      return "pl-[2ch]";
+      return "pl-[1.5ch]";
   }
 };
 
@@ -109,7 +109,8 @@ export const TreeMenu: FC<TreeMenuProps> = ({
         <Link
           href={item.href ?? "/"}
           className={classes(
-            "flex items-center gap-2 no-underline relative pl-[1.5ch]",
+            "flex items-center gap-2 no-underline relative",
+            hasChildren && "pl-[1.5ch]",
             isExpanded && "no-underline"
           )}
           onClick={(e) => handleItemClick(e, item)}
