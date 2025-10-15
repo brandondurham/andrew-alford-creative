@@ -26,7 +26,7 @@ export default function Info() {
           "font-semibold text-justify hyphens-auto"
         )}
       >
-        <figure className="sticky top-[52px] [aspect-ratio:1067/1048] overflow-hidden -ml-[2vw] w-[calc(100%+4vw)] -mt-[2vw] lg:-ml-[1vw] lg:w-[calc(100%+2vw)] lg:-mt-[1vw] mb-[2vw] lg:mb-[1vw]">
+        <figure className="relative [aspect-ratio:1067/1048] overflow-hidden -ml-[2vw] w-[calc(100%+4vw)] -mt-[2vw] lg:-ml-[1vw] lg:w-[calc(100%+2vw)] lg:-mt-[1vw] mb-[2vw] lg:mb-[1vw]">
           <Image
             alt="Info"
             className="w-full"
