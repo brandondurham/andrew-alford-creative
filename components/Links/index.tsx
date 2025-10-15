@@ -3,7 +3,7 @@
 import { usePathname } from "next/navigation";
 
 // Components
-import { Link as NextLink } from "../Link";
+import { Link } from "../Link";
 
 // Context
 import { useDragging } from "@/context/DraggingContext";
@@ -12,7 +12,7 @@ import { useDragging } from "@/context/DraggingContext";
 import { classes } from "@/utils";
 
 // Types
-import type { Link } from "./types";
+import type { Link as LinkType } from "./types";
 
 export function Links({
   className,
@@ -20,12 +20,12 @@ export function Links({
   fonts = undefined,
   links,
   separator = undefined,
-  spacing = 'gap-2',
+  spacing = "gap-2",
 }: {
   className?: string;
   decorated?: boolean;
   fonts?: string[];
-  links: Link[];
+  links: LinkType[];
   separator?: React.ReactNode;
   spacing?: string;
 }) {
@@ -38,7 +38,7 @@ export function Links({
         return (
           <li className="flex items-baseline" key={id}>
             {href ? (
-              <NextLink
+              <Link
                 className={classes(
                   fonts?.[index],
                   isDragging ? "pointer-events-none" : "pointer-events-auto",
@@ -49,7 +49,7 @@ export function Links({
                 href={href}
               >
                 {label as string}
-              </NextLink>
+              </Link>
             ) : (
               <div>{label}</div>
             )}
