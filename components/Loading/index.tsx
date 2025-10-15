@@ -18,7 +18,7 @@ function LoadingLine() {
     <div
       className={classes(
         "uppercase",
-        "font-knockout-ultimate font-black -indent-[0.046em] leading-[0.665] text-[16.862vw]"
+        "font-knockout-ultimate font-black"
       )}
     >
       <span className={classes("block -translate-y-[0.026em]")}>Loading</span>
@@ -26,7 +26,7 @@ function LoadingLine() {
   );
 }
 
-export function Loading() {
+export function Loading({ className }: { className?: string }) {
   const colors = useMemo(() => {
     const randomIndex = Math.floor(Math.random() * COLORS.length);
     return COLORS[randomIndex];
@@ -35,8 +35,9 @@ export function Loading() {
   return (
     <div
       className={classes(
-        "fixed inset-0 p-[1vw] z-40 text-outline-[currentColor]",
-        colors
+        "p-[1vw] text-outline-[currentColor]",
+        colors,
+        className
       )}
     >
       <div className="animate-scroll-up flex flex-col gap-[2vw] mix-blend-screen">

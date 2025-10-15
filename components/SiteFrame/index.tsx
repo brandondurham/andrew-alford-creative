@@ -107,7 +107,9 @@ export function SiteFrame({
     };
   }, []);
 
-  if (!theme || !isMinimumLoadingTimeMet) return <Loading />;
+  if (!theme || !isMinimumLoadingTimeMet) return (
+    <Loading className="fixed inset-0 z-40 -indent-[0.046em] leading-[0.665] text-[16.862vw]" />
+  );
 
   return (
     <div
