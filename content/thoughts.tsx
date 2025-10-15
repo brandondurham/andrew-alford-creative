@@ -3,41 +3,6 @@ import type { Article } from "@/components/Article/types";
 
 export const articles: Article[] = [
   {
-    articleID: 5,
-    authors: ["Andrew Alford"],
-    content: (
-      <>
-        <p>
-          Do aliquip irure nisi veniam cillum non aute proident. Ut minim
-          nostrud sint est consequat ipsum nisi do anim qui deserunt amet
-          officia veniam. Tempor laborum ut minim tempor esse ullamco magna est
-          sint. Eiusmod amet occaecat fugiat amet.
-        </p>
-        <p>
-          Et mollit ea sit Lorem dolore in. Ipsum Lorem incididunt non do sunt
-          fugiat adipisicing elit anim culpa ea Lorem eu. Proident esse
-          consectetur excepteur dolore commodo Lorem.
-        </p>
-        <p>
-          Pariatur duis labore exercitation consequat. Amet enim laborum cillum
-          et laborum magna laboris. Fugiat enim cillum irure nulla dolor ad
-          nostrud aliqua consectetur non qui do. Nisi est eu ipsum incididunt
-          sint pariatur minim veniam laborum commodo eiusmod laborum anim
-          laboris.
-        </p>
-        <p>
-          Labore anim culpa occaecat labore elit proident commodo excepteur et
-          nisi dolor aute. Pariatur officia laborum voluptate veniam id nisi
-          velit enim. Sunt ad nisi ullamco enim dolore elit ut laboris. Fugiat
-          ad deserunt reprehenderit excepteur. Officia ea labore quis sit magna.
-        </p>
-      </>
-    ),
-    date: "October 12, 2025",
-    id: "06981041-936c-4314-8758-3a1faf7d6e3a",
-    title: "Heavy Metal",
-  },
-  {
     articleID: 4,
     authors: ["Andrew Alford"],
     content: (

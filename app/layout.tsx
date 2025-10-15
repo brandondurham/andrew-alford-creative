@@ -1,3 +1,5 @@
+import { GoogleAnalytics } from '@next/third-parties/google';
+
 // Components
 import { Letters } from "@/components/Letters";
 import { SiteFrame } from "@/components/SiteFrame";
@@ -40,6 +42,7 @@ export default function RootLayout({ children }) {
           </DraggingProvider>
         </ThemeProvider>
       </body>
+      <GoogleAnalytics gaId="G-LDZ8DYQ8P0" />
     </html>
   );
 }

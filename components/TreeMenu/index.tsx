@@ -109,13 +109,13 @@ export const TreeMenu: FC<TreeMenuProps> = ({
         <Link
           href={item.href ?? "/"}
           className={classes(
-            "flex items-center gap-2 no-underline",
+            "flex items-center gap-2 no-underline relative pl-[1.5ch]",
             isExpanded && "no-underline"
           )}
           onClick={(e) => handleItemClick(e, item)}
         >
           {hasChildren && (
-            <span className="block absolute -left-[2ch]">
+            <span className="block absolute left-0 text-[0.7em]">
               {isExpanded ? "▼" : "▶"}
             </span>
           )}

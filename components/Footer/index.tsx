@@ -19,7 +19,7 @@ export function Footer({ className }) {
   return (
     <footer
       className={classes(
-        "flex justify-between pointer-events-none text-[13px] lg:text-[15px] items-end p-[2vw] lg:p-[1vw] top-auto text-foreground",
+        "flex justify-between pointer-events-none text-[13px] lg:text-[15px] items-end p-[4vw] lg:p-[2vw] top-auto text-foreground",
         theme === ThemeNames.YELLOW
           ? "text-background mix-blend-plus-lighter"
           : "text-foreground mix-blend-luminosity",
