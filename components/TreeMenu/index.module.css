@@ -24,7 +24,3 @@
 .tree li::after {
   @apply h-[1px] inset-[1ch_auto_auto_var(--left)] w-[1ch];
 }
-
-.tree li[aria-expanded="true"] {
-  @apply mb-line;
-}
