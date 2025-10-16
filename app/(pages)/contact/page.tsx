@@ -24,7 +24,14 @@ export default function Contact({ className }: { className?: string }) {
           <span>Conta</span>
           <span className="flex flex-col lg:flex-row lg:items-end gap-[2.3vw] lg:gap-[1.3vw]">
             <span className="whitespace-nowrap">ct</span>
-            <div className="text-black flex flex-col gap-[2.6vw] lg:gap-[1vw] normal-case grow font-ringside-regular text-[5.6vw] lg:text-[1.7vw] leading-[1.2] font-semibold text-outline-none [&_a]:text-background pb-[1.5vw]">
+            <div
+              className={classes(
+                "text-black flex flex-col gap-[2.6vw] lg:gap-[1vw] normal-case grow font-ringside-regular text-[5.6vw] lg:text-[1.7vw] leading-[1.2] font-semibold text-outline-none pb-[1.5vw]",
+                theme === ThemeNames.YELLOW
+                  ? "[&_a]:text-foreground"
+                  : "[&_a]:text-background"
+              )}
+            >
               <span>
                 <span className="flex flex-col">Email:</span>
                 <a
