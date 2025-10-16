@@ -22,8 +22,8 @@ export default function Info() {
       <article
         className={classes(
           styles.articleContent,
-          "flex flex-col font-ringside-regular font-medium leading-[1.35] text-pretty grow",
-          "font-semibold text-justify hyphens-auto"
+          "bg-gray-200 flex flex-col font-ringside-regular font-medium leading-[1.35] text-pretty grow",
+          "font-semibold text-justify hyphens-auto pb-[8vh]"
         )}
       >
         <figure className="max-w-full relative [aspect-ratio:1140/990] overflow-hidden">
@@ -36,11 +36,10 @@ export default function Info() {
             width={1140}
           />
           <figcaption className="font-champion-welterweight font-normal flex flex-col items-center justify-center absolute inset-0 text-[48vw] lg:text-[20vw] uppercase leading-[0.95] pt-[0.08em] text-[#e60d27] mix-blend-multiply">
-            <span className="text-[1.06em]">F$@!</span>{" "}
-            <span>beige</span>
+            <span className="text-[1.06em]">F$@!</span> <span>beige</span>
           </figcaption>
         </figure>
-        <div className="bg-gray-200 relative z-10 p-[2vw] lg:p-[1vw] pb-[15vh]">
+        <div className="relative z-10 p-[2vw] lg:p-[1vw]">
           <p>
             No one ever looked at a sunset and said, &ldquo;I wish it was more
             beige.&rdquo; That&rsquo;s Andrew Alford&rsquo;s core philosophy of
