@@ -27,9 +27,9 @@ export default function Contact({ className }: { className?: string }) {
         }
       >
         <span>Andrew Alford Creative</span>
-        <a className="link-underline" href="tel:+13123440344">
+        {/* <a className="link-underline" href="tel:+13123440344">
           +1(312)344-0344
-        </a>
+        </a> */}
         <a
           className="link-underline"
           href="mailto:info@andrewalfordcreative.com"
