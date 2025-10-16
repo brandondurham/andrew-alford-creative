@@ -1,3 +1,5 @@
+"use client";
+
 // Utils
 import { classes } from "@/utils";
 import { useDragging } from "@/context/DraggingContext";
