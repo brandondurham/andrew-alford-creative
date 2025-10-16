@@ -182,8 +182,9 @@ export const TreeMenu: FC<TreeMenuProps> = ({
     <ul
       className={classes(
         level === 0 && "[&>li]:mt-4",
-        styles.tree,
+        level === 0 && styles.tree,
         indent(level),
+        "list-none m-0 p-0",
         className
       )}
       role="tree"

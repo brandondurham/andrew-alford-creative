@@ -2,10 +2,22 @@
 
 .tree {
   --left: calc(-1ch - 1px);
+
+  /* && {
+    list-style-type: none !important;
+    margin: 0;
+    padding: 0;
+  }
+
+  ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  } */
 }
 
-.tree > li {
-  @apply relative;
+.tree li {
+  position: relative;
 }
 
 .tree li[data-expandable="false"]::before,
@@ -14,11 +26,12 @@
 }
 
 .tree li::before {
-  @apply h-full inset-[0_auto_0_var(--left)] w-[1px];
+  @apply inset-[0_auto_0_var(--left)] w-[1px];
 }
 
 .tree li:last-of-type::before {
-  @apply h-[1ch];
+  /* @apply h-[1ch]; */
+  height: calc(1ch - 1px);
 }
 
 .tree li::after {

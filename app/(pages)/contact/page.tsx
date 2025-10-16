@@ -14,18 +14,17 @@ export default function Contact({ className }: { className?: string }) {
   return (
     <address
       className={classes(
-        "flex flex-col text-pretty bg-gray-100",
-        "p-[2vw] lg:p-[1vw] pb-[6vh] lg:pb-[6vh] not-italic",
+        "flex flex-col text-pretty",
+        "not-italic",
         theme === ThemeNames.YELLOW ? "text-foreground" : "text-background"
       )}
     >
       <div className="inline-flex flex-wrap">
-        <div className="font-champion-middleweight font-normal text-[32vw] lg:text-[16.3vw] leading-[0.9] uppercase text-outline-[currentColor]">
+        <div className="font-champion-middleweight font-normal text-[31vw] lg:text-[15.7vw] leading-[0.9] uppercase text-outline-[currentColor]">
           <span>Conta</span>
-          <span className="flex gap-[2.3vw] lg:gap-[1.3vw]">
+          <span className="flex flex-col lg:flex-row lg:items-end gap-[2.3vw] lg:gap-[1.3vw]">
             <span className="whitespace-nowrap">ct</span>
-            <span className="text-black flex flex-col gap-[2.6vw] lg:gap-[1.6vw] normal-case grow font-ringside-regular text-[3.5vw] lg:text-[1.7vw] leading-[1.2] font-semibold text-outline-none [&_a]:text-background -translate-y-[0.2em]">
-              <span className="block">Andrew Alford Creative</span>
+            <div className="text-black flex flex-col gap-[2.6vw] lg:gap-[1vw] normal-case grow font-ringside-regular text-[5.6vw] lg:text-[1.7vw] leading-[1.2] font-semibold text-outline-none [&_a]:text-background pb-[1.5vw]">
               <span>
                 <span className="flex flex-col">Email:</span>
                 <a
@@ -44,7 +43,7 @@ export default function Contact({ className }: { className?: string }) {
                   @andrewalfordcreative
                 </a>
               </span>
-            </span>
+            </div>
           </span>
         </div>
       </div>

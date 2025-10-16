@@ -6,11 +6,11 @@ import { ArticleBanner } from "@/components/ArticleBanner";
 // Utils
 import { classes } from "@/utils";
 
-// Styles
-import styles from "./index.module.css";
-
 // Types
 import { ArticleProps } from "./types";
+
+// Styles
+import styles from "./index.module.css";
 
 export function Article({
   articleID = 0,
@@ -26,25 +26,20 @@ export function Article({
 
   const titleFace =
     numWordsInTitle <= 3 && longestWordInTitle <= 6
-      ? "font-champion-heviweight -tracking-[0.03em] leading-[0.86]"
+      ? "font-champion-heviweight -tracking-[0.03em] leading-[0.86] text-[18vw] lg:text-[9.25vw]"
       : numWordsInTitle <= 8 && longestWordInTitle <= 10
-        ? "font-champion-middleweight -tracking-[0.03em] leading-[0.85]"
-        : "font-champion-bantamweight -tracking-[0.008em] leading-[0.92]";
+      ? "font-champion-middleweight -tracking-[0.03em] leading-[0.9] text-[18vw] lg:text-[9.25vw]"
+      : "font-champion-bantamweight -tracking-[0.008em] leading-[0.92] text-[20vw] lg:text-[10vw]";
 
   return (
-    <article
-      className={classes(
-        "flex flex-col font-ringside-regular font-medium [font-size:clamp(1.2rem,2vw,25px)] leading-[1.35] text-pretty bg-gray-100",
-        className
-      )}
-    >
-      <header className="relative z-10 flex flex-col gap-[0.75vw] text-center py-[6vh] px-[1vw] bg-inherit">
+    <article className={classes("flex flex-col text-pretty", styles.articleContent, className)}>
+      <header className="font-normal relative z-10 flex flex-col gap-[0.75vw] text-center pt-[6vh] pb-[3vh] px-[1vw] bg-gray-100">
         <div className="text-[0.9em] font-black leading-[0.75]">
           #{articleID.toString().padStart(3, "0")}
         </div>
         <h1
           className={classes(
-            "relative uppercase z-11 text-[18vw] lg:text-[9.25vw] -translate-x-[0.012em] text-balance flex flex-col",
+            "relative uppercase z-11 -translate-x-[0.012em] text-balance flex flex-col",
             "text-background",
             titleFace
           )}
@@ -57,12 +52,7 @@ export function Article({
         </div>
       </header>
       <ArticleBanner articleID={articleID} date={date} title={title} />
-      <div
-        className={classes(
-          styles.articleContent,
-          "px-[2vw] lg:px-[1vw] pb-[6vh] text-[0.8em] font-semibold leading-[1.2] text-justify hyphens-auto"
-        )}
-      >
+      <div className="px-[4vw] lg:px-[2vw] pb-[6vh]">
         {content}
       </div>
     </article>

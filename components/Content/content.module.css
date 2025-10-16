@@ -1,0 +1,10 @@
+.content {
+  font-size: clamp(1.2rem, 2vw, 25px);
+
+  /**
+   * Paragraphs.
+   */
+  p:not(:first-of-type) {
+    text-indent: 6vw;
+  }
+}

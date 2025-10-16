@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
 
 // Utils
 import { classes } from "@/utils";
@@ -10,14 +9,12 @@ import { classes } from "@/utils";
 import styles from "@/components/Article/index.module.css";
 
 export default function Info() {
-  const [isLoaded, setIsLoaded] = useState(false);
-
   return (
     <article
       className={classes(
         styles.articleContent,
-        "bg-gray-200 flex flex-col font-ringside-regular font-medium leading-[1.35] text-pretty grow",
-        "font-semibold text-justify hyphens-auto pb-[8vh]"
+        "flex flex-col grow",
+        "pb-[6vh]"
       )}
     >
       <figure className="max-w-full relative [aspect-ratio:1140/990] overflow-hidden">
@@ -25,7 +22,6 @@ export default function Info() {
           alt="Info"
           className="w-full"
           height={990}
-          onLoad={() => setIsLoaded(true)}
           src="/headshot.jpg"
           width={1140}
         />
@@ -33,7 +29,7 @@ export default function Info() {
           <span className="text-[1.06em]">F$@!</span> <span>beige</span>
         </figcaption>
       </figure>
-      <div className="relative z-10 p-[2vw] lg:p-[1vw]">
+      <div className="relative z-10 p-[4vw] lg:p-[2vw]">
         <p>
           No one ever looked at a sunset and said, &ldquo;I wish it was more
           beige.&rdquo; That&rsquo;s Andrew Alford&rsquo;s core philosophy of
