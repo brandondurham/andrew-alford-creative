@@ -26,7 +26,7 @@ export default function Info() {
           "font-semibold text-justify hyphens-auto"
         )}
       >
-        <figure className="max-w-full relative [aspect-ratio:1067/1048] overflow-hidden">
+        <figure className="max-w-full relative [aspect-ratio:1140/990] overflow-hidden">
           <Image
             alt="Info"
             className="w-full"
