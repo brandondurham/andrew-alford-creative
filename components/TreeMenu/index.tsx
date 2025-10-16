@@ -39,6 +39,42 @@ const indent = (level: TreeMenuProps["level"] = 0) => {
   }
 };
 
+// Helper function to determine if a URL is external
+const isExternalUrl = (href: string): boolean => {
+  try {
+    const url = new URL(href, window.location.origin);
+    return url.hostname !== window.location.hostname;
+  } catch {
+    // If URL parsing fails, assume it's internal
+    return false;
+  }
+};
+
+// Unified link component that handles both internal and external links
+interface UnifiedLinkProps {
+  href: string;
+  className?: string;
+  onClick?: (e: MouseEvent<HTMLAnchorElement>) => void;
+  children: React.ReactNode;
+}
+
+const UnifiedLink: FC<UnifiedLinkProps> = ({ href, className, onClick, children }) => {
+  const isExternal = isExternalUrl(href);
+  
+  const linkProps = {
+    href,
+    className,
+    onClick,
+    ...(isExternal && { target: "_blank", rel: "noopener noreferrer" })
+  };
+
+  return isExternal ? (
+    <a {...linkProps}>{children}</a>
+  ) : (
+    <Link {...linkProps}>{children}</Link>
+  );
+};
+
 export const TreeMenu: FC<TreeMenuProps> = ({ 
   className = '', 
   items, 
@@ -85,18 +121,23 @@ export const TreeMenu: FC<TreeMenuProps> = ({
   }, [expandedItems]);
 
   const handleItemClick = useCallback((event: MouseEvent<HTMLAnchorElement>, item: MenuItem) => {
-    event.preventDefault();
     if (item.children && item.children.length > 0) {
+      // For items with children, prevent default navigation and toggle expansion
+      event.preventDefault();
       toggleExpanded(item.id);
     } else if (item.onClick) {
+      // For items with onClick handlers, prevent default and call the handler
+      event.preventDefault();
       item.onClick();
     }
+    // For leaf items without onClick, allow default link behavior
   }, [toggleExpanded]);
 
   const renderMenuItem = useCallback((item: MenuItem, index: number) => {
     const hasChildren = Boolean(item.children && item.children.length > 0);
     const isExpanded = expandedItems.has(item.id);
-    console.log('item.href', item.href);
+    const href = item.href ?? "/";
+
     return (
       <li
         aria-expanded={isExpanded}
@@ -106,15 +147,14 @@ export const TreeMenu: FC<TreeMenuProps> = ({
         key={item.id}
         role="treeitem"
       >
-        <Link
-          href={item.href ?? "/"}
+        <UnifiedLink
+          href={href}
           className={classes(
             "flex items-center gap-2 no-underline relative",
             hasChildren && "pl-[1.5ch]",
             isExpanded && "no-underline"
           )}
           onClick={(e) => handleItemClick(e, item)}
-          target="_blank"
         >
           {hasChildren && (
             <span className="block absolute left-0 text-[0.7em]">
@@ -125,7 +165,7 @@ export const TreeMenu: FC<TreeMenuProps> = ({
             <Chip className="font-normal text-[0.4em] translate-y-[0.05em]">{item.year}</Chip>
           )}
           {numbered && `${index + 1}.`} {item.label}
-        </Link>
+        </UnifiedLink>
 
         {hasChildren && isExpanded && (
           <TreeMenu
