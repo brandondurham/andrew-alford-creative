@@ -35,7 +35,7 @@ const indent = (level: TreeMenuProps["level"] = 0) => {
     case 0:
       return "pl-0";
     default:
-      return "pl-[1.5ch]";
+      return "pl-[2.7ch]";
   }
 };
 
