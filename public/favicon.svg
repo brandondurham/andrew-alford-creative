@@ -1,4 +1,9 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500">
+  <style>
+    path { fill: black; }
+    @media (prefers-color-scheme: dark) {
+      path { fill: white; }
+    }
+  </style>
   <path d="M0,261.31C0,125,111.9,14.88,250,14.88s250,110.12,250,246.43c0,123.21-91.07,210.71-210.71,223.81v-154.76c45.83-5.95,64.29-36.9,64.29-61.91,0-32.14-29.76-64.29-103.57-64.29s-103.57,32.14-103.57,64.29c0,24.41,18.45,55.36,62.5,61.31v155.36C89.88,472.02,0,383.93,0,261.31Z"/>
 </svg>
