@@ -39,7 +39,6 @@ export default function ClientPortal({ className }: { className?: string }) {
     const timeout = setTimeout(() => {
       setIsSubmitting(false);
       setIsSubmitted(true);
-      setEmail("");
     }, 2000);
     return () => clearTimeout(timeout);
   };
