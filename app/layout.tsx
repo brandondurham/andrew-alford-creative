@@ -25,6 +25,11 @@ export const metadata = {
   },
   description:
     "Andrew Alford Creative offers small and large scale brand development, interior design services, freelance creative direction, and licensed product collaborations.",
+  icons: {
+    icon: '/favicon.svg',
+    shortcut: '/favicon.svg',
+    apple: '/favicon.svg',
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

@@ -30,14 +30,13 @@ export default function Info() {
           <Image
             alt="Info"
             className="w-full"
-            height={1048}
+            height={990}
             onLoad={() => setIsLoaded(true)}
             src="/headshot.jpg"
-            width={1067}
+            width={1140}
           />
           <figcaption className="font-champion-liteweight font-normal flex flex-col items-center justify-center absolute inset-0 text-[48vw] lg:text-[24vw] uppercase leading-[0.95] pt-[0.08em] text-[#e60d27] mix-blend-multiply">
             <span className="text-[1.004em]">F$@!</span>{" "}
-            {/* <span>F$@!</span> */}
             <span>beige</span>
           </figcaption>
         </figure>
