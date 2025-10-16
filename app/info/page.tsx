@@ -59,24 +59,6 @@ export default function Info() {
             development, interior design services, freelance creative direction,
             and licensed product collaborations.
           </p>
-          <p>
-            No one ever looked at a sunset and said, &ldquo;I wish it was more
-            beige.&rdquo; That&rsquo;s Andrew Alford&rsquo;s core philosophy of
-            design. For more than twenty-five years, Andrew has focused his
-            talents on creating truly memorable projects that have an unwavering
-            sense of individuality, wit, and soul. Andrew has designed luxury
-            homes, iconic independent hotels, unforgettable food and beverage
-            experiences, product collections, and ambitious scalable hospitality
-            brands. As Chief Creative Officer for Graduate Hotels, Andrew was
-            there from day one, concepting the brand&rsquo;s visual DNA and
-            leading the in-house design team on more than thirty-five
-            properties.
-          </p>
-          <p>
-            Andrew Alford Creative now offers small and large scale brand
-            development, interior design services, freelance creative direction,
-            and licensed product collaborations.
-          </p>
         </div>
       </article>
     </Content>
