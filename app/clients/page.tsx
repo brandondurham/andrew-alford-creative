@@ -13,8 +13,28 @@ export default function ClientPortal({ className }: { className?: string }) {
   const [email, setEmail] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [emailError, setEmailError] = useState("");
+
+  const validateEmail = (email: string) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
 
   const handleSubmit = () => {
+    // Clear previous errors
+    setEmailError("");
+    
+    // Validate email
+    if (!email.trim()) {
+      setEmailError("Email is required");
+      return;
+    }
+    
+    if (!validateEmail(email)) {
+      setEmailError("Please enter a valid email address");
+      return;
+    }
+
     setIsSubmitting(true);
     const timeout = setTimeout(() => {
       setIsSubmitting(false);
@@ -37,16 +57,28 @@ export default function ClientPortal({ className }: { className?: string }) {
           <label htmlFor="email">Email Address</label>
           <input
             className={classes(
-              "border-b-2 border-gray-900 w-full px-0 py-2",
+              "border-b-2 w-full px-0 py-2",
+              emailError ? "border-red-500" : "border-gray-900",
               "disabled:opacity-30 disabled:cursor-not-allowed"
             )}
             disabled={isSubmitting}
             id="email"
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) => {
+              setEmail(e.target.value);
+              // Clear error when user starts typing
+              if (emailError) {
+                setEmailError("");
+              }
+            }}
             placeholder="Enter your email"
             type="email"
             value={email}
           />
+          {emailError && (
+            <div className="text-theme-p animate-fade-in">
+              <p>{emailError}</p>
+            </div>
+          )}
           {isSubmitted && (
             <div className="text-theme-p animate-fade-in">
               <p>

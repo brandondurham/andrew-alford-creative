@@ -96,7 +96,7 @@ export const TreeMenu: FC<TreeMenuProps> = ({
   const renderMenuItem = useCallback((item: MenuItem, index: number) => {
     const hasChildren = Boolean(item.children && item.children.length > 0);
     const isExpanded = expandedItems.has(item.id);
-
+    console.log('item.href', item.href);
     return (
       <li
         aria-expanded={isExpanded}
@@ -114,6 +114,7 @@ export const TreeMenu: FC<TreeMenuProps> = ({
             isExpanded && "no-underline"
           )}
           onClick={(e) => handleItemClick(e, item)}
+          target="_blank"
         >
           {hasChildren && (
             <span className="block absolute left-0 text-[0.7em]">
@@ -121,7 +122,7 @@ export const TreeMenu: FC<TreeMenuProps> = ({
             </span>
           )}
           {item.year && (
-            <Chip className="font-normal text-[0.4em]">{item.year}</Chip>
+            <Chip className="font-normal text-[0.4em] translate-y-[0.05em]">{item.year}</Chip>
           )}
           {numbered && `${index + 1}.`} {item.label}
         </Link>

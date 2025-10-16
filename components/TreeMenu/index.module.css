@@ -1,7 +1,7 @@
 @reference "../../app/globals.css";
 
 .tree {
-  --left: calc(-2ch + 1px);
+  --left: calc(-1ch - 1px);
 }
 
 .tree > li {
@@ -10,7 +10,7 @@
 
 .tree li[data-expandable="false"]::before,
 .tree li[data-expandable="false"]::after {
-  @apply absolute bg-foreground content-[''];
+  @apply absolute bg-gray-500 content-[''];
 }
 
 .tree li::before {
@@ -22,5 +22,5 @@
 }
 
 .tree li::after {
-  @apply h-[1px] inset-[1ch_auto_auto_var(--left)] w-[1ch];
+  @apply h-[1px] inset-[50%_auto_auto_var(--left)] w-[0.65ch];
 }
