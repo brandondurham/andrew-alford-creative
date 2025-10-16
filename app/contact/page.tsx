@@ -19,29 +19,41 @@ export default function Contact({ className }: { className?: string }) {
     <Content className={className}>
       <ContentMasthead>Contact</ContentMasthead>
       <address
-        className={
-          classes(
-            "items-center justify-center flex flex-col gap-1 grow p-[1vw] text-[1rem] font-light font-monaspace-neon leading-[1.6] text-center uppercase not-italic",
-            theme === ThemeNames.YELLOW ? "text-foreground" : "text-background",
-          )
-        }
+        className={classes(
+          "flex flex-col text-pretty bg-gray-100",
+          "p-[2vw] lg:p-[1vw] pb-[6vh] lg:pb-[6vh] not-italic",
+          theme === ThemeNames.YELLOW ? "text-foreground" : "text-background"
+        )}
       >
-        <span>Andrew Alford Creative</span>
-        {/* <a className="link-underline" href="tel:+13123440344">
-          +1(312)344-0344
-        </a> */}
-        <a
-          className="link-underline"
-          href="mailto:info@andrewalfordcreative.com"
-        >
-          info@andrewalfordcreative.com
-        </a>
-        <a
-          className="link-underline"
-          href="https://instagram.com/andrewalfordcreative"
-        >
-          @andrewalfordcreative
-        </a>
+        <div className="inline-flex flex-wrap">
+          <div className="font-champion-middleweight font-normal text-[32vw] lg:text-[16.3vw] leading-[0.9] uppercase text-outline-[currentColor]">
+            <span>Conta</span>
+            <span className="flex gap-[2.3vw] lg:gap-[1.3vw]">
+              <span className="whitespace-nowrap">ct</span>
+              <span className="text-black flex flex-col gap-[2.6vw] lg:gap-[1.6vw] normal-case grow font-ringside-regular text-[3.5vw] lg:text-[1.7vw] leading-[1.2] font-semibold text-outline-none [&_a]:text-background -translate-y-[0.2em]">
+                <span className="block">Andrew Alford Creative</span>
+                <span>
+                  <span className="flex flex-col">Email:</span>
+                  <a
+                    className="link-underline"
+                    href="mailto:info@andrewalfordcreative.com"
+                  >
+                    info@andrewalfordcreative.com
+                  </a>
+                </span>
+                <span>
+                  <span className="flex flex-col">Instagram:</span>
+                  <a
+                    className="link-underline"
+                    href="https://instagram.com/andrewalfordcreative"
+                  >
+                    @andrewalfordcreative
+                  </a>
+                </span>
+              </span>
+            </span>
+          </div>
+        </div>
       </address>
     </Content>
   );

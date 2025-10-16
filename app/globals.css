@@ -80,7 +80,6 @@
 /* Text Outline Utilities */
 @utility text-outline-* {
   -webkit-text-stroke-color: --value(--color-*, [color]);
-  /* -webkit-text-stroke-width: clamp(0.5px, 0.1vw, 2px); */
   -webkit-text-stroke-width: clamp(1px, 0.3vw, 2.5px);
   -webkit-text-fill-color: transparent;
 }
