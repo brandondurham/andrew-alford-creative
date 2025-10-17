@@ -91,6 +91,16 @@ export const ringsideRegular = localFont({
 export const knockoutFull = localFont({
   src: [
     {
+      path: "../assets/fonts/Knockout-68.woff2",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "../assets/fonts/Knockout-69.woff2",
+      weight: "500",
+      style: "normal",
+    },
+    {
       path: "../assets/fonts/Knockout-74.woff2",
       weight: "900",
       style: "normal",

@@ -86,11 +86,11 @@ export function SiteMasthead({ className }: { className?: string }) {
       <Links
         className={classes(
           "relative z-2 whitespace-nowrap flex-nowrap text-center [&_a]:hover:text-white/80",
-          "font-knockout-full font-black",
-          "[&_a]:underline [&_a]:underline-offset-[0.5vw] [&_a]:text-decoration-thickness-0.05em",
+          "[&_a]:underline [&_a]:underline-offset-[0.75vw] [&_a]:text-decoration-thickness-0.05em",
           "[&_a]:hover:underline",
           "flex flex-wrap lg:flex-nowrap justify-between lg:justify-center px-[2vw] lg:px-[1vw] gap-y-[2.5vw] lg:gap-y-0",
-          "text-[4.4vw] lg:text-[2.14vw] leading-[0.7]"
+          "font-knockout-full font-medium text-[5.7vw] leading-[0.7]",
+          "lg:font-knockout-full font-normal lg:text-[5.63vw] lg:leading-[0.7]"
         )}
         decorated={false}
         separator={<span className="px-[0.75vw] hidden lg:block">•</span>}
