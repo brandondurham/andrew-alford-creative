@@ -29,8 +29,11 @@ export function Footer({ className }) {
       <Link className="pointer-events-auto" href="/">
         <Logo className="w-[90px]" />
       </Link>
-      <div className="text-right leading-[1.4] flex gap-1 lg:gap-2 flex-col lg:flex-row">
+      <div className="text-right leading-[1.4] flex gap-1 lg:gap-2 flex-col">
         <span>
+          <Link decorated className="pointer-events-auto" href="/site-credits">
+            Site credits.
+          </Link>{" "}
           A{" "}
           <Link
             decorated
