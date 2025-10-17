@@ -43,10 +43,7 @@ export default function SiteCredits() {
                   Brandon Durham @ Small Parade
                 </a>
               </span>
-              <span>
-                <span className="flex flex-col">Flair:</span>
-                Site Design & Development
-              </span>
+              Site Design & Development
             </div>
           </span>
         </div>
