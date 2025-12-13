@@ -445,7 +445,7 @@ export const articles: Article[] = [
             aesthetic decisions you’re making.
           </li>
           <li>
-            Know where the owner’s money comes from, how it's deployed, and what
+            Know where the owner’s money comes from, how it’s deployed, and what
             it’s expected to return. – Hotels cost a lot of money to build, and
             that money doesn’t come free. Banks and investors don’t buy into in
             a project with a loose hope that they see returns. Owners and
