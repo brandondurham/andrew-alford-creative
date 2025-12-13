@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev --webpack",
-    "build": "next build --experimental-debug-memory-usage",
+    "build": "next build --webpack --experimental-debug-memory-usage",
     "start": "next start",
     "lint": "eslint"
   },

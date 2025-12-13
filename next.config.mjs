@@ -29,8 +29,8 @@ const nextConfig = {
     }
 
     // Add a new rule to handle SVG imports with @svgr/webpack
-    // This rule should come before other rules to ensure it's processed first
-    config.module.rules.push({
+    // Insert at the beginning to ensure it's processed first
+    config.module.rules.unshift({
       test: /\.svg$/i,
       issuer: /\.[jt]sx?$/,
       use: [
