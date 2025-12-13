@@ -2,9 +2,6 @@ import createMDX from '@next/mdx'
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
   experimental: {
     serverSourceMaps: false,
     webpackMemoryOptimizations: true,
@@ -21,25 +18,31 @@ const nextConfig = {
       });
     }
     
+    // Find the existing rule that handles SVG imports
     const fileLoaderRule = config.module.rules.find((rule) =>
       rule.test?.test?.(".svg")
     );
 
-    config.module.rules.push(
-      {
-        test: /\.svg$/i,
-        issuer: fileLoaderRule.issuer,
-        resourceQuery: { not: [...fileLoaderRule.resourceQuery.not, /url/] },
-        use: ["@svgr/webpack"],
-      },
-      {
-        test: /\.svg$/i,
-        type: "asset",
-        resourceQuery: /url/,
-      }
-    );
+    // Exclude SVG files from the default file loader
+    if (fileLoaderRule) {
+      fileLoaderRule.exclude = /\.svg$/i;
+    }
 
-    fileLoaderRule.exclude = /\.svg$/i;
+    // Add a new rule to handle SVG imports with @svgr/webpack
+    // This rule should come before other rules to ensure it's processed first
+    config.module.rules.push({
+      test: /\.svg$/i,
+      issuer: /\.[jt]sx?$/,
+      use: [
+        {
+          loader: "@svgr/webpack",
+          options: {
+            exportType: "default",
+            svgo: false,
+          },
+        },
+      ],
+    });
 
     return config;
   },
