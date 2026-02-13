@@ -22,6 +22,7 @@ const PAGES = {
 }; 
 
 export function Content({ children }: { children?: React.ReactNode }) {
+  console.log("Content");
   const pathname = usePathname();
   const { isDragging } = useDragging();
 

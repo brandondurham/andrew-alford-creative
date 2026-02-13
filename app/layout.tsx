@@ -1,12 +1,5 @@
 import { GoogleAnalytics } from '@next/third-parties/google';
-
-// Components
-import { Letters } from "@/components/Letters";
-import { SiteFrame } from "@/components/SiteFrame";
-import { Footer } from "@/components/Footer";
-import { SiteMasthead } from "@/components/SiteMasthead";
-import { ThemeBackground } from "@/components/ThemeBackground";
-import { Main } from "@/components/Main";
+import { AntdRegistry } from '@ant-design/nextjs-registry';
 
 // Context
 import { Providers } from "./providers";
@@ -38,15 +31,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body className={classes(fontData.join(" "), "antialiased")}>
-        <Providers>
-          <SiteFrame className="min-h-screen">
-            <ThemeBackground className="fixed inset-0" />
-            <Letters className="pointer-events-auto" />
-            <SiteMasthead className="sticky top-0" />
-            <Main className="grow">{children}</Main>
-            <Footer className="fixed inset-0 top-auto" />
-          </SiteFrame>
-        </Providers>
+        <AntdRegistry>
+          <Providers>
+            {children}
+          </Providers>
+        </AntdRegistry>
       </body>
       <GoogleAnalytics gaId="G-LDZ8DYQ8P0" />
     </html>
