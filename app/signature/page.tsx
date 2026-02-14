@@ -242,6 +242,7 @@ export default function Signature() {
                         fontFamily:
                           "ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', 'Liberation Mono', monospace",
                         fontSize: "13px",
+                        lineHeight: 1.4,
                       }}
                     >
                       <br />
@@ -345,7 +346,7 @@ export default function Signature() {
                       Adding the Signature to Your E-mail Program
                     </Heading>
                   </header>
-                  <div>
+                  <div className="text-[0.94em]">
                     <h3 className="text-[1.15em] font-semibold mb-2">
                       Apple Mail (desktop)
                     </h3>
@@ -371,7 +372,14 @@ export default function Signature() {
                         has some default signauture text in it. Delete that
                         text.
                       </li>
-                      <li>Now paste your new signature into this box.</li>
+                      <li>
+                        Now paste your new signature into this box. You may not see the logo appear here. That’s okay. When you create a new AAC email you should see it.
+                      </li>
+                      <li>Close the Settings window.</li>
+                      <li>
+                        Open a new email and make sure the signature appears as
+                        expected.
+                      </li>
                     </ol>
                   </div>
                 </div>
@@ -383,8 +391,8 @@ export default function Signature() {
                   </Heading>
                   <p className="text-[1.1em] font-normal text-center">
                     If you have any problems; your email program of choice isn’t
-                    listed here; or if you’d like me to double-check your signature, please reach out
-                    to me at{" "}
+                    listed here; or if you’d like me to double-check your
+                    signature, please reach out to me at{" "}
                     <a href="mailto:brandon@andrewalfordcreative.com">
                       brandon@andrewalfordcreative.com
                     </a>
