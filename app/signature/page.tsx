@@ -23,9 +23,9 @@ interface SignatureFormValues {
 const pickRandom = <T,>(arr: T[]): T => arr[Math.floor(Math.random() * arr.length)];
 
 const defaultValues: SignatureFormValues = {
-  name: "Brandon Durham",
-  title: "Senior Software Developer/Designer",
-  telephone: "(512) 527-4626",
+  // name: "Brandon Durham",
+  // title: "Senior Software Developer/Designer",
+  // telephone: "(512) 527-4626",
 };
 
 const Heading = ({ children, className = '' }: { children: React.ReactNode, className?: string }) => {
@@ -168,7 +168,7 @@ export default function Signature() {
                         control={control}
                         rules={{ required: "Full name is required." }}
                         render={({ field }) => (
-                          <Input size="large" {...field} />
+                          <Input placeholder={randomName} size="large" {...field} />
                         )}
                       />
                     </Form.Item>
@@ -183,7 +183,7 @@ export default function Signature() {
                         control={control}
                         rules={{ required: "Title is required." }}
                         render={({ field }) => (
-                          <Input size="large" {...field} />
+                          <Input placeholder={randomTitle} size="large" {...field} />
                         )}
                       />
                     </Form.Item>
@@ -279,7 +279,7 @@ export default function Signature() {
                       <br />
                       Portland, OR 97214
                       <br />
-                      {submittedValues.telephone.length ? (
+                      {submittedValues.telephone?.length ? (
                         <>{submittedValues.telephone}</>
                       ) : (
                         "+1 (312) 344-3440"
@@ -373,12 +373,16 @@ export default function Signature() {
                         text.
                       </li>
                       <li>
-                        Now paste your new signature into this box. You may not see the logo appear here. That’s okay. When you create a new AAC email you should see it.
+                        Now paste your new signature into this box. You may not
+                        see the logo appear here. That’s okay. When you create a
+                        new AAC email you should see it.
                       </li>
                       <li>Close the Settings window.</li>
                       <li>
                         Open a new email and make sure the signature appears as
-                        expected.
+                        expected. If it’s missing in your email, click the
+                        "Signature" dropdown on the right and select the
+                        signature you just created. Apple Mail <em>still</em> may not show the signature. If not, close the draft email and open a new one. It should appear now and every time you draft a new AAC email.
                       </li>
                     </ol>
                   </div>

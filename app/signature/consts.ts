@@ -68,21 +68,6 @@ export const TITLES: string[] = [
   "Principal",
 ];
 
-export const MESSAGES: string[] = [
-  "“I didn’t claw my way out of nothing, build this company, and bury two husbands just to let you waltz in here with a smile and a signature and take it from me. You want my name on that contract? Pry the pen from my cold, perfectly manicured hand.”",
-  "“You keep calling this a family, but families don’t stab each other in the back over breakfast. They don’t hide wills in desk drawers and lovers in guest houses. This isn’t a family—it’s a battlefield with better china.”",
-  "“Don’t you dare look at me like I’m the villain. I protected you. I lied for you. I burned my whole life down for you. And now you’re shocked to find smoke on your clothes?”",
-  "“This house was built on my father’s money and my mother’s tears. Every brick has a secret in it. If you think you can move in here and pretend none of that happened, you’re going to find out exactly how loud the walls can scream.”",
-  "“You talk about love like it’s poetry. I talk about love like it’s war. Love costs. Love bleeds. And if you’re not willing to lose everything for it, then don’t you dare say you love me.”",
-  "“I didn’t steal your husband. He walked out the door all by himself. The only thing I gave him was a reason to stop pretending he was happy.”",
-  "“You want the truth? Fine. The baby isn’t yours, the company isn’t safe, and the only reason I stayed was to make sure you never forgot what you did to me. Sleep tight.”",
-  "“I’ve been underestimated my entire life—too soft, too quiet, too polite. Funny thing about quiet people: we hear everything. And now I know exactly where to aim.”",
-  "“You think money makes you powerful. Money just makes you loud. Power is knowing everyone’s secrets and deciding which one to whisper at the right moment.”",
-  "“I forgave you for the affair. I forgave you for the lies. But showing up here and acting like we can go back to normal? That’s not love. That’s amnesia, and I refuse to forget what you did.”",
-  "“I buried my past, changed my name, and started over. Then you showed up with that smile like nothing ever happened. Some ghosts don’t rattle chains—they wear cologne and call you sweetheart.”",
-  "“You keep saying ‘it’s just business.’ Funny. Business doesn’t usually involve my sister’s tears, my father’s grave, and you sleeping in my bed.”",
-];
-
 type Film = {
   characters: string[];
   quotes: string[];
@@ -108,11 +93,18 @@ export const FILMS: Film[] = [
       "Tommy Pischedda",
     ],
     quotes: [
-      "These go to eleven.",
-      "It’s such a fine line between stupid and clever.",
-      "Hello, Cleveland!",
-      "We’re very lucky in the band in that we have two visionaries.",
-      "Turn it up to eleven.",
+      "It’s part of a trilogy, a musical trilogy I’m working on in D minor which is the saddest of all keys, I find. People weep instantly when they hear it, and I don’t know why.",
+      "You know, just simple lines intertwining, you know, very much like - I’m really influenced by Mozart and Bach, and it’s sort of in between those, really. It’s like a Mach piece, really.",
+      "He died in a bizarre gardening accident…",
+      "It’s like, how much more black could this be? And the answer is none. None more black.",
+      "This pretentious ponderous collection of religious rock psalms is enough to prompt the question, ’What day did the Lord create Spinal Tap, and couldn’t he have rested on that day too?",
+      "I do not, for one, think that the problem was that the band was down. I think that the problem may have been, that there was a Stonehenge monument on the stage that was in danger of being crushed by a dwarf. Alright? That tended to understate the hugeness of the object.",
+      "Nigel gave me a drawing that said 18 inches. Now, whether or not he knows the difference between feet and inches is not my problem. I do what I’m told.",
+      "Let’s talk about your reviews a little bit. Regarding Intravenus de Milo - “This tasteless cover is a good indication of the lack of musical invention within. The musical growth rate of this band cannot even be charted. They are treading water in a sea of retarded sexuality and bad poetry.”",
+      "In ancient times, hundreds of years before the dawn of history, an ancient race of people… the Druids. No one knows who they were or what they were doing…",
+      "This is our monthly “At Ease” weekend. It gives us a chance to let our hair down, although I see you’ve got a head start in that department. I shouldn’t talk, though, I’m getting a little shaggy myself. I’d better not stand too close to you, people might think I’m part of the band. I’m joking, of course.",
+      "May I start by saying how thrilled we are to have you here. We are such fans of your music and all of your records. I’m not speaking of yours personally, but the whole genre of the rock and roll.",
+      "Hello; my name is Marty DiBergi. I’m a filmmaker. I make a lot of commercials. That little dog that chases the covered wagon underneath the sink? That was mine. In 1966, I went down to Greenwich Village, New York City to a rock club called Electric Banana. Don’t look for it; it’s not there anymore. But that night, I heard a band that for me redefined the word “rock and roll”. I remember being knocked out by their… their exuberance, their raw power - and their punctuality. That band was Britain’s now-legendary Spinal Tap. Seventeen years and fifteen albums later, Spinal Tap is still going strong. And they’ve earned a distinguished place in rock history as one of England’s loudest bands. So in the late fall of 1982, when I heard that Tap was releasing a new album called “Smell the Glove”, and was planning their first tour of the United States in almost six years to promote that album, well needless to say I jumped at the chance to make the documentary - the, if you will, “rockumentary” - that you’re about to see. I wanted to capture the… the sights, the sounds… the smells of a hard-working rock band, on the road. And I got that; I got more… a lot more. But hey, enough of my yakkin’; whaddaya say? Let’s boogie!",
     ],
   },
   {
@@ -131,11 +123,14 @@ export const FILMS: Film[] = [
       "Harold Steinberg",
     ],
     quotes: [
-      "I hate you and I hate your ass face!",
-      "This is my life, right here.",
-      "We’re doing a musical about Blaine.",
-      "I’ve been in 42 productions.",
-      "Guffman’s coming.",
+      "So what I’m understanding here, correct me if I’m wrong, is that you’re not giving me any money, so now I’m left, basically, with nothing. I’m left with zero, in which, what can I do with zero? You know, what can I… I can’t do anything with it. I need to… this is my life here we’re talking about, we’re not just talking about, you know, something else, we’re talking about my life, you know? And it’s forcing me to do something I don’t wanna do: to leave. To go out and just leave and go home and say… make a clean cut here and say “no way, Corky. You’re not putting up with these people.” And I’ll tell you why I can’t put up with you people, because you’re bastard people. That’s what you are, you’re just bastard people and I’m going home and I’m gonna… I’m gonna bite my pillow is what I’m gonna do!",
+      "I’ve been coming to this circle for about five years, and measuring it. The diameter and the circumference are constantly changing, but the radius stays the same. Which brings me to the number 5. There are five letters in the word Blaine. Now, if you mix up the letters in the word Blaine, mix ’em around, eventually, you’ll come up with Nebali. Nebali. The name of a planet in a galaxy way, way, way... way far away. And another thing. Once you go into that circle, the weather never changes. It is always 67 degrees with a 40% chance of rain.",
+      "My first show was Barefoot in the Park, which was an absolute smash, but my production on the stage of Backdraft was what really got them excited. This whole idea of ’In Your Face’ theatre really affected them. The conceptualization, the whole abstraction, the obtuseness of this production to me was what was interesting. I wanted the audience to feel the heat from the fire, the fear, because people don’t like fire, poked, poked in their noses, you know when you get a cinder from a barbeque right on the end of your nose and you kind of make that face, you know, that’s not a good thing, and I wanted them to have the sense memory of that. So during the show I had someone burn newspapers and send it through the vents in the theatre. And well, they freaked out, and ’course the fire Marshall came over and they shut us down for a couple of days.",
+      "I think I got a, a, an entertaining bug... from my grandfather... uh, Chaim Pearlgut, who was very very big in the, um, Yiddish, uh, theater, back in New York. He was in the, the very... the sardonically irreverent... “Dybbuk Shmybbuk, I Said ’More Ham’”… and that revue I believe was 1914, and that revue was what made him famous. Incidentally, the song “Bubbe Made A Kishke” came from that revue.",
+      "What New York really is, is it’s an island, with lots of people, lots of different people... I hope to maybe meet some guys, some Italian guys, and maybe watch some TV.",
+      "They took me off into a separate room; I seen ’em takin’ different people off; different ones of us off in separate rooms and put me on a big white table and uh the guy that took me in there - to examine me I guess - he probed me and then I was in there I bet more than three or four hours, in that room, being probed and at one time or another these different ones of ’em came in, four or five or six of ’em at different times, and all of ’em probed me, uh, not all at once, you know, individually. Later on, years later, now, even still, uh, it’s a funny thing - it happened on a Sunday and every Sunday about the time I was taken on board that ship I - find I have no feelings in my buttocks.",
+      "I was shopping for my wife Bonnie. I buy most of her clothes and Mrs Pearl was in the same shop! And it just was an accident you know, we started talking... about panty hose, she was saying... whatever that’s not the point of the story but what the point is is that through this accidental meeting... it’s like a Hitchcock movie you know where you’re thrown into a rubber bag and put in the trunk of a car, you find people. You find them. Something, is is it karma? Maybe. But we found him, that’s the important thing. And I got Bonnie a wonderful pantsuit.",
+      "I been workin’ here at the D.Q. for about, um... eight months? Seven? I don’t know, somethin’ like that, it’s fun. Just do the cones... make sundaes, make Blizzards, ’n... put stuff on ’em, ’n... see a lot of people come in, a lot of people come to the D.Q... burgers... ice cream... anything, you know? Cokes... just drive in and get a Coke, if you’re thirsty.",
     ],
   },
   {
@@ -162,7 +157,7 @@ export const FILMS: Film[] = [
       "We met at Starbucks. Not at the same Starbucks but we saw each other at different Starbucks across the street from each other.",
       "I remember what I was drinking when I met you. It was a grande espresso. That’s right. And you thought that was really sexy.",
       "Doctor, question that’s always bothered me and a lot of people: Mayflower, combined with Philadelphia - a no-brainer, right? Cause this is where the Mayflower landed. Not so. It turns out Columbus actually set foot somewhere down in the West Indies. Little known fact.",
-      "You know something, what you don’t understand is... what do they say?... one picture is worth a thousand words. I only went through 125 or 130 words describing that. If I wanted to go on, I could go through 800 words more.",
+      "You know something, what you don’t understand is… what do they say?… one picture is worth a thousand words. I only went through 125 or 130 words describing that. If I wanted to go on, I could go through 800 words more.",
       "Well, it’s breathing now, but it’ll be hot down there. I could go with the lambswool, but then again, you’ll see a lot of khaki down there and this merlot looks good with the gray.",
       "We got to open this, this, these offices, and publish this magazine here, ‘American Bitch’. The dog magazine for women and their dogs. Umm, it’s a focus on the issues of the lesbian pure bred dog owner.",
       "When I started here all there was was lampshade warehouses and leather bars, the serious leather bars where you wouldn’t get in unless you had a rubber ball stuffed in your mouth, the wine list was tattooed on the bar tender’s face. That kind of place. I remember one guy had a bicycle reflector sewn onto one nipple.",
