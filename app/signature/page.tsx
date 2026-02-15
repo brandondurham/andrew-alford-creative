@@ -241,7 +241,7 @@ export default function Signature() {
                       style={{
                         fontFamily:
                           "ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', 'Liberation Mono', monospace",
-                        fontSize: "13px",
+                        fontSize: "12px",
                         lineHeight: 1.4,
                       }}
                     >
